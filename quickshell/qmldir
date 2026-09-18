@@ -1,0 +1,9 @@
+singleton Colors Colors.qml
+Bar Bar.qml
+Clock Clock.qml
+Workspaces Workspaces.qml
+Battery Battery.qml
+Audio Audio.qml
+Network Network.qml
+Tray Tray.qml
+Menu Menu.qml
