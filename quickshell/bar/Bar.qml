@@ -1,6 +1,7 @@
 // quickshell/Bar.qml
 import Quickshell
 import QtQuick
+import "../theme/"
 
 PanelWindow {
     anchors {

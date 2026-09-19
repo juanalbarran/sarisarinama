@@ -2,6 +2,7 @@
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import QtQuick
+import "../theme/"
 
 Row {
     spacing: 8

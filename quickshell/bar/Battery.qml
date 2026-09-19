@@ -1,6 +1,7 @@
 // quickshell/Battery.qml
 import Quickshell.Services.UPower
 import QtQuick
+import "../theme/"
 
 Text {
     readonly property var dev: UPower.displayDevice

@@ -1,6 +1,7 @@
 // quickshell/Network.qml
 import Quickshell.Io
 import QtQuick
+import "../theme/"
 
 Text {
     property string icon: "\udb83\udc9c"   // disconnected

@@ -1,6 +1,7 @@
 // quickshell/Clock.qml
 import Quickshell
 import QtQuick
+import "../theme/"
 
 Text {
     SystemClock {

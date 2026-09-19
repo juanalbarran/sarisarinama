@@ -1,6 +1,7 @@
 // quickshell/Audio.qml
 import Quickshell.Services.Pipewire
 import QtQuick
+import "../theme/"
 
 Text {
     readonly property var sink: Pipewire.defaultAudioSink
