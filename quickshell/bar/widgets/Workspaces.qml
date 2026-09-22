@@ -1,7 +1,7 @@
-// quickshell/Workspaces.qml
+// quickshell/widgets/Workspaces.qml
 import Quickshell.I3
 import QtQuick
-import "../theme/"
+import "../../theme/"
 
 Row {
     spacing: 7

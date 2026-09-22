@@ -1,7 +1,8 @@
-// quickshell/Bar.qml
+// quickshell/bar/Bar.qml
 import Quickshell
 import QtQuick
 import "../theme/"
+import "./widgets/"
 
 PanelWindow {
     anchors {
