@@ -1,4 +1,4 @@
-// quickshell/widgets/Clock.qml
+// quickshell/bar/widgets/Clock.qml
 import Quickshell
 import QtQuick
 import "../../theme/"

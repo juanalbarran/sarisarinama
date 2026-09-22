@@ -1,4 +1,4 @@
-// quickshell/widgets/Battery.qml
+// quickshell/bar/widgets/Battery.qml
 import Quickshell.Services.UPower
 import QtQuick
 import "../../theme/"

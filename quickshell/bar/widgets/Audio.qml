@@ -1,4 +1,4 @@
-// quickshell/widgets/Audio.qml
+// quickshell/bar/widgets/Audio.qml
 import Quickshell.Services.Pipewire
 import QtQuick
 import "../../theme/"

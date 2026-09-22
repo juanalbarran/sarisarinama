@@ -1,4 +1,4 @@
-// quickshell/widgets/Network.qml
+// quickshell/bar/widgets/Network.qml
 import Quickshell.Io
 import QtQuick
 import "../../theme/"

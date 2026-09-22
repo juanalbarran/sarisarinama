@@ -1,4 +1,4 @@
-// quickshell/widgets/Tray.qml
+// quickshell/bar/widgets/Tray.qml
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import QtQuick

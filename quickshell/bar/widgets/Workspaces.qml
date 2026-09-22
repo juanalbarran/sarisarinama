@@ -1,4 +1,4 @@
-// quickshell/widgets/Workspaces.qml
+// quickshell/bar/widgets/Workspaces.qml
 import Quickshell.I3
 import QtQuick
 import "../../theme/"
