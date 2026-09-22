@@ -1,6 +1,6 @@
 # Sarisarinama
 
-The goal here is to create an ui with a `quickshell` instance, for reference check [omarchy](https://github.com/omacom/omarchy/tree/quattro)
+The goal here is to create an ui with a `quickshell` instance, for reference check [omanix](https://github.com/T00fy/omanix) or [omarchy](https://github.com/omacom/omarchy/tree/quattro)
 This is gonna work as a `flake` that will be inserted into my `NixOS` configuration [canaima](https://github.com/juanalbarran/canaima)
 Sarisarinama will be configured as a standalone flake and will use the `dendritic` pattern
 The `window manager` `hyprland` or `sway` will auto launch the shell.
@@ -24,8 +24,7 @@ bar/
 
 ### Menu
 
-The `menu` will be inspired in the omarchy `menu`, read the code and docs from omarchy quattro.
-
+The `menu` will be inspired in the omarchy `menu`, read the code and docs from omarchy quattro. Check [omanix](https://github.com/T00fy/omanix)
 There are two kinds of menu: `options menu` and `project menu`
 
 #### Options Menu
