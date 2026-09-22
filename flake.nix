@@ -1,3 +1,4 @@
+# flake.nix
 {
   description = "Sarisarinama - a Quickshell UI for canaima";
 
@@ -11,6 +12,12 @@
   };
 
   outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;}
-    (inputs.import-tree ./modules);
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        # Declares flake.modules.<class>.<name> as mergeable modules, so every
+        # file under modules/ can extend the same Home Manager module.
+        inputs.flake-parts.flakeModules.modules
+        (inputs.import-tree ./modules)
+      ];
+    };
 }

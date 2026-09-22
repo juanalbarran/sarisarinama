@@ -1,90 +1,50 @@
 // quickshell/menu/Menu.qml
-import Quickshell
-import Quickshell.Io
-import Quickshell.Wayland
+// The menu window. Implements the host contract shell.qml expects
+// (open/close/opened); Model owns navigation, Card owns the look.
 import QtQuick
-import "../theme/"
+import Quickshell
+import Quickshell.Wayland
 
 PanelWindow {
     id: root
-    visible: false
+
+    property bool opened: false
+    visible: opened
+
+    // Payload is {"file": "<menu json>"}; no file means the root menu.
+    function open(payloadJson) {
+        var payload = {};
+        try {
+            payload = JSON.parse(payloadJson || "{}");
+        } catch (e) {}
+        model.navStack = [];
+        model.show(payload.file || "");
+        opened = true;
+    }
+
+    function close() {
+        opened = false;
+    }
+
+    Model {
+        id: model
+    }
 
     implicitWidth: 500
     implicitHeight: 400
     color: "transparent"
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    WlrLayershell.namespace: "sarisarinama-menu"
+    WlrLayershell.keyboardFocus: opened ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
-    onVisibleChanged: if (visible)
-        list.currentIndex = 0
+    onOpenedChanged: if (opened)
+        card.focusList()
 
-    IpcHandler {
-        target: "menu"
-
-        function toggle(): void {
-            root.visible = !root.visible;
-        }
-    }
-
-    Rectangle {
+    Card {
+        id: card
         anchors.fill: parent
-        color: Colors.background
-        radius: 8
-        border.color: Colors.accent
-
-        Column {
-            anchors.fill: parent
-            anchors.margins: 12
-            spacing: 8
-
-            Text {
-                id: title
-                text: "menu"
-                color: Colors.accent
-                font.family: "JetBrains Mono Nerd Font"
-                font.pixelSize: 12
-            }
-
-            ListView {
-                id: list
-                width: parent.width
-                height: parent.height - title.height - parent.spacing
-                focus: true
-                clip: true
-                keyNavigationWraps: true
-
-                model: ["  Lock", "󰐥  Power off", "  Restart", "  Projects"]
-
-                delegate: Text {
-                    required property string modelData
-                    required property int index
-
-                    width: list.width
-                    text: modelData
-                    padding: 6
-                    color: ListView.isCurrentItem ? Colors.accent : Colors.text
-                    font.family: "JetBrains Mono Nerd Font"
-                    font.pixelSize: 12
-                }
-
-                highlight: Rectangle {
-                    color: Colors.base01
-                    radius: 4
-                }
-
-                Keys.onPressed: event => {
-                    if (event.key === Qt.Key_J) {
-                        list.incrementCurrentIndex();
-                        event.accepted = true;
-                    } else if (event.key === Qt.Key_K) {
-                        list.decrementCurrentIndex();
-                        event.accepted = true;
-                    }
-                }
-                Keys.onEscapePressed: root.visible = false
-                Keys.onReturnPressed: console.log("selected:", list.currentIndex, list.model[list.currentIndex])
-            }
-        }
+        menu: model
+        onCloseRequested: root.close()
     }
 }

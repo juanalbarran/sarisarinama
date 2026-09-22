@@ -1,0 +1,39 @@
+// quickshell/menu/MenuFile.qml
+// Reads one menu file and exposes its parsed entries. A missing file or bad
+// JSON is logged and yields an empty menu instead of a crash.
+import Quickshell
+import Quickshell.Io
+
+FileView {
+    id: root
+
+    readonly property string home: Quickshell.env("HOME")
+    readonly property string defaultFile: home + "/.config/sarisarinama/root.json"
+    property var entries: []
+
+    // A rebuild that rewrites the file is picked up while the menu is open.
+    watchChanges: true
+    printErrors: true
+
+    // Accepts "~/..." paths as written by the Nix side; empty means root.
+    function load(filePath) {
+        var target = filePath || root.defaultFile;
+        root.path = target.indexOf("~") === 0 ? root.home + target.slice(1) : target;
+        root.reload();
+    }
+
+    onLoaded: {
+        try {
+            var parsed = JSON.parse(text());
+            root.entries = Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+            console.warn("menu: invalid JSON in", root.path, e);
+            root.entries = [];
+        }
+    }
+
+    onLoadFailed: function (error) {
+        console.warn("menu: cannot read", root.path, error);
+        root.entries = [];
+    }
+}
