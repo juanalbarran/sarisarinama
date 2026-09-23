@@ -1,6 +1,7 @@
 // quickshell/menu/Menu.qml
 // The menu window. Implements the host contract shell.qml expects
-// (open/close/opened); Model owns navigation, Card owns the look.
+// (open/close/opened); Model owns navigation, Card owns the look and the
+// size: the window is exactly as large as the card asks to be.
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -30,8 +31,8 @@ PanelWindow {
         id: model
     }
 
-    implicitWidth: 500
-    implicitHeight: 400
+    implicitWidth: card.implicitWidth
+    implicitHeight: card.implicitHeight
     color: "transparent"
 
     WlrLayershell.layer: WlrLayer.Overlay
@@ -45,6 +46,8 @@ PanelWindow {
         id: card
         anchors.fill: parent
         menu: model
+        // A card that swallows the screen reads as a page, not a menu.
+        maxHeight: Math.round((root.screen?.height ?? 1080) * 0.7)
         onCloseRequested: root.close()
     }
 }

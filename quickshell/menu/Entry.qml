@@ -11,11 +11,14 @@ Text {
     required property int index
 
     width: ListView.view ? ListView.view.width : implicitWidth
-    padding: 6
+    height: Style.rowHeight
+    leftPadding: Style.space(Style.row.paddingX)
+    rightPadding: Style.space(Style.row.paddingX)
+    verticalAlignment: Text.AlignVCenter
     text: (modelData.icon ? modelData.icon + "  " : "") + modelData.label + (modelData.menu ? "  " : "")
     color: ListView.isCurrentItem ? Colors.accent : Colors.text
-    font.family: "JetBrains Mono Nerd Font"
-    font.pixelSize: 12
+    font.family: Style.font.family
+    font.pixelSize: Style.font.body
 
     MouseArea {
         anchors.fill: parent
