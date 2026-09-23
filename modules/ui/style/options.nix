@@ -1,15 +1,9 @@
 # modules/ui/style/options.nix
-# programs.sarisarinama.style: geometry and typography tokens, see
-# docs/style.md. Defaults equal the ones in Style.qml, so leaving an option
-# alone changes nothing. Colors are not here.
+# programs.sarisarinama.style: what every component shares, see docs/style.md.
+# Per-component looks live beside this file: bar.nix, menu.nix. Colors are
+# not here. Defaults equal the ones in quickshell/theme/Style.qml.
 {
-  flake.modules.homeManager.sarisarinama = {lib, ...}: let
-    px = default: description:
-      lib.mkOption {
-        type = lib.types.ints.unsigned;
-        inherit default description;
-      };
-  in {
+  flake.modules.homeManager.sarisarinama = {lib, ...}: {
     options.programs.sarisarinama.style = {
       font = {
         family = lib.mkOption {
@@ -17,25 +11,20 @@
           default = "JetBrains Mono Nerd Font";
           description = "Font family for every text in the shell.";
         };
-        size = px 12 "Base font size in px; the type scale derives from it.";
+        size = lib.mkOption {
+          type = lib.types.ints.unsigned;
+          default = 12;
+          description = ''
+            Base font size in px. The type scale derives from it:
+            caption x0.833, body x1, title x1.167, heading x1.333.
+          '';
+        };
       };
 
       spacing.scale = lib.mkOption {
         type = lib.types.numbers.positive;
         default = 1.0;
         description = "Multiplies every length token; 1.0 keeps design pixels.";
-      };
-
-      card = {
-        width = px 300 "Menu card width in design px.";
-        padding = px 18 "Space between the card edge and its content.";
-        radius = px 8 "Corner radius; not scaled.";
-        border = px 1 "Border width; not scaled. 0 removes the border.";
-      };
-
-      row = {
-        height = px 36 "Minimum menu row height in design px.";
-        paddingX = px 12 "Horizontal padding inside a menu row.";
       };
     };
   };

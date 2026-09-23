@@ -1,3 +1,5 @@
 singleton Colors Colors.qml
 singleton Style Style.qml
-StyleFile StyleFile.qml
+ConfigFile ConfigFile.qml
+BarStyle BarStyle.qml
+MenuStyle MenuStyle.qml

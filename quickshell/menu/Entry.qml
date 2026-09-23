@@ -11,9 +11,9 @@ Text {
     required property int index
 
     width: ListView.view ? ListView.view.width : implicitWidth
-    height: Style.rowHeight
-    leftPadding: Style.space(Style.row.paddingX)
-    rightPadding: Style.space(Style.row.paddingX)
+    height: Style.menu.rowHeight
+    leftPadding: Style.menu.row.paddingX
+    rightPadding: Style.menu.row.paddingX
     verticalAlignment: Text.AlignVCenter
     text: (modelData.icon ? modelData.icon + "  " : "") + modelData.label + (modelData.menu ? "  " : "")
     color: ListView.isCurrentItem ? Colors.accent : Colors.text

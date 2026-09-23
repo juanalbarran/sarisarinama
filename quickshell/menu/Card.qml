@@ -1,7 +1,8 @@
 // quickshell/menu/Card.qml
 // The visible card: a title taken from the file name, plus the row list.
 // Height is padding, title, gap and one row per entry, capped by maxHeight;
-// past the cap the list scrolls. Every size comes from Style.
+// past the cap the list scrolls. Every size comes from Style.menu, already
+// scaled; only the literal gap still goes through Style.space.
 import QtQuick
 import "../theme/"
 
@@ -11,7 +12,7 @@ Rectangle {
     required property Model menu
     property int maxHeight: 700
 
-    readonly property int padding: Style.space(Style.card.padding)
+    readonly property int padding: Style.menu.card.padding
     readonly property int gap: Style.space(8)
     readonly property int chrome: padding * 2 + title.height + gap
 
@@ -21,12 +22,12 @@ Rectangle {
         list.forceActiveFocus();
     }
 
-    implicitWidth: Style.space(Style.card.width)
+    implicitWidth: Style.menu.card.width
     implicitHeight: chrome + list.height
 
     color: Colors.background
-    radius: Style.card.radius
-    border.width: Style.card.border
+    radius: Style.menu.card.radius
+    border.width: Style.menu.card.border
     border.color: Colors.accent
 
     Column {
@@ -46,7 +47,7 @@ Rectangle {
         List {
             id: list
             width: parent.width
-            height: Math.min(Math.max(1, count) * Style.rowHeight, root.maxHeight - root.chrome)
+            height: Math.min(Math.max(1, count) * Style.menu.rowHeight, root.maxHeight - root.chrome)
             menu: root.menu
             onActivated: index => {
                 if (root.menu.activate(index))

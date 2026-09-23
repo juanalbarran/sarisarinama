@@ -5,14 +5,14 @@ import QtQuick
 import "../../theme/"
 
 Row {
-    spacing: 8
+    spacing: Style.bar.tray.spacing
 
     Repeater {
         model: SystemTray.items
 
         IconImage {
             required property var modelData
-            implicitSize: 16
+            implicitSize: Style.bar.tray.iconSize
             source: modelData.icon
             anchors.verticalCenter: parent.verticalCenter
 

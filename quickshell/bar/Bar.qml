@@ -1,4 +1,6 @@
 // quickshell/bar/Bar.qml
+// The bar window. Geometry comes from Style.bar, colors from Colors; each
+// widget sizes its own text. Nothing here is a literal.
 import Quickshell
 import QtQuick
 import "../theme/"
@@ -10,15 +12,14 @@ PanelWindow {
         left: true
         right: true
     }
-    implicitHeight: 30
+    implicitHeight: Style.bar.height
     color: Colors.background
 
-    // left — workspaces will live here
+    // left — workspaces bring their own spacing
     Row {
         anchors.left: parent.left
-        anchors.leftMargin: 40
+        anchors.leftMargin: Style.bar.paddingLeft
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 4
         Workspaces {}
     }
 
@@ -27,12 +28,12 @@ PanelWindow {
         anchors.centerIn: parent
     }
 
-    // right — audio / network / battery will live here
+    // right — tray, audio, network, battery
     Row {
         anchors.right: parent.right
-        anchors.rightMargin: 20
+        anchors.rightMargin: Style.bar.paddingRight
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 10
+        spacing: Style.bar.spacing
 
         Tray {
             anchors.verticalCenter: parent.verticalCenter

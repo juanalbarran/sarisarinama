@@ -1,7 +1,7 @@
 // quickshell/theme/Style.qml
-// Geometry and typography tokens, see docs/style.md. Colors live in
-// Colors.qml. `cfg` is style.json as read by StyleFile; every token falls
-// back to its default when the section or key is missing.
+// What every component shares, plus one object per component, see
+// docs/style.md. Colors live in Colors.qml; style never holds a color.
+// Every token falls back to its default when style.json lacks the key.
 pragma Singleton
 import Quickshell
 import QtQuick
@@ -9,12 +9,17 @@ import QtQuick
 Singleton {
     id: root
 
-    readonly property StyleFile file: StyleFile {}
+    readonly property ConfigFile file: ConfigFile {}
     readonly property var cfg: file.data
 
-    function pick(section, key, fallback) {
-        var s = cfg[section];
-        var v = s ? s[key] : undefined;
+    // One section of style.json, or {} while the file is missing.
+    function section(name) {
+        var s = cfg[name];
+        return s ? s : {};
+    }
+
+    function pick(name, key, fallback) {
+        var v = section(name)[key];
         return v === undefined || v === null ? fallback : v;
     }
 
@@ -37,18 +42,15 @@ Singleton {
         readonly property real scale: root.pick("spacing", "scale", 1.0)
     }
 
-    readonly property QtObject card: QtObject {
-        readonly property int width: root.pick("card", "width", 300)
-        readonly property int padding: root.pick("card", "padding", 18)
-        readonly property int radius: root.pick("card", "radius", 8)
-        readonly property int border: root.pick("card", "border", 1)
+    readonly property BarStyle bar: BarStyle {
+        cfg: root.section("bar")
+        fonts: root.font
+        scale: root.spacing.scale
     }
 
-    readonly property QtObject row: QtObject {
-        readonly property int height: root.pick("row", "height", 36)
-        readonly property int paddingX: root.pick("row", "paddingX", 12)
+    readonly property MenuStyle menu: MenuStyle {
+        cfg: root.section("menu")
+        body: root.font.body
+        scale: root.spacing.scale
     }
-
-    // Menu row: the larger of the declared height and text plus padding.
-    readonly property int rowHeight: Math.max(space(row.height), font.body + 2 * space(row.paddingX))
 }

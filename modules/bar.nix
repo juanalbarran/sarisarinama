@@ -1,3 +1,0 @@
-# ./modules/bar.nix
-{
-}

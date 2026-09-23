@@ -8,8 +8,8 @@ Text {
 
     text: icon
     color: Colors.text
-    font.family: "JetBrains Mono Nerd Font"
-    font.pixelSize: 12
+    font.family: Style.font.family
+    font.pixelSize: Style.bar.textSize("network", "body")
 
     Process {
         id: nmcli

@@ -10,6 +10,6 @@ Text {
 
     text: Qt.formatDateTime(clock.date, "HH:mm | ddd, dd")
     color: Colors.text
-    font.family: "JetBrains Mono Nerd Font"
-    font.pixelSize: 14
+    font.family: Style.font.family
+    font.pixelSize: Style.bar.textSize("clock", "title")
 }

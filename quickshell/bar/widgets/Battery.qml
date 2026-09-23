@@ -18,6 +18,6 @@ Text {
     visible: dev.isLaptopBattery
     text: batIcon + " " + pct + "%"
     color: (pct <= 15 && !charging) ? Colors.urgent : Colors.text
-    font.family: "JetBrains Mono Nerd Font"
-    font.pixelSize: 12
+    font.family: Style.font.family
+    font.pixelSize: Style.bar.textSize("battery", "body")
 }

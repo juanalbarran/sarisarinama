@@ -4,7 +4,7 @@ import QtQuick
 import "../../theme/"
 
 Row {
-    spacing: 7
+    spacing: Style.bar.workspaces.spacing
 
     Repeater {
         model: 5
@@ -14,17 +14,17 @@ Row {
             readonly property var ws: I3.workspaces.values.find(w => w.num === index + 1)
 
             text: ws?.urgent ? "\uf06a" : ws?.focused ? "\uebb4" : "\u{f0130}"
-            font.family: "JetBrains Mono Nerd Font"
-            font.pixelSize: 10
+            font.family: Style.font.family
+            font.pixelSize: Style.bar.workspaces.fontSize
             padding: 0
-            leftPadding: 2
-            rightPadding: 2
+            leftPadding: Style.bar.workspaces.paddingX
+            rightPadding: Style.bar.workspaces.paddingX
 
             color: mouse.containsMouse ? Colors.hover : ws?.urgent ? Colors.urgent : ws?.focused ? Colors.accent : Colors.text
 
             Behavior on color {
                 ColorAnimation {
-                    duration: 300
+                    duration: Style.bar.workspaces.animation
                     easing.type: Easing.InOutQuad
                 }
             }
