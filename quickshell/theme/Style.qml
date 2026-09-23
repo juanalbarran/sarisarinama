@@ -1,6 +1,7 @@
 // quickshell/theme/Style.qml
 // Geometry and typography tokens, see docs/style.md. Colors live in
-// Colors.qml. `cfg` mirrors style.json; step 3 fills it from the file.
+// Colors.qml. `cfg` is style.json as read by StyleFile; every token falls
+// back to its default when the section or key is missing.
 pragma Singleton
 import Quickshell
 import QtQuick
@@ -8,9 +9,8 @@ import QtQuick
 Singleton {
     id: root
 
-    // Parsed style.json. Empty until step 3 wires the FileView; every
-    // token falls back to its default when the section or key is missing.
-    property var cfg: ({})
+    readonly property StyleFile file: StyleFile {}
+    readonly property var cfg: file.data
 
     function pick(section, key, fallback) {
         var s = cfg[section];
