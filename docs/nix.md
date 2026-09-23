@@ -1,58 +1,46 @@
 # Nix
 
+How the flake is put together and where every option lives. To run the
+shell from the checkout, see [development.md](./development.md).
+
 ## Flake outputs
 
 - `packages.default`: the `quickshell/` tree copied to `share/sarisarinama`.
-- `packages.menus`: the rendered menu JSON, for development without Home Manager.
+- `packages.menus`: every rendered config file, `style.json` included.
 - `modules.homeManager.sarisarinama`: the Home Manager module.
 - `devShells.default`: quickshell and qt tooling.
 
 `flake.modules.<class>.<name>` comes from `inputs.flake-parts.flakeModules.modules`,
-imported in `flake.nix`. It merges definitions from many files into one module;
-the default `flake.homeModules.x` is `unique raw` and cannot be split.
+imported in `flake.nix`. It merges many files into one module; the default
+`flake.homeModules.x` is `unique raw` and cannot be split.
 
 ## Home Manager module
 
-`programs.sarisarinama` options and where they live:
+A component's _content_ lives in its own module, its _looks_ in the style
+module: `modules/ui/menu/` says what the menu contains, `modules/ui/style/`
+how the menu and the bar look. There is no `modules/ui/bar/`.
 
 | Option                         | File                                 |
 | ------------------------------ | ------------------------------------ |
 | `enable`, `package`            | `modules/home-manager.nix`           |
 | `menus` (attrsOf listOf entry) | `modules/ui/menu/options.nix`        |
-| rendering + assertions         | `modules/ui/menu/render.nix`         |
+| menu rendering + assertions    | `modules/ui/menu/render.nix`         |
 | `systemMenu.*`                 | `modules/ui/menu/presets/system.nix` |
+| `style.font`, `style.spacing`  | `modules/ui/style/options.nix`       |
+| `style.bar.*`                  | `modules/ui/style/bar.nix`           |
+| `style.menu.*`                 | `modules/ui/style/menu.nix`          |
+| `style` rendering              | `modules/ui/style/render.nix`        |
 
-`render.nix` writes `xdg.configFile."sarisarinama/<name>.json"` per menu and
-turns `menu = "system"` into the absolute path of `system.json`. Assertions:
-exactly one of `action`/`menu` per entry, every referenced menu exists, a
-`root` menu exists.
+The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
+per menu and turns `menu = "system"` into the path of `system.json`. It
+asserts exactly one of `action`/`menu` per entry, no dangling reference and
+a `root` menu. The style `render.nix` serializes the whole `style` tree into
+`style.json`: two modules cannot define the same `xdg.configFile`, which is
+why looks are one file and not one per component.
 
 ## Presets
 
 One file per menu in `modules/ui/menu/presets/`, each a flake-parts module
 adding to `flake.modules.homeManager.sarisarinama`. A value-only preset
-assigns `...programs.sarisarinama.menus.<name> = [ ... ]`; a preset with its
-own options is a function of `{config, lib, ...}` (see `system.nix`).
-Dropping a file in the directory is enough; import-tree finds it.
-
-## Development loop
-
-```
-git add -A                      # flakes only see tracked files
-nix build .#menus
-ln -sfn "$(readlink -f result)/sarisarinama" ~/.config/sarisarinama
-nix develop
-qs -p ./quickshell              # terminal 1
-qs -p ./quickshell ipc call shell toggle menu '{"file":"~/.config/sarisarinama/root.json"}'
-```
-
-Remove that symlink before activating the real module; Home Manager will not
-overwrite files it does not own.
-
-## Gotchas
-
-- Untracked files are invisible to `nix build .`; use `path:.` or `git add`.
-- `IpcHandler` needs `import Quickshell.Io`; `Loader` needs `import QtQuick`.
-- `qml`/`qmllint` in the devshell cannot resolve QtQuick. To check QML
-  headlessly, run `timeout 8 qs -p <dir>` on a windowless `ShellRoot`.
-- `pkgs.system` is deprecated; use `pkgs.stdenv.hostPlatform.system`.
+assigns `...menus.<name> = [ ... ]`; one with its own options is a function
+of `{config, lib, ...}` (see `system.nix`). import-tree finds new files.
