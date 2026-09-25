@@ -1,14 +1,16 @@
 // quickshell/theme/MenuStyle.qml
 // The `menu` section of style.json: the card and its rows. Lengths arrive
-// already scaled, so Card.qml and Entry.qml never call Style.space.
+// already scaled, so Card.qml and Entry.qml never call Style.space. The
+// font and the scale are the menu's own when it declares them, and the
+// shared ones otherwise.
 import QtQuick
 
 QtObject {
     id: root
 
     property var cfg: ({})
-    property int body: 12
-    property real scale: 1.0
+    property FontScale sharedFont: null
+    property real sharedScale: 1.0
 
     function group(name) {
         var g = cfg[name];
@@ -19,8 +21,15 @@ QtObject {
         return value === undefined || value === null ? fallback : value;
     }
 
+    readonly property real scale: root.raw(root.cfg.scale, root.sharedScale)
+
+    readonly property FontScale font: FontScale {
+        family: root.raw(root.group("font").family, root.sharedFont ? root.sharedFont.family : "JetBrains Mono Nerd Font")
+        size: root.raw(root.group("font").size, root.sharedFont ? root.sharedFont.size : 12)
+    }
+
     function px(value, fallback) {
-        return Math.max(1, Math.round(raw(value, fallback) * scale));
+        return Math.max(1, Math.round(raw(value, fallback) * root.scale));
     }
 
     readonly property QtObject card: QtObject {
@@ -37,5 +46,5 @@ QtObject {
     }
 
     // A row is the larger of the declared height and text plus padding.
-    readonly property int rowHeight: Math.max(row.height, body + 2 * row.paddingX)
+    readonly property int rowHeight: Math.max(root.row.height, root.font.body + 2 * root.row.paddingX)
 }

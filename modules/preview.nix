@@ -1,7 +1,12 @@
-# modules/ui/menu/preview.nix
-# Renders the menus through the real Home Manager module, outside Home
-# Manager, so `nix build .#menus` yields exactly the JSON a rebuild writes.
+# modules/preview.nix
+# Evaluates the whole Home Manager module outside Home Manager, so
+# `nix build .#menus` yields exactly the files a rebuild writes: the menus,
+# style.json, surfaces.json, theme.json and one file per theme. It sits
+# beside home-manager.nix because it belongs to no single component.
 # Home Manager's own options are stubbed; Menu.qml expands the leading `~`.
+#
+# The config block below is the only place this repo sets an option, so it
+# is also where to try one out before putting it in the real config.
 {config, ...}: {
   perSystem = {
     pkgs,
@@ -40,7 +45,10 @@
       modules = [
         config.flake.modules.homeManager.sarisarinama
         stubs
-        {programs.sarisarinama.enable = true;}
+        {
+          programs.sarisarinama.enable = true;
+          programs.sarisarinama.style.menu.font.size = 16;
+        }
       ];
     };
 

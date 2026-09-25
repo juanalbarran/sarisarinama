@@ -12,5 +12,10 @@
       label = "Projects";
       menu = "projects";
     }
+    {
+      icon = "󰏘";
+      label = "Themes";
+      menu = "themes";
+    }
   ];
 }

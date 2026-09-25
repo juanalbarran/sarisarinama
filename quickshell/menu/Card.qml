@@ -25,10 +25,10 @@ Rectangle {
     implicitWidth: Style.menu.card.width
     implicitHeight: chrome + list.height
 
-    color: Colors.background
+    color: Colors.menu.background
     radius: Style.menu.card.radius
     border.width: Style.menu.card.border
-    border.color: Colors.accent
+    border.color: Colors.menu.border
 
     Column {
         anchors.fill: parent
@@ -39,9 +39,9 @@ Rectangle {
             id: title
             // "system.json" -> "system"
             text: root.menu.file.path.split("/").pop().replace(/\.json$/, "")
-            color: Colors.accent
-            font.family: Style.font.family
-            font.pixelSize: Style.font.title
+            color: Colors.menu.title
+            font.family: Style.menu.font.family
+            font.pixelSize: Style.menu.font.title
         }
 
         List {

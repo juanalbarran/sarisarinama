@@ -1,24 +1,35 @@
 // quickshell/theme/BarStyle.qml
 // The `bar` section of style.json: the bar itself, then the widgets that
-// need more than a font size. Widgets share Style.font.family; each names
-// a step of the type scale, and `fontSize` overrides that step.
+// need more than a font size. Widgets share the bar's own font, which is
+// the shared one unless the bar overrides it; each names a step of that
+// scale, and `fontSize` overrides that step.
 import QtQuick
 
 QtObject {
     id: root
 
     property var cfg: ({})
-    property QtObject fonts: null
-    property real scale: 1.0
+    property FontScale sharedFont: null
+    property real sharedScale: 1.0
 
     function group(name) {
         var g = cfg[name];
         return g ? g : {};
     }
 
+    function raw(value, fallback) {
+        return value === undefined || value === null ? fallback : value;
+    }
+
+    readonly property real scale: root.raw(root.cfg.scale, root.sharedScale)
+
+    readonly property FontScale font: FontScale {
+        family: root.raw(root.group("font").family, root.sharedFont ? root.sharedFont.family : "JetBrains Mono Nerd Font")
+        size: root.raw(root.group("font").size, root.sharedFont ? root.sharedFont.size : 12)
+    }
+
     function px(value, fallback) {
-        var v = value === undefined || value === null ? fallback : value;
-        return Math.max(1, Math.round(v * scale));
+        return Math.max(1, Math.round(root.raw(value, fallback) * root.scale));
     }
 
     // Text size of one widget: fontSize wins, else its step of the scale.
@@ -26,7 +37,7 @@ QtObject {
         var w = group(widget);
         if (w.fontSize !== undefined && w.fontSize !== null)
             return w.fontSize;
-        return fonts[w.step || fallbackStep];
+        return root.font[w.step || fallbackStep];
     }
 
     readonly property int height: px(cfg.height, 30)

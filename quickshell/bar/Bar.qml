@@ -13,7 +13,7 @@ PanelWindow {
         right: true
     }
     implicitHeight: Style.bar.height
-    color: Colors.background
+    color: Colors.bar.background
 
     // left — workspaces bring their own spacing
     Row {

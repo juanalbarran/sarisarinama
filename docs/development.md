@@ -10,7 +10,14 @@ git add -A                      # flakes only see tracked files
 nix build .#menus
 ln -sfn "$(readlink -f result)/sarisarinama" ~/.config/sarisarinama
 nix develop
-qs -p ./quickshell              # terminal 1
+qs -p ./quickshell              # terminal 1: the shell
+```
+
+Toggle a component from a second terminal. The handler is `shell`, the
+component id is its key in the table in `shell.qml`, and an empty payload
+means the root menu:
+
+```
 qs -p ./quickshell ipc call shell toggle menu '{}'
 ```
 
@@ -26,5 +33,3 @@ overwrite files it does not own.
 - A singleton loads its `FileView` when first touched: a probe reading tokens
   in that same tick still sees defaults.
 - `pkgs.system` is deprecated; use `pkgs.stdenv.hostPlatform.system`.
-
-The toggle line now uses '{}' — I verified in Menu.qml:15 and File.qml that an empty payload already means root.json. The new FileView gotcha is the one that cost me a wrong conclusion earlier in this session.

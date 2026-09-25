@@ -12,8 +12,8 @@ Text {
     }
 
     text: sink?.audio.muted ? "\udb81\udf5f" : vol > 0.66 ? "\uf028" : vol > 0.33 ? "\uf027" : "\uf026"
-    color: mouse.containsMouse ? Colors.hover : Colors.text
-    font.family: Style.font.family
+    color: mouse.containsMouse ? Colors.bar.hover : Colors.bar.text
+    font.family: Style.bar.font.family
     font.pixelSize: Style.bar.textSize("audio", "body")
 
     MouseArea {

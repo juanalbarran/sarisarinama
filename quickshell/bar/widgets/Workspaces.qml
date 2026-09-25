@@ -14,13 +14,13 @@ Row {
             readonly property var ws: I3.workspaces.values.find(w => w.num === index + 1)
 
             text: ws?.urgent ? "\uf06a" : ws?.focused ? "\uebb4" : "\u{f0130}"
-            font.family: Style.font.family
+            font.family: Style.bar.font.family
             font.pixelSize: Style.bar.workspaces.fontSize
             padding: 0
             leftPadding: Style.bar.workspaces.paddingX
             rightPadding: Style.bar.workspaces.paddingX
 
-            color: mouse.containsMouse ? Colors.hover : ws?.urgent ? Colors.urgent : ws?.focused ? Colors.accent : Colors.text
+            color: mouse.containsMouse ? Colors.bar.hover : ws?.urgent ? Colors.bar.urgent : ws?.focused ? Colors.bar.focused : Colors.bar.text
 
             Behavior on color {
                 ColorAnimation {

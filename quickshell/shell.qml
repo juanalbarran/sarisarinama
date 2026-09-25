@@ -2,6 +2,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "theme"
 import "bar"
 import "menu"
 
@@ -9,6 +10,7 @@ ShellRoot {
     id: shell
 
     Bar {}
+    ThemeIpc {}
 
     // Fixed component table. No manifests, no discovery: adding a
     // component means adding one line here.

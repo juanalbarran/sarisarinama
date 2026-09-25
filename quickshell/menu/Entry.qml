@@ -16,9 +16,9 @@ Text {
     rightPadding: Style.menu.row.paddingX
     verticalAlignment: Text.AlignVCenter
     text: (modelData.icon ? modelData.icon + "  " : "") + modelData.label + (modelData.menu ? "  " : "")
-    color: ListView.isCurrentItem ? Colors.accent : Colors.text
-    font.family: Style.font.family
-    font.pixelSize: Style.font.body
+    color: ListView.isCurrentItem ? Colors.menu.selectedText : Colors.menu.text
+    font.family: Style.menu.font.family
+    font.pixelSize: Style.menu.font.body
 
     MouseArea {
         anchors.fill: parent

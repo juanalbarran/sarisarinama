@@ -1,25 +1,65 @@
-// quickshell/Colors.qml
-
+// quickshell/theme/Colors.qml
+// Colors, and only colors; geometry is Style.qml. surfaces.json says which
+// palette key paints what, themes/<name>.json is the palette, and the theme
+// in use is current.json falling back to theme.json. Every token has a
+// default here, so the shell paints itself when no file can be read.
 pragma Singleton
 import Quickshell
 import QtQuick
 
 Singleton {
-    // canaima base16 "dark" scheme
-    readonly property color base00: "#131314"
-    readonly property color base01: "#32302f"
-    readonly property color base02: "#a9b1d6"
-    readonly property color base03: "#665c54"
-    readonly property color base05: "#ffffff"
-    readonly property color base08: "#ea6962"
-    readonly property color base0A: "#d8a657"
-    readonly property color base0B: "#a9b665"
-    readonly property color base0D: "#7aa2f7"
+    id: root
 
-    // semantic aliases, mirroring templates/waybar.nix
-    readonly property color background: base00
-    readonly property color text: base02
-    readonly property color accent: base0D
-    readonly property color urgent: base08
-    readonly property color hover: base0A
+    readonly property ConfigFile themeFile: ConfigFile {
+        name: "theme"
+    }
+
+    // The shell's own file, written over IPC; absent until a theme is set.
+    readonly property ConfigFile currentFile: ConfigFile {
+        name: "current"
+    }
+
+    readonly property ConfigFile surfaceFile: ConfigFile {
+        name: "surfaces"
+    }
+
+    // Set by ThemeIpc; "" means "whatever the files say". Held in memory so
+    // a switch is instant: current.json is persistence, not the source.
+    property string selected: ""
+
+    readonly property string themeName: root.selected !== "" ? root.selected : root.currentFile.value("default", root.themeFile.value("default", "tokyo-night"))
+
+    readonly property ConfigFile paletteFile: ConfigFile {
+        name: "themes/" + root.themeName
+    }
+
+    // A surface value names a palette key, or is a literal "#rrggbb".
+    function lookup(token, fallback) {
+        if (typeof token !== "string" || token === "")
+            return fallback;
+        if (token.charAt(0) === "#")
+            return token;
+        var v = root.paletteFile.data[token];
+        return typeof v === "string" ? v : fallback;
+    }
+
+    function token(section, key, fallback) {
+        var s = root.surfaceFile.data[section];
+        var v = s ? s[key] : undefined;
+        return v === undefined || v === null ? fallback : v;
+    }
+
+    // One surface: its key resolved through the palette, its alpha applied.
+    function paint(section, key, defToken, defColor, defAlpha) {
+        var hex = root.lookup(root.token(section, key, defToken), defColor);
+        return Qt.alpha(hex, root.token(section, key + "Alpha", defAlpha));
+    }
+
+    readonly property BarColors bar: BarColors {
+        paint: (key, token, color, alpha) => root.paint("bar", key, token, color, alpha)
+    }
+
+    readonly property MenuColors menu: MenuColors {
+        paint: (key, token, color, alpha) => root.paint("menu", key, token, color, alpha)
+    }
 }

@@ -9,7 +9,9 @@
   }: let
     cfg = config.programs.sarisarinama;
     menuDir = "${config.xdg.configHome}/sarisarinama";
-    allEntries = lib.concatLists (lib.attrValues cfg.menus);
+    # Command menus have no entries to validate or rewrite; only lists do.
+    listMenus = lib.filterAttrs (_: m: builtins.isList m) cfg.menus;
+    allEntries = lib.concatLists (lib.attrValues listMenus);
 
     # Nulls are dropped so Menu.qml only sees the keys that apply.
     renderEntry = e:
@@ -17,9 +19,14 @@
       // lib.optionalAttrs (e.action != null) {inherit (e) action;}
       // lib.optionalAttrs (e.menu != null) {menu = "${menuDir}/${e.menu}.json";};
 
-    menuFiles = lib.mapAttrs' (name: entries:
+    renderMenu = m:
+      if builtins.isList m
+      then map renderEntry m
+      else {inherit (m) command icon action;};
+
+    menuFiles = lib.mapAttrs' (name: m:
       lib.nameValuePair "sarisarinama/${name}.json" {
-        text = builtins.toJSON (map renderEntry entries);
+        text = builtins.toJSON (renderMenu m);
       })
     cfg.menus;
 

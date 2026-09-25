@@ -7,8 +7,8 @@ Text {
     property string icon: "\udb83\udc9c"   // disconnected
 
     text: icon
-    color: Colors.text
-    font.family: Style.font.family
+    color: Colors.bar.text
+    font.family: Style.bar.font.family
     font.pixelSize: Style.bar.textSize("network", "body")
 
     Process {

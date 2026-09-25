@@ -17,7 +17,7 @@ Text {
 
     visible: dev.isLaptopBattery
     text: batIcon + " " + pct + "%"
-    color: (pct <= 15 && !charging) ? Colors.urgent : Colors.text
-    font.family: Style.font.family
+    color: (pct <= 15 && !charging) ? Colors.bar.urgent : Colors.bar.text
+    font.family: Style.bar.font.family
     font.pixelSize: Style.bar.textSize("battery", "body")
 }

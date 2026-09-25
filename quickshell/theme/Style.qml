@@ -1,7 +1,8 @@
 // quickshell/theme/Style.qml
 // What every component shares, plus one object per component, see
 // docs/style.md. Colors live in Colors.qml; style never holds a color.
-// Every token falls back to its default when style.json lacks the key.
+// A component inherits the shared font and scale unless it declares its
+// own; every token falls back to its default when style.json lacks the key.
 pragma Singleton
 import Quickshell
 import QtQuick
@@ -28,14 +29,9 @@ Singleton {
         return Math.max(1, Math.round(px * spacing.scale));
     }
 
-    readonly property QtObject font: QtObject {
-        readonly property string family: root.pick("font", "family", "JetBrains Mono Nerd Font")
-        readonly property int size: root.pick("font", "size", 12)
-        // Type scale, derived; components ask for a step, not a number.
-        readonly property int caption: Math.round(size * 0.833)
-        readonly property int body: size
-        readonly property int title: Math.round(size * 1.167)
-        readonly property int heading: Math.round(size * 1.333)
+    readonly property FontScale font: FontScale {
+        family: root.pick("font", "family", "JetBrains Mono Nerd Font")
+        size: root.pick("font", "size", 12)
     }
 
     readonly property QtObject spacing: QtObject {
@@ -44,13 +40,13 @@ Singleton {
 
     readonly property BarStyle bar: BarStyle {
         cfg: root.section("bar")
-        fonts: root.font
-        scale: root.spacing.scale
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
     }
 
     readonly property MenuStyle menu: MenuStyle {
         cfg: root.section("menu")
-        body: root.font.body
-        scale: root.spacing.scale
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
     }
 }
