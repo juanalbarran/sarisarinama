@@ -48,6 +48,9 @@ helper for every component.
   below 1. Section tokens arrive scaled, so it is only for literals left
   in QML.
 - Radius and border are strokes, not spaces, and are never scaled.
+- Counts and durations are neither: `bar.workspaces.count` and
+  `bar.workspaces.animation` are read raw, so a bar at ×1.5 still draws
+  five workspaces with a 300ms fade.
 - Menu row height is the larger of `row.height` and the menu's own body
   size + 2×`row.paddingX`, so raising the font raises the row.
 - Card height is padding, title, gap and rows, capped at 70% of the screen.

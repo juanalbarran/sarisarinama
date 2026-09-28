@@ -110,7 +110,8 @@ Five presets: `tokyo-night` (the default), `vantablack` and `white` (both
 21:1, the highest contrast omarchy ships), `kanagawa-dragon` (not an
 omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same way
 omarchy maps wave) and `no-clown-fiesta` (from the neovim theme, background
-darkened to `#0d0d0d`). The other 17 omarchy themes are still to port.
+darkened to `#0d0d0d`). Three of those five are omarchy's, so 19 of its 22
+are still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on

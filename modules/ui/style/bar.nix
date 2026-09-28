@@ -45,6 +45,12 @@
         workspaces =
           text "caption"
           // {
+            # A tally, not a length: never scaled, so never `px`.
+            count = lib.mkOption {
+              type = lib.types.ints.positive;
+              default = 5;
+              description = "How many workspace indicators the bar draws.";
+            };
             spacing = px 7 "Gap between workspace indicators.";
             paddingX = px 2 "Horizontal padding around one indicator.";
             animation = lib.mkOption {

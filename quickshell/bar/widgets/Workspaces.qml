@@ -1,17 +1,17 @@
 // quickshell/bar/widgets/Workspaces.qml
-import Quickshell.I3
 import QtQuick
 import "../../theme/"
+import "../../compositor/"
 
 Row {
     spacing: Style.bar.workspaces.spacing
 
     Repeater {
-        model: 5
+        model: Style.bar.workspaces.count
 
         Text {
             required property int index
-            readonly property var ws: I3.workspaces.values.find(w => w.num === index + 1)
+            readonly property var ws: Compositor.workspace(index + 1)
 
             text: ws?.urgent ? "\uf06a" : ws?.focused ? "\uebb4" : "\u{f0130}"
             font.family: Style.bar.font.family
@@ -33,7 +33,7 @@ Row {
                 id: mouse
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: ws ? ws.activate() : I3.dispatch("workspace number " + (index + 1))
+                onClicked: Compositor.activate(index + 1)
             }
         }
     }

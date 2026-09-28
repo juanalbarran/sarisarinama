@@ -2,7 +2,7 @@
 // The `bar` section of style.json: the bar itself, then the widgets that
 // need more than a font size. Widgets share the bar's own font, which is
 // the shared one unless the bar overrides it; each names a step of that
-// scale, and `fontSize` overrides that step.
+// scale, and `fontSize` overrides that step. A count is not a length.
 import QtQuick
 
 QtObject {
@@ -46,6 +46,7 @@ QtObject {
     readonly property int spacing: px(cfg.spacing, 10)
 
     readonly property QtObject workspaces: QtObject {
+        readonly property int count: root.raw(root.group("workspaces").count, 5)
         readonly property int fontSize: root.textSize("workspaces", "caption")
         readonly property int spacing: root.px(root.group("workspaces").spacing, 7)
         readonly property int paddingX: root.px(root.group("workspaces").paddingX, 2)
