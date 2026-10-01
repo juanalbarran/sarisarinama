@@ -39,11 +39,13 @@
           description = "Glyph shown before every generated label.";
         };
         action = lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.nullOr lib.types.str;
+          default = null;
           description = ''
-            Command run for the chosen row. `{}` is replaced by the line and
-            `{shell}` by the running config path, so a row can reach the
-            shell over IPC wherever it was launched from.
+            Command run for the chosen row, when the command prints plain
+            lines. `{}` is replaced by the line, `{arg}` by what the opening
+            row carried and `{shell}` by the running config path. Leave null
+            when the command prints a JSON array: those rows carry their own.
           '';
         };
       };

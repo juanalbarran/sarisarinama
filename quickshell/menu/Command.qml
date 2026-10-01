@@ -1,8 +1,9 @@
 // quickshell/menu/Command.qml
-// A menu whose rows come from a command: every non-empty line of stdout
-// becomes one entry. In `command` and `action`, `{shell}` is replaced by
-// the running config path and `{}` by the line, so a row can call the
-// shell back over IPC without knowing where it was launched from.
+// A menu whose rows come from a command. Stdout that parses as a JSON array
+// is the entry list verbatim, so one command can mix rows that act with rows
+// that open a submenu; anything else is read as lines, one row each.
+// In `command` and `action`, `{shell}` becomes the running config path,
+// `{arg}` what the opening row carried, and `{}` the line.
 import Quickshell
 import Quickshell.Io
 
@@ -10,17 +11,19 @@ Process {
     id: root
 
     property var spec: ({})
+    property string arg: ""
     property var entries: []
 
     function fill(template, line) {
         if (typeof template !== "string")
             return "";
-        return template.split("{shell}").join(Quickshell.shellDir).split("{}").join(line);
+        return template.split("{shell}").join(Quickshell.shellDir).split("{arg}").join(root.arg).split("{}").join(line);
     }
 
-    function run(newSpec) {
+    function run(newSpec, newArg) {
         root.entries = [];
         root.spec = newSpec || {};
+        root.arg = newArg || "";
         if (!root.spec.command)
             return;
         root.command = ["bash", "-lc", root.fill(root.spec.command, "")];
@@ -29,6 +32,13 @@ Process {
 
     stdout: StdioCollector {
         onStreamFinished: {
+            try {
+                var parsed = JSON.parse(text);
+                if (Array.isArray(parsed)) {
+                    root.entries = parsed;
+                    return;
+                }
+            } catch (e) {}
             var out = [];
             var lines = text.split("\n");
             for (var i = 0; i < lines.length; i++) {

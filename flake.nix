@@ -9,6 +9,8 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
+    herdr.url = "github:herdrdev/herdr/v0.9.1";
+    kukenan.url = "github:juanalbarran/kukenan";
   };
 
   outputs = inputs:

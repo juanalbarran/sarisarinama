@@ -1,6 +1,8 @@
 // quickshell/menu/Model.qml
-// Navigation state for one menu session: the trail of files we came from and
-// what each row does. Knows nothing about windows or widgets.
+// Navigation state for one menu session: the trail of menus we came from and
+// what each row does. Knows nothing about windows or widgets. A trail entry
+// is a file and an argument, because one command menu can serve many
+// directories and Back must return to the right one.
 import QtQuick
 import Quickshell
 
@@ -20,17 +22,22 @@ QtObject {
         }
     ]) : file.entries
 
-    // Fired whenever a different file is shown, so the list can reset.
+    // Fired whenever a different menu is shown, so the list can reset.
     signal navigated
 
-    function show(path) {
-        root.file.load(path);
+    function show(path, arg) {
+        root.file.load(path, arg);
         root.navigated();
     }
 
-    function enter(path) {
-        root.navStack = root.navStack.concat([root.file.path]);
-        root.show(path);
+    function enter(path, arg) {
+        root.navStack = root.navStack.concat([
+            {
+                path: root.file.path,
+                arg: root.file.arg
+            }
+        ]);
+        root.show(path, arg);
     }
 
     function goBack() {
@@ -38,7 +45,7 @@ QtObject {
             return;
         var previous = root.navStack[root.navStack.length - 1];
         root.navStack = root.navStack.slice(0, -1);
-        root.show(previous);
+        root.show(previous.path, previous.arg);
     }
 
     // Returns true when an action ran and the menu should close.
@@ -49,7 +56,7 @@ QtObject {
         if (row.back)
             root.goBack();
         else if (row.menu)
-            root.enter(row.menu);
+            root.enter(row.menu, row.arg);
         else if (row.action)
             Quickshell.execDetached(["bash", "-lc", row.action]);
         return !!row.action;
