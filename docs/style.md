@@ -66,6 +66,7 @@ helper for every component.
 | `quickshell/theme/ConfigFile.qml`  | Watched FileView; `{}` on error; theme too |
 | `quickshell/theme/qmldir`          | Registers every singleton of `theme/`      |
 | `modules/ui/style/options.nix`     | `style.font` and `style.spacing`           |
+| `modules/ui/style/font.nix`        | `fontPackage`, the files behind the family |
 | `modules/ui/style/_lib/shared.nix` | The keys a component may override          |
 | `modules/ui/style/bar.nix`         | `style.bar.*`, one block per widget        |
 | `modules/ui/style/menu.nix`        | `style.menu.*`                             |

@@ -33,6 +33,7 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | menu rendering + assertions           | `modules/ui/menu/render.nix`          |
 | `systemMenu.*`                        | `modules/ui/menu/presets/system.nix`  |
 | `style.font`, `style.spacing`         | `modules/ui/style/options.nix`        |
+| `fontPackage`                         | `modules/ui/style/font.nix`           |
 | `style.<component>.font` and `.scale` | `modules/ui/style/_lib/shared.nix`    |
 | `style.bar.*`                         | `modules/ui/style/bar.nix`            |
 | `style.menu.*`                        | `modules/ui/style/menu.nix`           |

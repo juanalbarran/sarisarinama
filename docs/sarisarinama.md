@@ -97,6 +97,10 @@ Open, roughly in the order each blocks something:
   compositor answers, and `ConfigFile` warns about `current.json` on every
   start although that file is meant to be absent until the first `theme set`.
 
+## Prerequisites
+
+Check [prerequisites.md](./prerequisites.md)
+
 ## Notes
 
 `herdr` is a multiplexer

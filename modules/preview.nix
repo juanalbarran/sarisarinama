@@ -23,6 +23,10 @@
           type = lib.types.listOf lib.types.package;
           default = [];
         };
+        fonts.fontconfig.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
         home.sessionVariables = lib.mkOption {
           type = lib.types.attrsOf lib.types.str;
           default = {};
