@@ -14,6 +14,8 @@ FileView {
     readonly property string defaultFile: home + "/.config/sarisarinama/root.json"
     property var entries: []
     property string arg: ""
+    // A command menu's `backWithin`: Back only returns to this same file
+    property bool backWithin: false
 
     readonly property Command source: Command {
         onEntriesChanged: root.entries = entries
@@ -33,8 +35,10 @@ FileView {
 
     onLoaded: {
         root.entries = [];
+        root.backWithin = false;
         try {
             var parsed = JSON.parse(text());
+            root.backWithin = !Array.isArray(parsed) && !!(parsed && parsed.backWithin);
             if (Array.isArray(parsed))
                 root.entries = parsed;
             else if (parsed && parsed.command)

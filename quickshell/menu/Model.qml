@@ -11,7 +11,9 @@ QtObject {
 
     readonly property File file: File {}
     property var navStack: []
-    readonly property bool canGoBack: navStack.length > 0
+    // A backWithin menu goes Back only to itself, so where it was first
+    // opened, from another menu or over IPC, there is no Back row
+    readonly property bool canGoBack: navStack.length > 0 && (!file.backWithin || navStack[navStack.length - 1].path === file.path)
 
     // Entries plus a synthetic Back row when opened from another menu.
     readonly property var rows: canGoBack ? file.entries.concat([

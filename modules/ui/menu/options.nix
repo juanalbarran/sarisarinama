@@ -48,6 +48,14 @@
             when the command prints a JSON array: those rows carry their own.
           '';
         };
+        backWithin = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = ''
+            Back returns only to this same menu, one level up. Where the menu
+            was first opened, from another menu or over IPC, it has no Back.
+          '';
+        };
       };
     };
   in {

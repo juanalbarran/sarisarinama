@@ -9,12 +9,6 @@ dir="${1:-}"
 dir="${dir:-${SARISARINAMA_PROJECTS_ROOT:-$HOME/dev}}"
 dir="${dir/#\~/$HOME}"
 menu="${SARISARINAMA_PROJECTS_MENU:-$HOME/.config/sarisarinama/projects.json}"
-
-is_project() {
-    [ -e "$1/.git" ] || [ -e "$1/devenv.nix" ] ||
-        [ -e "$1/.gitignore" ] || [ -e "$1/.project" ]
-}
-
 {
     while IFS= read -r name; do
         if is_project "$dir/$name"; then

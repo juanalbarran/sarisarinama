@@ -14,10 +14,15 @@ Process {
     property string arg: ""
     property var entries: []
 
+    // One shell word whatever the text holds: spaces stay, $(...) is not run
+    function quote(text) {
+        return "'" + text.split("'").join("'\\''") + "'";
+    }
+
     function fill(template, line) {
         if (typeof template !== "string")
             return "";
-        return template.split("{shell}").join(Quickshell.shellDir).split("{arg}").join(root.arg).split("{}").join(line);
+        return template.split("{shell}").join(Quickshell.shellDir).split("{arg}").join(root.quote(root.arg)).split("{}").join(line);
     }
 
     function run(newSpec, newArg) {

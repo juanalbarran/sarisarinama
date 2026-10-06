@@ -22,7 +22,7 @@
     renderMenu = m:
       if builtins.isList m
       then map renderEntry m
-      else {inherit (m) command icon action;};
+      else {inherit (m) command icon action backWithin;};
 
     menuFiles = lib.mapAttrs' (name: m:
       lib.nameValuePair "sarisarinama/${name}.json" {

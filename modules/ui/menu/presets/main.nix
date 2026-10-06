@@ -10,7 +10,7 @@
     {
       icon = "";
       label = "Projects";
-      menu = "projects";
+      action = "sarisarinama-projects-menu";
     }
     {
       icon = "󰏘";

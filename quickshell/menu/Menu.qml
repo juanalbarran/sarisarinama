@@ -12,14 +12,15 @@ PanelWindow {
     property bool opened: false
     visible: opened
 
-    // Payload is {"file": "<menu json>"}; no file means the root menu.
+    // Payload is {"file": "<menu json>", "arg": "<dir>"}; no file means the root menu.
+    // and arg is what a commands menu's {arg} becomes
     function open(payloadJson) {
         var payload = {};
         try {
             payload = JSON.parse(payloadJson || "{}");
         } catch (e) {}
         model.navStack = [];
-        model.show(payload.file || "");
+        model.show(payload.file || "", payload.arg || "");
         opened = true;
     }
 
