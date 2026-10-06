@@ -41,7 +41,7 @@ QtObject {
     }
 
     // Counts, read raw like bar.workspaces.count: a menu at ×1.5 still shows
-    // eight rows, not fifteen.
+    // eight rows, not twelve.
     readonly property QtObject list: QtObject {
         readonly property int maxRows: root.raw(root.group("list").maxRows, 8)
         readonly property int filterAbove: root.raw(root.group("list").filterAbove, 5)
