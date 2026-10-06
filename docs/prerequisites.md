@@ -1,7 +1,6 @@
 # Prerequisites
 
-What `sarisarinama` needs to run. Anything marked _planned_ is not used by
-the code yet.
+What `sarisarinama` needs to run.
 
 ## Operating system
 
@@ -49,12 +48,15 @@ wrong.
 | UPower         | `Battery.qml` | no battery widget                 |
 | NetworkManager | `Network.qml` | `nmcli` fails, shows disconnected |
 
-## Applications (planned)
+## Applications
 
-For the project menu; pinned in `flake.nix` or chosen, not wired yet.
+The project menu launches these from `PATH`; the module installs none.
 
-- `herdr`: the multiplexer. Third-party, `github:herdrdev/herdr`, pinned
-  at `v0.9.1`.
-- `kukenan`: my neovim flake; the project menu opens its `base` flavor.
-- `foot`: the default terminal.
-- `ghostty`: the second terminal.
+| Application            | Used for                                  |
+| ---------------------- | ----------------------------------------- |
+| `tmux`                 | every project session                     |
+| `foot`                 | the default terminal, `projects.terminal` |
+| `claude`               | the `agent` window                        |
+| `nvim-base`            | the `editor` window, kukenan's `base`     |
+| `devenv`               | projects with a `devenv.nix`              |
+| `swaymsg` or `hyprctl` | focusing the terminal (the compositor's)  |

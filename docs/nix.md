@@ -26,23 +26,24 @@ two: `modules/ui/style/` holds geometry and type, `modules/ui/theme/` holds
 color. So `modules/ui/menu/` says what the menu contains, `style/` how big
 it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 
-| Option                                | File                                  |
-| ------------------------------------- | ------------------------------------- |
-| `enable`, `package`                   | `modules/home-manager.nix`            |
-| `menus` (entries or a command)        | `modules/ui/menu/options.nix`         |
-| menu rendering + assertions           | `modules/ui/menu/render.nix`          |
-| `systemMenu.*`                        | `modules/ui/menu/presets/system.nix`  |
-| `style.font`, `style.spacing`         | `modules/ui/style/options.nix`        |
-| `fontPackage`                         | `modules/ui/style/font.nix`           |
-| `style.<component>.font` and `.scale` | `modules/ui/style/_lib/shared.nix`    |
-| `style.bar.*`                         | `modules/ui/style/bar.nix`            |
-| `style.menu.*`                        | `modules/ui/style/menu.nix`           |
-| `style` rendering                     | `modules/ui/style/render.nix`         |
-| `theme.default`, `theme.palettes`     | `modules/ui/theme/options.nix`        |
-| one palette per theme                 | `modules/ui/theme/presets/<name>.nix` |
-| `theme.surfaces.*`                    | `modules/ui/theme/surfaces.nix`       |
-| palette cascade (no options)          | `modules/ui/theme/_lib/`              |
-| theme rendering + assertions          | `modules/ui/theme/render.nix`         |
+| Option                                | File                                   |
+| ------------------------------------- | -------------------------------------- |
+| `enable`, `package`                   | `modules/home-manager.nix`             |
+| `menus` (entries or a command)        | `modules/ui/menu/options.nix`          |
+| menu rendering + assertions           | `modules/ui/menu/render.nix`           |
+| `systemMenu.*`                        | `modules/ui/menu/presets/system.nix`   |
+| `projects.root`, `projects.terminal`  | `modules/ui/menu/presets/projects.nix` |
+| `style.font`, `style.spacing`         | `modules/ui/style/options.nix`         |
+| `fontPackage`                         | `modules/ui/style/font.nix`            |
+| `style.<component>.font` and `.scale` | `modules/ui/style/_lib/shared.nix`     |
+| `style.bar.*`                         | `modules/ui/style/bar.nix`             |
+| `style.menu.*`                        | `modules/ui/style/menu.nix`            |
+| `style` rendering                     | `modules/ui/style/render.nix`          |
+| `theme.default`, `theme.palettes`     | `modules/ui/theme/options.nix`         |
+| one palette per theme                 | `modules/ui/theme/presets/<name>.nix`  |
+| `theme.surfaces.*`                    | `modules/ui/theme/surfaces.nix`        |
+| palette cascade (no options)          | `modules/ui/theme/_lib/`               |
+| theme rendering + assertions          | `modules/ui/theme/render.nix`          |
 
 The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
 per menu and turns `menu = "system"` into the path of `system.json`. It

@@ -38,7 +38,8 @@ There are two kinds of menu: `options menu` and `project menu`
 All the menus should contain an option to go back if it is open by another menu
 
 An options menu is a list of entries, or a `command` whose output becomes
-the entries when the menu opens. The project menu is still to write.
+the entries when the menu opens. The project menu browses a directory and
+opens a project in tmux, one terminal for every project.
 
 For more context [menu](./menu.md)
 
@@ -66,12 +67,12 @@ For more context [themes](./themes.md)
 
 The aggregate; each component doc carries its own detail and rough edges.
 
-| Component | State                                                         |
-| --------- | ------------------------------------------------------------- |
-| Style     | Done. One `style.json`, per-component overrides verified      |
-| Theme     | Done. Cascade matches omarchy on all 22; switching over IPC   |
-| Bar       | Six widgets, styled; Sway and Hyprland behind one adapter     |
-| Menu      | Options and command menus done; the project menu is not begun |
+| Component | State                                                       |
+| --------- | ----------------------------------------------------------- |
+| Style     | Done. One `style.json`, per-component overrides verified    |
+| Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
+| Bar       | Six widgets, styled; Sway and Hyprland behind one adapter   |
+| Menu      | Options, command and project menus done                     |
 
 Open, roughly in the order each blocks something:
 
@@ -80,9 +81,6 @@ Open, roughly in the order each blocks something:
   no `exec-once`. Whether the launch belongs here or in canaima's compositor
   config is undecided. Until then the shell is started by hand, see
   [development.md](./development.md).
-- The **project menu** is the one missing feature, and it waits on `herdr`,
-  which is not written yet. A command menu already covers part of the job:
-  `ls` plus an `action` template. See [menu](./menu.md).
 - **Hyprland is written but never run.** The adapter is verified to detect
   the compositor and load the right backend, and `Hypr.qml` compiles, but it
   has never spoken to a real Hyprland. See [bar](./bar.md).
@@ -103,5 +101,4 @@ Check [prerequisites.md](./prerequisites.md)
 
 ## Notes
 
-`herdr` is a multiplexer
 `nvim-base` is one of the flavors of my `neovim` configuration [kukenan](https://github.com/juanalbarran/kukenan)

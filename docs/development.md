@@ -24,6 +24,13 @@ qs -p ./quickshell ipc call shell toggle menu '{}'
 Remove that symlink before activating the real module; Home Manager will not
 overwrite files it does not own.
 
+The project menu calls three scripts that only the Home Manager module
+installs, and talks to the shell at `$SARISARINAMA_PATH`. Before starting
+`qs`, in both terminals: put the scripts on `PATH`, and
+`export SARISARINAMA_PATH="$PWD/quickshell"`, then start the shell with
+`qs -p "$SARISARINAMA_PATH"`. Quickshell tells the commands it runs
+nothing about where it was started from.
+
 ## Gotchas
 
 - Untracked files are invisible to `nix build .`; use `path:.` or `git add`.
