@@ -21,6 +21,19 @@
           border = px 1 "Border width; not scaled. 0 removes the border.";
         };
 
+        list = {
+          maxRows = lib.mkOption {
+            type = lib.types.ints.positive;
+            default = 8;
+            description = "Rows shown at once; past this the list scrolls. A count, not scaled.";
+          };
+          filterAbove = lib.mkOption {
+            type = lib.types.ints.unsigned;
+            default = 5;
+            description = "A menu with more entries than this shows a filter box. Back is not counted.";
+          };
+        };
+
         row = {
           height = px 36 "Minimum menu row height in design px.";
           paddingX = px 12 "Horizontal padding inside a menu row.";

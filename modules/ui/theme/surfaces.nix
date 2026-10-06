@@ -40,6 +40,7 @@
         selectedBackground = key "foreground" "Fill behind the current row.";
         selectedBackgroundAlpha = alpha 0.08 "A wash, not a block.";
         selectedText = key "accent" "The current row's text.";
+        placeholder = key "muted" "The hint in the empty filter box.";
       };
     };
   };

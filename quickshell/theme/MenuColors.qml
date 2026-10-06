@@ -15,4 +15,5 @@ QtObject {
     readonly property color border: root.paint("border", "accent", "#7aa2f7", 1.0)
     readonly property color selectedBackground: root.paint("selectedBackground", "foreground", "#a9b1d6", 0.08)
     readonly property color selectedText: root.paint("selectedText", "accent", "#7aa2f7", 1.0)
+    readonly property color placeholder: root.paint("placeholder", "muted", "#414868", 1.0)
 }

@@ -40,6 +40,13 @@ QtObject {
         readonly property int border: root.raw(root.group("card").border, 1)
     }
 
+    // Counts, read raw like bar.workspaces.count: a menu at ×1.5 still shows
+    // eight rows, not fifteen.
+    readonly property QtObject list: QtObject {
+        readonly property int maxRows: root.raw(root.group("list").maxRows, 8)
+        readonly property int filterAbove: root.raw(root.group("list").filterAbove, 5)
+    }
+
     readonly property QtObject row: QtObject {
         readonly property int height: root.px(root.group("row").height, 36)
         readonly property int paddingX: root.px(root.group("row").paddingX, 12)
