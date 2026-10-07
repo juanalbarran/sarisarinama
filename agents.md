@@ -26,7 +26,8 @@ You may run read-only commands (e.g. `cat`, `ls`, `nix flake check --no-write-lo
 
 # Code Answers
 
-- For new files, show the complete file. For existing files, show only the part that changes, with line numbers and 2–3 unchanged lines before and after so I can locate it.
+- New files: show the complete file. Start it with its path as a comment.
+- Existing files: show only the part that changes, without line numbers so it is easy to copy, plus 2–3 unchanged lines before and after so I can locate it. State the line range in the text above the block, e.g. "Replace lines 12–15".
 - Put the file path above each code block, e.g. `modules/bar/default.nix`.
 - After each code block, briefly list what you changed or added and why.
 - One functionality per file. You may propose a directory structure (with sub-directories) for a feature or component, showing each file in full. I will create them.
