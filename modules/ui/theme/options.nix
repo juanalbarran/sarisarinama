@@ -8,7 +8,7 @@
     options.programs.sarisarinama.theme = {
       default = lib.mkOption {
         type = lib.types.str;
-        default = "tokyo-night";
+        default = "no-clown-fiesta";
         description = ''
           Theme the shell falls back to when nothing was picked at runtime.
           Must name an entry of `palettes`.

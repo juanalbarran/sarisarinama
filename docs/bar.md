@@ -108,7 +108,7 @@ A text-only widget needs no block in `BarStyle.qml`; it calls
 `hover` and `urgent` (an urgent workspace, a battery at 15% or less and not
 charging). A widget reads `Colors.bar.<token>`, never a palette key. Which
 key each token points at is [themes](./themes.md); the defaults in
-`BarColors.qml` are tokyo-night's, so the bar still paints with no file.
+`BarColors.qml` are no-clown-fiesta's, so the bar still paints with no file.
 
 ## Status
 

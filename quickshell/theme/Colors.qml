@@ -27,7 +27,7 @@ Singleton {
     // a switch is instant: current.json is persistence, not the source.
     property string selected: ""
 
-    readonly property string themeName: root.selected !== "" ? root.selected : root.currentFile.value("default", root.themeFile.value("default", "tokyo-night"))
+    readonly property string themeName: root.selected !== "" ? root.selected : root.currentFile.value("default", root.themeFile.value("default", "no-clown-fiesta"))
 
     readonly property ConfigFile paletteFile: ConfigFile {
         name: "themes/" + root.themeName

@@ -106,11 +106,11 @@ omarchy themes: 572 of 572 keys identical. Surfaces, `Colors.qml` and
 switching over IPC are in and verified: a `set` repoints `paletteFile`,
 every bound surface follows, and the choice survives a restart.
 
-Five presets: `tokyo-night` (the default), `vantablack` and `white` (both
-21:1, the highest contrast omarchy ships), `kanagawa-dragon` (not an
-omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same way
-omarchy maps wave) and `no-clown-fiesta` (from the neovim theme, background
-darkened to `#0d0d0d`). Three of those five are omarchy's, so 19 of its 22
+Five presets: `no-clown-fiesta` (the default: from the neovim theme, background
+darkened to `#0d0d0d`), `tokyo-night` (omarchy's own default), `vantablack`
+and `white` (both 21:1, the highest contrast omarchy ships) and `kanagawa-dragon`
+(not an omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same
+way omarchy maps wave). Three of those five are omarchy's, so 19 of its 22
 are still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
