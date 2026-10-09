@@ -42,6 +42,26 @@
         selectedText = key "accent" "The current row's text.";
         placeholder = key "muted" "The hint in the empty filter box.";
       };
+
+      network = {
+        background = key "background" "The panel card.";
+        backgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
+        border = key "accent" "Panel border, like the menu's.";
+        borderAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
+        text = key "foreground" "Names and values.";
+        muted = key "dark_foreground" "The state line under the name.";
+        accent = key "accent" "The Wi-Fi switch when on.";
+        track = key "muted" "The Wi-Fi switch when off.";
+        urgent = key "red" "A captive portal, limited access, a failed connect.";
+        separator = key "muted" "The line between the panel's sections.";
+        hover = key "foreground" "Fill behind the network under the pointer.";
+        hoverAlpha = alpha 0.08 "A wash, not a block.";
+        current = key "accent" "Fill behind the connected network.";
+        currentAlpha = alpha 0.10 "A wash, not a block.";
+        field = key "lighter_background" "The password field.";
+        fieldBorder = key "accent" "The password field's border.";
+        cursor = key "accent" "The keyboard ring around the Wi-Fi switch.";
+      };
     };
   };
 }

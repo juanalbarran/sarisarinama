@@ -4,6 +4,10 @@ import QtQuick
 import "../../theme/"
 
 Text {
+    id: root
+
+    signal clicked
+
     property string icon: "\udb83\udc9c"   // disconnected
 
     text: icon
@@ -21,6 +25,12 @@ Text {
                 icon = types.some(t => t.includes("ethernet")) ? "\udb80\ude00" : types.some(t => t.includes("wireless")) ? "\uf1eb" : "\udb83\udc9c";
             }
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        onClicked: root.clicked()
     }
 
     Timer {

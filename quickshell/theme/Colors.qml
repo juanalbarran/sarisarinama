@@ -62,4 +62,8 @@ Singleton {
     readonly property MenuColors menu: MenuColors {
         paint: (key, token, color, alpha) => root.paint("menu", key, token, color, alpha)
     }
+
+    readonly property NetworkColors network: NetworkColors {
+        paint: (key, token, color, alpha) => root.paint("network", key, token, color, alpha)
+    }
 }

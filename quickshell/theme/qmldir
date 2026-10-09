@@ -6,4 +6,6 @@ BarColors BarColors.qml
 MenuColors MenuColors.qml
 BarStyle BarStyle.qml
 MenuStyle MenuStyle.qml
+NetworkColors NetworkColors.qml
+NetworkStyle NetworkStyle.qml
 ThemeIpc ThemeIpc.qml

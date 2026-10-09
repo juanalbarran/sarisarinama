@@ -7,6 +7,11 @@ import "../theme/"
 import "./widgets/"
 
 PanelWindow {
+    id: root
+
+    // The bar opens nothing itself; shell.qml decides what a click opens.
+    signal networkClicked
+
     anchors {
         bottom: true
         left: true
@@ -43,6 +48,7 @@ PanelWindow {
         }
         Network {
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: root.networkClicked()
         }
         Battery {
             anchors.verticalCenter: parent.verticalCenter

@@ -49,4 +49,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property NetworkStyle network: NetworkStyle {
+        cfg: root.section("network")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }

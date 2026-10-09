@@ -5,23 +5,33 @@ import Quickshell.Io
 import "theme"
 import "bar"
 import "menu"
+import "panes/network"
 
 ShellRoot {
     id: shell
 
-    Bar {}
+    Bar {
+        onNetworkClicked: shell.toggle("network", "{}")
+    }
     ThemeIpc {}
 
     // Fixed component table. No manifests, no discovery: adding a
     // component means adding one line here.
     property var components: ({
-            "menu": menuLoader
+            "menu": menuLoader,
+            "network": networkLoader
         })
 
     Loader {
         id: menuLoader
         active: false
         sourceComponent: Menu {}
+    }
+
+    Loader {
+        id: networkLoader
+        active: false
+        sourceComponent: NetworkPanel {}
     }
 
     function summon(id, payloadJson) {
@@ -44,6 +54,14 @@ ShellRoot {
         return !!(loader && loader.item && loader.item.opened);
     }
 
+    function toggle(id, payloadJson) {
+        if (isOpen(id)) {
+            hide(id);
+            return "ok";
+        }
+        return summon(id, payloadJson);
+    }
+
     IpcHandler {
         target: "shell"
 
@@ -56,11 +74,7 @@ ShellRoot {
         }
 
         function toggle(id: string, payload: string): string {
-            if (shell.isOpen(id)) {
-                shell.hide(id);
-                return "ok";
-            }
-            return shell.summon(id, payload);
+            return shell.toggle(id, payload);
         }
     }
 }
