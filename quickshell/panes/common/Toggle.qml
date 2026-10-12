@@ -1,12 +1,15 @@
-// quickshell/panes/network/Toggle.qml
+// quickshell/panes/common/Toggle.qml
 // An on/off switch: a pill with a knob that slides across. It only reports
 // the click; whoever owns `checked` decides what the click does, so the
-// switch never shows a state NetworkManager did not confirm.
+// switch never shows a state the system did not confirm.
 import QtQuick
 import "../../theme/"
 
 Rectangle {
     id: root
+
+    required property PanelStyle panelStyle
+    required property PanelColors panelColors
 
     property bool checked: false
     property bool hasCursor: false
@@ -16,10 +19,10 @@ Rectangle {
 
     readonly property int inset: Style.space(2)
 
-    implicitWidth: Style.network.toggle.width
-    implicitHeight: Style.network.toggle.height
+    implicitWidth: root.panelStyle.toggle.width
+    implicitHeight: root.panelStyle.toggle.height
     radius: height / 2
-    color: root.checked ? Colors.network.accent : Colors.network.track
+    color: root.checked ? root.panelColors.accent : root.panelColors.track
 
     Rectangle {
         width: root.height - 2 * root.inset
@@ -27,11 +30,11 @@ Rectangle {
         radius: width / 2
         y: root.inset
         x: root.checked ? root.width - width - root.inset : root.inset
-        color: root.checked ? Colors.network.background : Colors.network.text
+        color: root.checked ? root.panelColors.background : root.panelColors.text
 
         Behavior on x {
             NumberAnimation {
-                duration: Style.network.toggle.animation
+                duration: root.panelStyle.toggle.animation
             }
         }
     }
@@ -43,8 +46,8 @@ Rectangle {
         anchors.margins: -2 * root.inset
         radius: height / 2
         color: "transparent"
-        border.width: Style.network.card.border
-        border.color: Colors.network.cursor
+        border.width: root.panelStyle.card.border
+        border.color: root.panelColors.cursor
         visible: root.hasCursor
     }
 

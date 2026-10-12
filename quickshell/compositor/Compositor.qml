@@ -2,7 +2,9 @@
 // The compositor, whichever one is running. Sway and Hyprland disagree on
 // how a workspace is numbered and how you switch to one; everything else
 // the bar reads — focused, urgent — is spelled the same on both, so it is
-// passed through live rather than copied. See docs/bar.md.
+// passed through live rather than copied. Outputs are the exception: each
+// backend reads them with its own command and hands back the same shape.
+// See docs/bar.md.
 pragma Singleton
 import Quickshell
 import QtQuick
@@ -28,5 +30,26 @@ Singleton {
     function activate(n) {
         if (root.backend.item)
             root.backend.item.activate(n);
+    }
+
+    // Every output, the disabled ones too:
+    // [{name, description, active, focused, scale, width, height}].
+    // Not live: it changes when refreshOutputs() has read them again, which
+    // every change below does by itself.
+    readonly property var outputs: root.backend.item ? root.backend.item.outputs : []
+
+    function refreshOutputs() {
+        if (root.backend.item)
+            root.backend.item.refreshOutputs();
+    }
+
+    function setOutputEnabled(name, enabled) {
+        if (root.backend.item)
+            root.backend.item.setOutputEnabled(name, enabled);
+    }
+
+    function setOutputScale(name, scale) {
+        if (root.backend.item)
+            root.backend.item.setOutputScale(name, scale);
     }
 }

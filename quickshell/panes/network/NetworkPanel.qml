@@ -6,6 +6,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "../../theme/"
+import "../common/"
 import "settingsmodel.js" as SettingsModel
 
 PanelWindow {
@@ -116,6 +117,8 @@ PanelWindow {
 
             PillRow {
                 id: bandRow
+                panelStyle: Style.network
+                panelColors: Colors.network
                 width: parent.width
                 visible: netSettings.bandShown
                 cursor: panelCursor
@@ -139,6 +142,8 @@ PanelWindow {
 
             PillRow {
                 id: dnsRow
+                panelStyle: Style.network
+                panelColors: Colors.network
                 width: parent.width
                 visible: netSettings.dnsShown
                 cursor: panelCursor

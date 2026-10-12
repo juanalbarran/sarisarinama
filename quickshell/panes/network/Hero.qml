@@ -3,6 +3,7 @@
 // the Wi-Fi switch on the right. Everything it shows is read from NetState.
 import QtQuick
 import "../../theme/"
+import "../common/"
 
 Item {
     id: root
@@ -55,6 +56,8 @@ Item {
 
     Toggle {
         id: toggle
+        panelStyle: Style.network
+        panelColors: Colors.network
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         visible: root.net.canToggleWifi

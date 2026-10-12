@@ -55,4 +55,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property PanelStyle monitor: PanelStyle {
+        cfg: root.section("monitor")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }

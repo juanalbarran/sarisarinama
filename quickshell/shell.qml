@@ -6,6 +6,7 @@ import "theme"
 import "bar"
 import "menu"
 import "panes/network"
+import "panes/monitor"
 
 ShellRoot {
     id: shell
@@ -19,7 +20,8 @@ ShellRoot {
     // component means adding one line here.
     property var components: ({
             "menu": menuLoader,
-            "network": networkLoader
+            "network": networkLoader,
+            "monitor": monitorLoader
         })
 
     Loader {
@@ -32,6 +34,12 @@ ShellRoot {
         id: networkLoader
         active: false
         sourceComponent: NetworkPanel {}
+    }
+
+    Loader {
+        id: monitorLoader
+        active: false
+        sourceComponent: MonitorPanel {}
     }
 
     function summon(id, payloadJson) {

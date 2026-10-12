@@ -1,14 +1,17 @@
-// quickshell/panes/network/PillRow.qml
-// One setting as a heading and a row of pills, one per choice. The band
-// row and the DNS row are both this; what a choice means is up to whoever
-// listens to `picked`. The row is one cursor line, and each pill a stop.
+// quickshell/panes/common/PillRow.qml
+// One setting as a heading and a row of pills, one per choice. What a
+// choice means is up to whoever listens to `picked`. The row is one cursor
+// line, and each pill a stop: `cursor` is the panel's own, anything with
+// at(line, stop) and select(line, stop).
 import QtQuick
 import "../../theme/"
 
 Column {
     id: root
 
-    required property Cursor cursor
+    required property PanelStyle panelStyle
+    required property PanelColors panelColors
+    required property var cursor
     required property string lineId
 
     property string title: ""
@@ -21,22 +24,22 @@ Column {
 
     signal picked(string id)
 
-    spacing: Style.network.list.spacing
+    spacing: root.panelStyle.list.spacing
 
     Text {
         width: parent.width
         text: root.title
         elide: Text.ElideRight
-        color: root.failed ? Colors.network.urgent : Colors.network.muted
-        font.family: Style.network.font.family
-        font.pixelSize: Style.network.font.caption
+        color: root.failed ? root.panelColors.urgent : root.panelColors.muted
+        font.family: root.panelStyle.font.family
+        font.pixelSize: root.panelStyle.font.caption
         font.bold: true
         font.letterSpacing: 1.2
     }
 
     Flow {
         width: parent.width
-        spacing: Style.network.pill.gap
+        spacing: root.panelStyle.pill.gap
 
         Repeater {
             model: root.options
@@ -45,6 +48,8 @@ Column {
                 required property var modelData
                 required property int index
 
+                panelStyle: root.panelStyle
+                panelColors: root.panelColors
                 text: modelData.label
                 active: modelData.id === root.current
                 hasCursor: root.cursor.at(root.lineId, index)

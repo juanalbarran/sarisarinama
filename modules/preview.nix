@@ -41,6 +41,14 @@
           });
           default = {};
         };
+        wayland.windowManager.sway.config.bindswitches = lib.mkOption {
+          type = lib.types.attrsOf lib.types.attrs;
+          default = {};
+        };
+        wayland.windowManager.hyprland.settings = lib.mkOption {
+          type = lib.types.attrs;
+          default = {};
+        };
       };
     };
 

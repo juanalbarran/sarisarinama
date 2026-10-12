@@ -66,4 +66,8 @@ Singleton {
     readonly property NetworkColors network: NetworkColors {
         paint: (key, token, color, alpha) => root.paint("network", key, token, color, alpha)
     }
+
+    readonly property PanelColors monitor: PanelColors {
+        paint: (key, token, color, alpha) => root.paint("monitor", key, token, color, alpha)
+    }
 }
