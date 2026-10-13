@@ -3,19 +3,29 @@
 {
   flake.modules.homeManager.sarisarinama.programs.sarisarinama.menus.root = [
     {
-      icon = "";
-      label = "System";
-      menu = "system";
-    }
-    {
-      icon = "";
+      icon = "󰈮 ";
       label = "Projects";
       action = "sarisarinama-projects-menu";
     }
     {
-      icon = "󰏘";
+      icon = "󰍹 ";
+      label = "Monitors";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";
+    }
+    {
+      icon = "󰖩 ";
+      label = "Network";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";
+    }
+    {
+      icon = "󰏘 ";
       label = "Themes";
       menu = "themes";
+    }
+    {
+      icon = "󰒓 ";
+      label = "System";
+      menu = "system";
     }
   ];
 }
