@@ -6,17 +6,6 @@
 # current.json, else theme.json. Ported from omarchy's
 # omarchy-theme-set-foot.
 
-config="${XDG_CONFIG_HOME:-$HOME/.config}/sarisarinama"
-state="${XDG_STATE_HOME:-$HOME/.local/state}/sarisarinama"
-
-name="${1:-}"
-if [ -z "$name" ]; then
-  name=$(jq -r '.default // empty' "$config/current.json" 2>/dev/null || true)
-fi
-# A name with no rendered file (a theme removed since) falls back too.
-if [ -z "$name" ] || [ ! -e "$config/foot/$name.ini" ]; then
-  name=$(jq -r '.default' "$config/theme.json")
-fi
 src="$config/foot/$name.ini"
 
 # install, not cp: the source is read-only in the Nix store and cp keeps

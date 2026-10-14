@@ -16,7 +16,9 @@
     script = pkgs.writeShellApplication {
       name = "sarisarinama-theme-foot";
       runtimeInputs = [pkgs.jq pkgs.procps];
-      text = builtins.readFile ./_lib/theme-foot.sh;
+      text =
+        builtins.readFile ../_lib/current-theme.sh
+        + builtins.readFile ./_lib/theme-foot.sh;
     };
   in {
     options.programs.sarisarinama.integrations.foot.enable =
