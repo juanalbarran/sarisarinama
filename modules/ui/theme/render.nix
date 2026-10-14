@@ -30,6 +30,7 @@
           "sarisarinama/theme.json".text = builtins.toJSON {
             default = cfg.theme.default;
             available = lib.attrNames cfg.theme.palettes;
+            onSet = cfg.theme.onSet;
           };
           "sarisarinama/surfaces.json".text = builtins.toJSON cfg.theme.surfaces;
         };

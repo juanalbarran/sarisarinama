@@ -5,6 +5,7 @@
 // IpcHandler exports every declared property, and `var` cannot cross IPC,
 // so the theme list is a function, not a property.
 import QtQuick
+import Quickshell
 import Quickshell.Io
 
 IpcHandler {
@@ -39,6 +40,9 @@ IpcHandler {
         Colors.currentFile.setText(JSON.stringify({
             default: name
         }) + "\n");
+        // Applications outside the shell follow. Detached, so a slow one
+        // never holds up the answer.
+        Colors.themeFile.value("onSet", []).forEach(program => Quickshell.execDetached([program, name]));
         return "ok";
     }
 }

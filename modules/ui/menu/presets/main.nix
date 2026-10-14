@@ -8,11 +8,6 @@
       action = "sarisarinama-projects-menu";
     }
     {
-      icon = "󰍹 ";
-      label = "Monitors";
-      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";
-    }
-    {
       icon = "󰖩 ";
       label = "Network";
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";
@@ -21,6 +16,11 @@
       icon = "󰏘 ";
       label = "Themes";
       menu = "themes";
+    }
+    {
+      icon = "󰍹 ";
+      label = "Monitors";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";
     }
     {
       icon = "󰒓 ";

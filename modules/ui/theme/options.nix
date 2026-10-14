@@ -26,6 +26,15 @@
           foreign colour.
         '';
       };
+      onSet = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        description = ''
+          Programs the shell runs after a successful `theme set`, each with
+          the theme's name as its only argument. How an application outside
+          the shell follows the theme; an integration adds itself here.
+        '';
+      };
     };
   };
 }

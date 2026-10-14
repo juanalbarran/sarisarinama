@@ -49,6 +49,22 @@
           type = lib.types.attrs;
           default = {};
         };
+        programs.foot.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
+        programs.foot.settings = lib.mkOption {
+          type = lib.types.attrs;
+          default = {};
+        };
+        home.activation = lib.mkOption {
+          type = lib.types.attrs;
+          default = {};
+        };
+        xdg.stateHome = lib.mkOption {
+          type = lib.types.str;
+          default = "~/.local/state";
+        };
       };
     };
 
@@ -60,6 +76,7 @@
         {
           programs.sarisarinama.enable = true;
           programs.sarisarinama.style.menu.font.size = 16;
+          programs.foot.enable = true;
         }
       ];
     };
