@@ -61,4 +61,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property PanelStyle vpn: PanelStyle {
+        cfg: root.section("vpn")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }

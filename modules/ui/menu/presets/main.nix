@@ -23,6 +23,11 @@
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";
     }
     {
+      icon = "󰖂 ";
+      label = "VPN";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon vpn '{}'";
+    }
+    {
       icon = "󰏘 ";
       label = "Themes";
       menu = "themes";

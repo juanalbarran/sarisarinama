@@ -63,6 +63,14 @@ qs -p $SARISARINAMA_PATH ipc call theme set vantablack
 
 For more context [themes](./themes.md)
 
+### VPN panel
+
+The NetworkManager VPN profiles, WireGuard and plugin VPNs alike, each
+with a switch to bring it up or down. A panel of its own, as omarchy
+keeps Tailscale apart from its network panel.
+
+For more context [vpn](./vpn.md)
+
 ## Status
 
 The aggregate; each component doc carries its own detail and rough edges.
@@ -73,6 +81,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
 | Bar       | Six widgets, styled; Sway and Hyprland behind one adapter   |
 | Menu      | Options, command, project and bookmarks menus done          |
+| VPN panel | Written; not yet checked on screen                          |
 
 Open, roughly in the order each blocks something:
 

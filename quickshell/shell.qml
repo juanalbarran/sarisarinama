@@ -7,6 +7,7 @@ import "bar"
 import "menu"
 import "panes/network"
 import "panes/monitor"
+import "panes/vpn"
 
 ShellRoot {
     id: shell
@@ -21,7 +22,8 @@ ShellRoot {
     property var components: ({
             "menu": menuLoader,
             "network": networkLoader,
-            "monitor": monitorLoader
+            "monitor": monitorLoader,
+            "vpn": vpnLoader
         })
 
     Loader {
@@ -40,6 +42,12 @@ ShellRoot {
         id: monitorLoader
         active: false
         sourceComponent: MonitorPanel {}
+    }
+
+    Loader {
+        id: vpnLoader
+        active: false
+        sourceComponent: VpnPanel {}
     }
 
     function summon(id, payloadJson) {

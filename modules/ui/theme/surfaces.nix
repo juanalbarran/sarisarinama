@@ -51,6 +51,7 @@
           fieldBorder = key "accent" "The password field's border.";
         };
       monitor = panel;
+      vpn = panel;
     };
   };
 }

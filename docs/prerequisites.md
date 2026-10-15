@@ -39,14 +39,15 @@ in the bar and menu is a Nerd Font glyph, so without one they show as boxes.
 
 ## System services
 
-The bar reads these. Missing one does not fail; its widget stays empty or
-wrong.
+The bar and the panels read these. Missing one does not fail; its widget
+stays empty or wrong.
 
 | Service        | Used by       | Without it                        |
 | -------------- | ------------- | --------------------------------- |
 | PipeWire       | `Audio.qml`   | no sink, the icon shows silence   |
 | UPower         | `Battery.qml` | no battery widget                 |
 | NetworkManager | `Network.qml` | `nmcli` fails, shows disconnected |
+| NetworkManager | VPN panel     | `nmcli` fails, lists no profiles  |
 
 ## Applications
 
