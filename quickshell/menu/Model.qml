@@ -73,6 +73,8 @@ QtObject {
             root.enter(row.menu, row.arg);
         else if (row.action)
             Quickshell.execDetached(["bash", "-lc", row.action]);
-        return !!row.action;
+        else if (row.app)
+            row.app.execute();
+        return !!row.action || !!row.app;
     }
 }

@@ -30,8 +30,18 @@
     commandType = lib.types.submodule {
       options = {
         command = lib.mkOption {
-          type = lib.types.str;
-          description = "Shell command; each line of stdout becomes a row.";
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Shell command; each line of stdout becomes a row. Exclusive with `source`.";
+        };
+        source = lib.mkOption {
+          type = lib.types.nullOr (lib.types.enum ["applications"]);
+          default = null;
+          description = ''
+            Rows the shell builds itself instead of a command: `applications`
+            lists the installed desktop entries, as `wofi --show drun` does.
+            Exclusive with `command`.
+          '';
         };
         icon = lib.mkOption {
           type = lib.types.str;

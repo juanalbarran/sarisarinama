@@ -3,6 +3,11 @@
 {
   flake.modules.homeManager.sarisarinama.programs.sarisarinama.menus.root = [
     {
+      icon = "󰀻 ";
+      label = "Applications";
+      menu = "applications";
+    }
+    {
       icon = "󰈮 ";
       label = "Projects";
       action = "sarisarinama-projects-menu";

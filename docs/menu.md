@@ -59,18 +59,45 @@ one command can mix rows that act with rows that open a submenu; a row may
 carry an `arg` for the menu it opens. `"backWithin": true` limits Back to
 this same file: where the menu was first opened there is no Back row.
 
+### Applications menu
+
+The root menu's first row. It lists what `wofi --show drun` lists: every
+`.desktop` file on `XDG_DATA_DIRS` that is not `NoDisplay`, sorted by name.
+The file names a source instead of a command:
+
+```json
+{ "source": "applications" }
+```
+
+The shell builds the rows itself from Quickshell's `DesktopEntries`; no
+command runs, so `{}`, `{arg}` and `{shell}` mean nothing here.
+`DesktopEntries` scans in the background and adds one app at a time, so the
+list fills in while the menu is open. It is longer than `list.filterAbove`,
+so typing filters it, as wofi's search box does. A row shows the app's icon
+from the icon theme, or the `󰀻` glyph when the theme has none. Enter
+launches the app through the entry's own `execute()`, and the menu closes.
+
+In Nix it is `menus.applications = { source = "applications"; }`, in
+`modules/ui/menu/presets/applications.nix`. A command menu takes exactly one
+of `command` or `source`, and `render.nix` asserts it.
+
+Not yet checked on screen. Two things are open: whether `execute()` opens
+a terminal for an app marked `Terminal=true`, and whether the icons are
+found under NixOS, which depends on Qt knowing the icon theme.
+
 ### Files (`quickshell/menu/`)
 
-| File          | Role                                                                |
-| ------------- | ------------------------------------------------------------------- |
-| `Menu.qml`    | PanelWindow; host contract `open(payloadJson)`, `close()`, `opened` |
-| `Card.qml`    | Background, title (file name), filter box, the list                 |
-| `Search.qml`  | The filter box; hands the four menu keys to the list                |
-| `List.qml`    | ListView, the four keys, scrolling, `activated`/`closeRequested`    |
-| `Entry.qml`   | One row; talks to its list through `ListView.view`                  |
-| `Model.qml`   | Navigation stack, filter, Back row, `activate(index)`               |
-| `File.qml`    | FileView wrapper: path expansion, JSON parsing, error handling      |
-| `Command.qml` | Runs a command menu's `command`, turns its lines into entries       |
+| File               | Role                                                                |
+| ------------------ | ------------------------------------------------------------------- |
+| `Menu.qml`         | PanelWindow; host contract `open(payloadJson)`, `close()`, `opened` |
+| `Card.qml`         | Background, title (file name), filter box, the list                 |
+| `Search.qml`       | The filter box; hands the four menu keys to the list                |
+| `List.qml`         | ListView, the four keys, scrolling, `activated`/`closeRequested`    |
+| `Entry.qml`        | One row, icon image or glyph; talks to its list via `ListView.view` |
+| `Model.qml`        | Navigation stack, filter, Back row, `activate(index)`               |
+| `File.qml`         | FileView wrapper: path expansion, JSON parsing, error handling      |
+| `Command.qml`      | Runs a command menu's `command`, turns its lines into entries       |
+| `Applications.qml` | The `applications` source: desktop entries as rows, sorted          |
 
 Data flows down (window, card, list, row); events flow up as signals.
 Nothing below `Menu.qml` knows about the window.

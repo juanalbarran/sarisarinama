@@ -11,6 +11,7 @@
     menuDir = "${config.xdg.configHome}/sarisarinama";
     # Command menus have no entries to validate or rewrite; only lists do.
     listMenus = lib.filterAttrs (_: m: builtins.isList m) cfg.menus;
+    objectMenus = lib.filterAttrs (_: m: !builtins.isList m) cfg.menus;
     allEntries = lib.concatLists (lib.attrValues listMenus);
 
     # Nulls are dropped so Menu.qml only sees the keys that apply.
@@ -22,8 +23,7 @@
     renderMenu = m:
       if builtins.isList m
       then map renderEntry m
-      else {inherit (m) command icon action backWithin;};
-
+      else {inherit (m) command source icon action backWithin;};
     menuFiles = lib.mapAttrs' (name: m:
       lib.nameValuePair "sarisarinama/${name}.json" {
         text = builtins.toJSON (renderMenu m);
@@ -40,6 +40,10 @@
         {
           assertion = lib.all (e: (e.action != null) != (e.menu != null)) allEntries;
           message = "programs.sarisarinama: every entry needs exactly one of `action` or `menu`.";
+        }
+        {
+          assertion = lib.all (m: (m.command != null) != (m.source != null)) (lib.attrValues objectMenus);
+          message = "programs.sarisarinama: every command menu needs exactly one of `command` or `source`.";
         }
         {
           assertion = danglingRefs == [];

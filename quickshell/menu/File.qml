@@ -21,6 +21,11 @@ FileView {
         onEntriesChanged: root.entries = entries
     }
 
+    readonly property Applications apps: Applications {
+        onEntriesChanged: if (active)
+            root.entries = entries
+    }
+
     // A rebuild that rewrites the file is picked up while the menu is open.
     watchChanges: true
     printErrors: true
@@ -36,6 +41,7 @@ FileView {
     onLoaded: {
         root.entries = [];
         root.backWithin = false;
+        root.apps.active = false;
         try {
             var parsed = JSON.parse(text());
             root.backWithin = !Array.isArray(parsed) && !!(parsed && parsed.backWithin);
@@ -43,7 +49,10 @@ FileView {
                 root.entries = parsed;
             else if (parsed && parsed.command)
                 root.source.run(parsed, root.arg);
-            else
+            else if (parsed && parsed.source === "applications") {
+                root.apps.active = true;
+                root.entries = root.apps.entries;
+            } else
                 console.warn("menu: neither entries nor a command in", root.path);
         } catch (e) {
             console.warn("menu: invalid JSON in", root.path, e);
@@ -52,6 +61,7 @@ FileView {
 
     onLoadFailed: function (error) {
         console.warn("menu: cannot read", root.path, error);
+        root.apps.active = false;
         root.entries = [];
     }
 }
