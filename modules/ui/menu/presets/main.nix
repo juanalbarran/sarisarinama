@@ -13,6 +13,11 @@
       action = "sarisarinama-projects-menu";
     }
     {
+      icon = "󰃀 ";
+      label = "Bookmarks";
+      menu = "bookmarks";
+    }
+    {
       icon = "󰖩 ";
       label = "Network";
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";

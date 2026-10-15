@@ -72,7 +72,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Style     | Done. One `style.json`, per-component overrides verified    |
 | Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
 | Bar       | Six widgets, styled; Sway and Hyprland behind one adapter   |
-| Menu      | Options, command and project menus done                     |
+| Menu      | Options, command, project and bookmarks menus done          |
 
 Open, roughly in the order each blocks something:
 

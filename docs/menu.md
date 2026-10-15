@@ -85,6 +85,47 @@ Not yet checked on screen. Two things are open: whether `execute()` opens
 a terminal for an app marked `Terminal=true`, and whether the icons are
 found under NixOS, which depends on Qt knowing the icon theme.
 
+### Bookmarks menu
+
+The root menu's **Bookmarks** row. Two levels, as canaima's wofi
+`bookmarks` script had: a row per category, then a row per link. Both are
+plain list menus, rendered by `render.nix` like any other, so the shell
+knows nothing about bookmarks.
+
+They are declared in Nix, in the config that uses the module, not in this
+repo:
+
+```nix
+programs.sarisarinama.bookmarks = {
+  browser = "qutebrowser";
+  categories = {
+    code.links = [
+      {label = "Github"; url = "https://github.com/juanalbarran";}
+    ];
+    work = {
+      label = "Work";
+      browser = "brave";
+      links = [{label = "ctwo"; url = "https://ctwo.com";}];
+    };
+  };
+};
+```
+
+Each category becomes `bookmarks-<name>.json`, and `bookmarks.json` lists
+them, in attribute order, which Nix sorts by name. A category's `label` is
+its name unless set. A link row runs the category's `browser`, or
+`bookmarks.browser` (`xdg-open` by default), with the URL quoted as one
+shell word; the menu closes. A browser already open gets the URL in its
+own window, so nothing focuses it first. A category with more than
+`list.filterAbove` links gets the filter box.
+
+`bookmarks.json` is written even with no categories, as an empty menu, so
+the root row never points at a missing file. Adding a bookmark means a
+rebuild; there is no runtime file to edit.
+
+The options and both menus are `modules/ui/menu/presets/bookmarks.nix`.
+Not yet checked on screen.
+
 ### Files (`quickshell/menu/`)
 
 | File               | Role                                                                |
@@ -184,3 +225,7 @@ a new window uses, with the flags it needs before a command (`foot`,
 
 Failures in `open-project.sh` show as notifications: it runs detached
 from the menu, so stderr goes nowhere.
+
+```
+
+```

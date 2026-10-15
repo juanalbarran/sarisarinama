@@ -77,6 +77,28 @@
           programs.sarisarinama.enable = true;
           programs.sarisarinama.style.menu.font.size = 16;
           programs.foot.enable = true;
+          programs.sarisarinama.bookmarks.categories = {
+            code.links = [
+              {
+                label = "Github";
+                url = "https://github.com/juanalbarran";
+              }
+              {
+                label = "Tony, btw";
+                url = "https://tonybtw.com";
+              }
+            ];
+            work = {
+              label = "Work";
+              browser = "brave";
+              links = [
+                {
+                  label = "ctwo";
+                  url = "https://ctwo.com";
+                }
+              ];
+            };
+          };
         }
       ];
     };
