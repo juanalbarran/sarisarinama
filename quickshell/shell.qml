@@ -18,6 +18,7 @@ ShellRoot {
         onNetworkClicked: shell.toggle("network", "{}")
         onBatteryClicked: shell.toggle("battery", "{}")
         onAudioClicked: shell.toggle("audio", "{}")
+        onVpnClicked: shell.toggle("vpn", "{}")
     }
     ThemeIpc {}
 

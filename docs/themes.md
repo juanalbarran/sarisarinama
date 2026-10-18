@@ -50,7 +50,7 @@ literal `#rrggbb`:
 ```
 
 The `bar` block is `background`, `backgroundAlpha`, `text`, `focused`,
-`hover` and `urgent`.
+`hover`, `urgent`, `warning` and `charging`.
 
 Omarchy bakes the hex in at theme-set time, because it re-renders on every
 switch; the reference is kept instead, so switching swaps one small file and

@@ -95,7 +95,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | --------- | ----------------------------------------------------------- |
 | Style     | Done. One `style.json`, per-component overrides verified    |
 | Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
-| Bar       | Six widgets, styled; Sway and Hyprland behind one adapter   |
+| Bar       | Seven widgets, styled; Sway and Hyprland behind one adapter   |
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
 | Battery   | Panel written; not yet checked on screen                    |

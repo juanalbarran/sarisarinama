@@ -27,6 +27,9 @@
         hover = key "yellow" "A widget under the pointer.";
         urgent = key "red" "A widget calling attention to itself:
           omarchy's [bar] active, split by state.";
+        warning = key "yellow" "A battery low, not yet critical: waybar's
+          #battery.warning.";
+        charging = key "accent" "A charging battery: waybar's #battery.charging.";
       };
 
       menu = {

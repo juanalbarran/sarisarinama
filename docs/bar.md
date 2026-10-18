@@ -19,9 +19,10 @@ directly.
 | `Workspaces.qml` | left   | one icon per workspace: urgent, focused, empty | click switches to it            |
 | `Clock.qml`      | centre | `HH:mm \| ddd, dd`, from `SystemClock`         | —                               |
 | `Tray.qml`       | right  | `SystemTray` icons                             | click activates the item        |
+| `Vpn.qml`        | right  | VPN glyph, `focused` while a tunnel is up      | click opens the VPN panel; polls `nmcli` every 5 s |
 | `Audio.qml`      | right  | default Pipewire sink: muted or 3 levels       | click opens the audio panel, right-click mutes, wheel ±5% |
 | `Network.qml`    | right  | ethernet, wifi or disconnected                 | polls `nmcli` every 5 s         |
-| `Battery.qml`    | right  | icon per decile + percent, charging bolt       | hidden without a laptop battery |
+| `Battery.qml`    | right  | waybar's 9 levels + percent, one charging icon | click opens the battery panel; hidden without a laptop battery |
 
 Adding one means dropping a file in `widgets/` and placing it in the left
 row, the centre or the right row of `Bar.qml`. The file name is the type
@@ -83,8 +84,10 @@ one. Both come from `_lib/shared.nix`, see [style](./style.md).
   "workspaces": { "step": "caption", "fontSize": null, "count": 5,
                   "spacing": 7, "paddingX": 2, "animation": 300 },
   "audio":      { "step": "body",    "fontSize": null },
-  "battery":    { "step": "body",    "fontSize": null },
+  "battery":    { "step": "body",    "fontSize": null,
+                  "warning": 30, "critical": 20, "blink": 500 },
   "network":    { "step": "body",    "fontSize": null },
+  "vpn":        { "step": "body",    "fontSize": null },
   "tray":       { "iconSize": 16, "spacing": 8 }
 }
 ```
@@ -99,14 +102,19 @@ The bar's length multiplier is `scale`, at the top. That collision is why
 `animation` it is read raw, never through `px()`, or a bar at scale 1.5
 would grow from five workspaces to eight. See [style](./style.md).
 
+`battery.warning` and `battery.critical` are percentages and `blink` is
+ms; like `count`, they are read raw.
+
 A text-only widget needs no block in `BarStyle.qml`; it calls
-`Style.bar.textSize("<widget>", "<step>")`. Only `workspaces` and `tray` do.
+`Style.bar.textSize("<widget>", "<step>")`. Only `workspaces`, `battery` and `tray` do.
 
 ## Colors (the `bar` block of `surfaces.json`)
 
 `background`, `backgroundAlpha`, `text`, `focused` (the focused workspace),
-`hover` and `urgent` (an urgent workspace, a battery at 15% or less and not
-charging). A widget reads `Colors.bar.<token>`, never a palette key. Which
+`hover`, `urgent` (an urgent workspace, a battery at `critical` or below,
+blinking towards `text`), `warning` (a battery at `warning` or below) and
+`charging`. The battery follows canaima's waybar: critical wins over
+warning, warning over charging. A widget reads `Colors.bar.<token>`, never a palette key. Which
 key each token points at is [themes](./themes.md); the defaults in
 `BarColors.qml` are no-clown-fiesta's, so the bar still paints with no file.
 
@@ -140,5 +148,6 @@ bar/                    compositor/
     ├── Clock.qml
     ├── Network.qml
     ├── Tray.qml
+    ├── Vpn.qml
     └── Workspaces.qml
 ```

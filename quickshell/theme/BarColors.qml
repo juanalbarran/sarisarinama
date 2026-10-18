@@ -15,4 +15,6 @@ QtObject {
     readonly property color focused: root.paint("focused", "accent", "#bad7ff", 1.0)
     readonly property color hover: root.paint("hover", "yellow", "#f4bf75", 1.0)
     readonly property color urgent: root.paint("urgent", "red", "#b46958", 1.0)
+    readonly property color warning: root.paint("warning", "yellow", "#f4bf75", 1.0)
+    readonly property color charging: root.paint("charging", "accent", "#bad7ff", 1.0)
 }

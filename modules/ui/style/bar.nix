@@ -62,8 +62,28 @@
 
         # Service widgets, on the right
         audio = text "body";
-        battery = text "body";
+        battery =
+          text "body"
+          // {
+            # Percentages and a duration: never scaled, so never `px`.
+            warning = lib.mkOption {
+              type = lib.types.ints.between 0 100;
+              default = 30;
+              description = "At or below this percent the battery turns yellow.";
+            };
+            critical = lib.mkOption {
+              type = lib.types.ints.between 0 100;
+              default = 20;
+              description = "At or below this percent the battery turns red and blinks.";
+            };
+            blink = lib.mkOption {
+              type = lib.types.ints.unsigned;
+              default = 500;
+              description = "Half a blink in ms, red to text.";
+            };
+          };
         network = text "body";
+        vpn = text "body";
 
         # The tray draws icons, not text, so it has no step
         tray = {

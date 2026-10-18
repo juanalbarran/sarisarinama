@@ -53,6 +53,13 @@ QtObject {
         readonly property int animation: root.group("workspaces").animation ?? 300
     }
 
+    // Percentages and a duration: read raw, never scaled.
+    readonly property QtObject battery: QtObject {
+        readonly property int warning: root.group("battery").warning ?? 30
+        readonly property int critical: root.group("battery").critical ?? 20
+        readonly property int blink: root.group("battery").blink ?? 500
+    }
+
     readonly property QtObject tray: QtObject {
         readonly property int iconSize: root.px(root.group("tray").iconSize, 16)
         readonly property int spacing: root.px(root.group("tray").spacing, 8)

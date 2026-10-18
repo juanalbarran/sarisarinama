@@ -10,7 +10,7 @@ the same split.
 qs -p $SARISARINAMA_PATH ipc call shell toggle vpn '{}'
 ```
 
-The root menu's **VPN** row summons it.
+A click on the bar's VPN icon summons it; the root menu has no row for it.
 
 ## Where the state comes from
 
@@ -64,4 +64,4 @@ Written; not yet checked on screen. Things known to be open:
 - An OpenVPN profile that asks for a password needs a NetworkManager secret
   agent (nm-applet, say). Without one, `up` fails with a secrets error,
   shown on the row. WireGuard keeps its key in the profile and needs none.
-- The bar shows no VPN state; only the panel does.
+- The bar shows only whether a tunnel is up, not which one.
