@@ -42,12 +42,18 @@ in the bar and menu is a Nerd Font glyph, so without one they show as boxes.
 The bar and the panels read these. Missing one does not fail; its widget
 stays empty or wrong.
 
-| Service        | Used by       | Without it                        |
-| -------------- | ------------- | --------------------------------- |
-| PipeWire       | `Audio.qml`   | no sink, the icon shows silence   |
-| UPower         | `Battery.qml` | no battery widget                 |
-| NetworkManager | `Network.qml` | `nmcli` fails, shows disconnected |
-| NetworkManager | VPN panel     | `nmcli` fails, lists no profiles  |
+| Service               | Used by       | Without it                          |
+| --------------------- | ------------- | ----------------------------------- |
+| PipeWire              | `Audio.qml`   | no sink, the icon shows silence     |
+| UPower                | `Battery.qml` | no battery widget                   |
+| UPower                | battery panel | the panel never opens               |
+| power-profiles-daemon | battery panel | the profile pills change nothing    |
+| NetworkManager        | `Network.qml` | `nmcli` fails, shows disconnected   |
+| NetworkManager        | VPN panel     | `nmcli` fails, lists no profiles    |
+
+UPower and power-profiles-daemon are system services, enabled in the NixOS
+config, not here: `services.upower.enable` and
+`services.power-profiles-daemon.enable`.
 
 ## Applications
 

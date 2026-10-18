@@ -10,4 +10,5 @@ PanelColors PanelColors.qml
 PanelStyle PanelStyle.qml
 NetworkColors NetworkColors.qml
 NetworkStyle NetworkStyle.qml
+BatteryStyle BatteryStyle.qml
 ThemeIpc ThemeIpc.qml

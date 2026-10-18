@@ -4,6 +4,8 @@ import QtQuick
 import "../../theme/"
 
 Text {
+    signal clicked
+
     readonly property var dev: UPower.displayDevice
     readonly property int pct: Math.round(dev.percentage * 100)
     readonly property bool charging: !UPower.onBattery
@@ -20,4 +22,9 @@ Text {
     color: (pct <= 15 && !charging) ? Colors.bar.urgent : Colors.bar.text
     font.family: Style.bar.font.family
     font.pixelSize: Style.bar.textSize("battery", "body")
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: parent.clicked()
+    }
 }

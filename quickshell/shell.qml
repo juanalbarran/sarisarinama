@@ -8,12 +8,14 @@ import "menu"
 import "panes/network"
 import "panes/monitor"
 import "panes/vpn"
+import "panes/battery"
 
 ShellRoot {
     id: shell
 
     Bar {
         onNetworkClicked: shell.toggle("network", "{}")
+        onBatteryClicked: shell.toggle("battery", "{}")
     }
     ThemeIpc {}
 
@@ -23,7 +25,8 @@ ShellRoot {
             "menu": menuLoader,
             "network": networkLoader,
             "monitor": monitorLoader,
-            "vpn": vpnLoader
+            "vpn": vpnLoader,
+            "battery": batteryLoader
         })
 
     Loader {
@@ -48,6 +51,12 @@ ShellRoot {
         id: vpnLoader
         active: false
         sourceComponent: VpnPanel {}
+    }
+
+    Loader {
+        id: batteryLoader
+        active: false
+        sourceComponent: BatteryPanel {}
     }
 
     function summon(id, payloadJson) {

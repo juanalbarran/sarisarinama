@@ -74,4 +74,8 @@ Singleton {
     readonly property PanelColors vpn: PanelColors {
         paint: (key, token, color, alpha) => root.paint("vpn", key, token, color, alpha)
     }
+
+    readonly property PanelColors battery: PanelColors {
+        paint: (key, token, color, alpha) => root.paint("battery", key, token, color, alpha)
+    }
 }

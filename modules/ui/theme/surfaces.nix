@@ -52,6 +52,7 @@
         };
       monitor = panel;
       vpn = panel;
+      battery = panel;
     };
   };
 }

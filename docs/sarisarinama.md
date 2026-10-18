@@ -71,6 +71,14 @@ keeps Tailscale apart from its network panel.
 
 For more context [vpn](./vpn.md)
 
+### Battery panel
+
+The charge, its time left or to full, the battery's health and the power
+profile, read from UPower and power-profiles-daemon. After omarchy's power
+panel.
+
+For more context [battery](./battery.md)
+
 ## Status
 
 The aggregate; each component doc carries its own detail and rough edges.
@@ -82,6 +90,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Bar       | Six widgets, styled; Sway and Hyprland behind one adapter   |
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
+| Battery   | Panel written; not yet checked on screen                    |
 
 Open, roughly in the order each blocks something:
 

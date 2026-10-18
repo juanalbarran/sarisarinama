@@ -67,4 +67,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property BatteryStyle battery: BatteryStyle {
+        cfg: root.section("battery")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }
