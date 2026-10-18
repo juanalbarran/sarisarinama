@@ -19,7 +19,7 @@ directly.
 | `Workspaces.qml` | left   | one icon per workspace: urgent, focused, empty | click switches to it            |
 | `Clock.qml`      | centre | `HH:mm \| ddd, dd`, from `SystemClock`         | —                               |
 | `Tray.qml`       | right  | `SystemTray` icons                             | click activates the item        |
-| `Audio.qml`      | right  | default Pipewire sink: muted or 3 levels       | click mutes, wheel ±5%          |
+| `Audio.qml`      | right  | default Pipewire sink: muted or 3 levels       | click opens the audio panel, right-click mutes, wheel ±5% |
 | `Network.qml`    | right  | ethernet, wifi or disconnected                 | polls `nmcli` every 5 s         |
 | `Battery.qml`    | right  | icon per decile + percent, charging bolt       | hidden without a laptop battery |
 

@@ -78,4 +78,8 @@ Singleton {
     readonly property PanelColors battery: PanelColors {
         paint: (key, token, color, alpha) => root.paint("battery", key, token, color, alpha)
     }
+
+    readonly property PanelColors audio: PanelColors {
+        paint: (key, token, color, alpha) => root.paint("audio", key, token, color, alpha)
+    }
 }

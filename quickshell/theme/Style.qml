@@ -73,4 +73,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property AudioStyle audio: AudioStyle {
+        cfg: root.section("audio")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }

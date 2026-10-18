@@ -12,6 +12,7 @@ PanelWindow {
     // The bar opens nothing itself; shell.qml decides what a click opens.
     signal networkClicked
     signal batteryClicked
+    signal audioClicked
 
     anchors {
         bottom: true
@@ -46,6 +47,7 @@ PanelWindow {
         }
         Audio {
             anchors.verticalCenter: parent.verticalCenter
+            onClicked: root.audioClicked()
         }
         Network {
             anchors.verticalCenter: parent.verticalCenter

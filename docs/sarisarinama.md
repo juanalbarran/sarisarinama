@@ -79,6 +79,14 @@ panel.
 
 For more context [battery](./battery.md)
 
+### Audio panel
+
+Every output and input device, with the volume of the default one and a
+row to make another the default, and every app playing sound with its
+own volume. Read from PipeWire, after omarchy's audio panel.
+
+For more context [audio](./audio.md)
+
 ## Status
 
 The aggregate; each component doc carries its own detail and rough edges.
@@ -91,6 +99,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
 | Battery   | Panel written; not yet checked on screen                    |
+| Audio     | Panel written; not yet checked on screen                    |
 
 Open, roughly in the order each blocks something:
 

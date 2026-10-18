@@ -28,6 +28,11 @@
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon vpn '{}'";
     }
     {
+      icon = "󰕾 ";
+      label = "Sound";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon audio '{}'";
+    }
+    {
       icon = "󰏘 ";
       label = "Themes";
       menu = "themes";

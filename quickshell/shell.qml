@@ -9,6 +9,7 @@ import "panes/network"
 import "panes/monitor"
 import "panes/vpn"
 import "panes/battery"
+import "panes/audio"
 
 ShellRoot {
     id: shell
@@ -16,6 +17,7 @@ ShellRoot {
     Bar {
         onNetworkClicked: shell.toggle("network", "{}")
         onBatteryClicked: shell.toggle("battery", "{}")
+        onAudioClicked: shell.toggle("audio", "{}")
     }
     ThemeIpc {}
 
@@ -26,7 +28,8 @@ ShellRoot {
             "network": networkLoader,
             "monitor": monitorLoader,
             "vpn": vpnLoader,
-            "battery": batteryLoader
+            "battery": batteryLoader,
+            "audio": audioLoader
         })
 
     Loader {
@@ -57,6 +60,12 @@ ShellRoot {
         id: batteryLoader
         active: false
         sourceComponent: BatteryPanel {}
+    }
+
+    Loader {
+        id: audioLoader
+        active: false
+        sourceComponent: AudioPanel {}
     }
 
     function summon(id, payloadJson) {

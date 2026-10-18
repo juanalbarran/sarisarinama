@@ -53,6 +53,7 @@
       monitor = panel;
       vpn = panel;
       battery = panel;
+      audio = panel;
     };
   };
 }

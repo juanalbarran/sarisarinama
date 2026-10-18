@@ -4,6 +4,10 @@ import QtQuick
 import "../../theme/"
 
 Text {
+    id: root
+
+    signal clicked
+
     readonly property var sink: Pipewire.defaultAudioSink
     readonly property real vol: sink?.audio.volume ?? 0
 
@@ -20,7 +24,14 @@ Text {
         id: mouse
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: sink.audio.muted = !sink.audio.muted
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        // Left opens the audio panel; right mutes, as a click did before.
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton)
+                sink.audio.muted = !sink.audio.muted;
+            else
+                root.clicked();
+        }
         onWheel: wheel => {
             const step = wheel.angleDelta.y > 0 ? 0.05 : -0.05;
             sink.audio.volume = Math.max(0, Math.min(1, sink.audio.volume + step));

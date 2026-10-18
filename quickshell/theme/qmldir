@@ -11,4 +11,5 @@ PanelStyle PanelStyle.qml
 NetworkColors NetworkColors.qml
 NetworkStyle NetworkStyle.qml
 BatteryStyle BatteryStyle.qml
+AudioStyle AudioStyle.qml
 ThemeIpc ThemeIpc.qml

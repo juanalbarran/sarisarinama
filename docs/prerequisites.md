@@ -45,6 +45,7 @@ stays empty or wrong.
 | Service               | Used by       | Without it                          |
 | --------------------- | ------------- | ----------------------------------- |
 | PipeWire              | `Audio.qml`   | no sink, the icon shows silence     |
+| PipeWire              | audio panel   | no devices, no apps                 |
 | UPower                | `Battery.qml` | no battery widget                   |
 | UPower                | battery panel | the panel never opens               |
 | power-profiles-daemon | battery panel | the profile pills change nothing    |
