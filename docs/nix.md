@@ -13,6 +13,8 @@ shell from the checkout, see [development.md](./development.md).
   block is the only place this repo sets an option, so it is where to try
   one before it goes in the real config.
 - `modules.homeManager.sarisarinama`: the Home Manager module.
+- `modules.nixos.sarisarinama`: the NixOS module, for what Home Manager
+  cannot do there; today only the lock's PAM service.
 - `devShells.default`: quickshell and qt tooling.
 
 `flake.modules.<class>.<name>` comes from `inputs.flake-parts.flakeModules.modules`,
@@ -44,6 +46,10 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | `theme.surfaces.*`                    | `modules/ui/theme/surfaces.nix`        |
 | palette cascade (no options)          | `modules/ui/theme/_lib/`               |
 | theme rendering + assertions          | `modules/ui/theme/render.nix`          |
+| `lock.idle`                           | `modules/ui/lock/idle.nix`             |
+| `lock.pam.enable`                     | `modules/ui/lock/pam.nix`              |
+| `lock` rendering                      | `modules/ui/lock/render.nix`           |
+| `style.lock.*`                        | `modules/ui/style/lock.nix`            |
 
 The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
 per menu and turns `menu = "system"` into the path of `system.json`. It

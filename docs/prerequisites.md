@@ -56,6 +56,14 @@ UPower and power-profiles-daemon are system services, enabled in the NixOS
 config, not here: `services.upower.enable` and
 `services.power-profiles-daemon.enable`.
 
+## Lock screen
+
+The lock needs systemd's logind (Ubuntu and NixOS both have it), with
+`busctl` and `systemd-inhibit` on `PATH`, and a PAM service; see
+[lock](./lock.md#pam). On NixOS that means importing
+`modules.nixos.sarisarinama`; elsewhere the Home Manager module writes it
+with sudo on activation.
+
 ## Applications
 
 The project menu launches these from `PATH`; the module installs none.

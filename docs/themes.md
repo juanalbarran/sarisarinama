@@ -57,7 +57,7 @@ switch; the reference is kept instead, so switching swaps one small file and
 every surface follows. Three departures: no `[hyprland]` block, since the
 shell also runs under Sway and borders point at `accent`; one block per
 component that exists, `bar` and `menu`, so omarchy's `popups`, `tooltip`,
-`notifications`, `launcher`, `polkit`, `lock` and `image-picker` are absent
+`notifications`, `launcher`, `polkit` and `image-picker` are absent
 until those surfaces are; and `menu.title`, which is ours — the card shows
 the menu file name and omarchy has no card title.
 

@@ -31,6 +31,29 @@ installs, and talks to the shell at `$SARISARINAMA_PATH`. Before starting
 `qs -p "$SARISARINAMA_PATH"`. Quickshell tells the commands it runs
 nothing about where it was started from.
 
+The lock runs `sarisarinama-lock-events` the same way, from `PATH`; without
+it the shell warns every 3 s and only `ipc call lock lock` and idle lock.
+It reads `lock.json`, which `nix build .#menus` renders like the others.
+Locking for real also needs `/etc/pam.d/sarisarinama-lock`, see
+[lock](./lock.md#pam).
+
+### Trying the lock without locking yourself out
+
+A crash while locked keeps the screen locked, so try changes in a headless
+Sway nested in the session, not in the session itself:
+
+```
+export XDG_RUNTIME_DIR=$(mktemp -d /run/user/$UID/sl.XXXX)
+WLR_BACKENDS=headless WLR_RENDERER=pixman WLR_LIBINPUT_NO_DEVICES=1 \
+  env -u SWAYSOCK -u WAYLAND_DISPLAY sway -c /dev/null &
+WAYLAND_DISPLAY=wayland-1 qs -p ./quickshell
+```
+
+The directory must sit under `/run/user`: a longer path overflows the
+socket name. `PamContext.configDirectory` points a test at a directory of
+its own services (`auth required pam_permit.so`, `pam_deny.so`), so both
+answers can be tried without a password.
+
 ## Gotchas
 
 - Untracked files are invisible to `nix build .`; use `path:.` or `git add`.

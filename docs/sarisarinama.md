@@ -87,6 +87,14 @@ own volume. Read from PipeWire, after omarchy's audio panel.
 
 For more context [audio](./audio.md)
 
+### Lock screen
+
+The session lock, held by the shell like omarchy's: the time, the date and
+a password field on every screen. It locks on `loginctl lock-session`, on
+idle and before suspend, and checks the password through PAM.
+
+For more context [lock](./lock.md)
+
 ## Status
 
 The aggregate; each component doc carries its own detail and rough edges.
@@ -100,6 +108,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | VPN panel | Written; not yet checked on screen                          |
 | Battery   | Panel written; not yet checked on screen                    |
 | Audio     | Panel written; not yet checked on screen                    |
+| Lock      | Lock and triggers tested headless; not yet used for real    |
 
 Open, roughly in the order each blocks something:
 
