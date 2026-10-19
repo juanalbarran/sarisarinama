@@ -2,7 +2,8 @@
 // The session lock. While locked the compositor shows only these surfaces,
 // one per screen, and keeps showing them if the shell dies: ext-session-lock
 // is released by an unlock, never by a crash. Always loaded, so `lock`
-// answers over IPC whatever else is open.
+// answers over IPC whatever else is open, and so it hears the three
+// triggers: `loginctl lock-session`, idle, and an imminent suspend.
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -22,6 +23,8 @@ Item {
 
     property bool checking: false
     property string failure: ""
+    // A suspend is held until the lock is secure.
+    property bool holdingSleep: false
 
     // "missing-pam" when nothing could unlock it, and nothing is locked.
     function lock() {
@@ -42,6 +45,26 @@ Item {
         auth.check(password);
     }
 
+    // Locks before letting the suspend go; lets it go at once when locking
+    // is impossible, rather than holding it for nothing.
+    function lockForSleep() {
+        if (root.lock() !== "ok" || session.secure) {
+            logind.release();
+            return;
+        }
+        holdingSleep = true;
+    }
+
+    IdleLock {
+        onIdle: root.lock()
+    }
+
+    LogindLock {
+        id: logind
+        onLockRequested: root.lock()
+        onSleepRequested: root.lockForSleep()
+    }
+
     LockAuth {
         id: auth
 
@@ -58,6 +81,13 @@ Item {
 
     WlSessionLock {
         id: session
+
+        onSecureStateChanged: {
+            if (secure && root.holdingSleep) {
+                root.holdingSleep = false;
+                logind.release();
+            }
+        }
 
         WlSessionLockSurface {
             LockView {
