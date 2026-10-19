@@ -61,6 +61,8 @@
       lock = {
         background = key "background" "The whole screen behind the lock.";
         backgroundAlpha = alpha 1.0 "Keep it 1: below that the desktop shows through.";
+        dim = key "background" "The wash over the wallpaper, so the time and field stay readable.";
+        dimAlpha = alpha 0.45 "0 shows the wallpaper as is, 1 hides it.";
         text = key "foreground" "The time and what is typed.";
         muted = key "dark_foreground" "The date and the field's hint.";
         field = key "lighter_background" "The password field.";

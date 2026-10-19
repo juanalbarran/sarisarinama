@@ -1,8 +1,10 @@
 // quickshell/lock/LockView.qml
-// What one screen shows while locked: the time, the date and the password
-// field. It only draws and reports; LockScreen decides. Enter submits,
-// Escape or Ctrl+U clears what is typed.
+// What one screen shows while locked: the theme's wallpaper, blurred and
+// dimmed, then the time, the date and the password field. It only draws
+// and reports; LockScreen decides. Enter submits, Escape or Ctrl+U clears
+// what is typed.
 import QtQuick
+import QtQuick.Effects
 import Quickshell
 import "../theme/"
 
@@ -16,6 +18,36 @@ Rectangle {
     signal edited
 
     color: Colors.lock.background
+
+    // The wallpaper the desktop shows. Only the blur is drawn, so the image
+    // itself stays hidden.
+    Image {
+        id: wallpaper
+        anchors.fill: parent
+        visible: false
+        source: Wallpapers.current !== "" ? "file://" + Wallpapers.current : ""
+        fillMode: Image.PreserveAspectCrop
+        asynchronous: true
+        sourceSize.width: width
+        sourceSize.height: height
+    }
+
+    MultiEffect {
+        anchors.fill: wallpaper
+        source: wallpaper
+        visible: wallpaper.status === Image.Ready
+        autoPaddingEnabled: false
+        blurEnabled: Style.lock.blur > 0
+        blur: 1.0
+        blurMax: Style.lock.blur
+    }
+
+    // Keeps the time and the field readable on any image.
+    Rectangle {
+        anchors.fill: parent
+        visible: wallpaper.status === Image.Ready
+        color: Colors.lock.dim
+    }
 
     SystemClock {
         id: clock

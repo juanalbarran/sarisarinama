@@ -1,7 +1,7 @@
 // quickshell/wallpaper/Wallpaper.qml
-// The theme's wallpaper, on every screen, below every window. The image
-// is the theme's default from wallpapers.json, so a `theme set` swaps it
-// with the colours. A theme with no wallpaper shows its background colour.
+// The theme's wallpaper, on every screen, below every window. Which image
+// is Wallpapers' to say: the theme's pick or its default, so a `theme set`
+// swaps it with the colours. A theme with none shows its background colour.
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -10,13 +10,9 @@ import "../theme/"
 Scope {
     id: root
 
-    ConfigFile {
-        id: config
-        name: "wallpapers"
-    }
+    readonly property string path: Wallpapers.current
 
-    readonly property var current: config.data[Colors.themeName] || {}
-    readonly property string path: root.current.default || ""
+    WallpaperIpc {}
 
     Variants {
         model: Quickshell.screens

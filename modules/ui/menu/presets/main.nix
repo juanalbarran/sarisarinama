@@ -33,6 +33,11 @@
       menu = "themes";
     }
     {
+      icon = "󰸉 ";
+      label = "Wallpaper";
+      menu = "wallpaper";
+    }
+    {
       icon = "󰍹 ";
       label = "Monitors";
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";

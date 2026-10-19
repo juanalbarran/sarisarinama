@@ -3,6 +3,7 @@
 # and which of them the theme starts with. Every directory under the
 # repository's wallpapers/ is picked up for the theme of the same name, so
 # adding an image there is enough; a config may point a theme elsewhere.
+# theme.rotateWallpapers moves to the next image on a timer.
 {
   flake.modules.homeManager.sarisarinama = {lib, ...}: let
     root = ../../../../wallpapers;
@@ -31,6 +32,17 @@
       });
       default = {};
       description = "Wallpapers per theme, keyed by theme name. A theme with none shows its background colour.";
+    };
+
+    # Beside `wallpapers`, not in it: that one is keyed by theme name.
+    options.programs.sarisarinama.theme.rotateWallpapers = lib.mkOption {
+      type = lib.types.ints.unsigned;
+      default = 0;
+      example = 30;
+      description = ''
+        Minutes between moving to the theme's next wallpaper; 0 never does.
+        omarchy has no rotation, so off by default.
+      '';
     };
 
     config.programs.sarisarinama.theme.wallpapers =

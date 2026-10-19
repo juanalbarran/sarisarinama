@@ -17,6 +17,7 @@
       // {
         gap = px 16 "Gap between the time, the date and the field.";
         clockSize = px 72 "The time in px; display type, outside the type scale.";
+        blur = px 64 "How far the wallpaper behind the lock is blurred; 0 keeps it sharp. Not scaled.";
 
         field = {
           width = px 320 "Password field width.";

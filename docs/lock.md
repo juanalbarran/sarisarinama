@@ -1,9 +1,9 @@
 # Lock screen
 
 The session lock, hosted by the shell as omarchy quattro's
-`shell/plugins/lock` is. Password only: no fingerprint, no wallpaper, no
-screen blanking. Each screen shows the time, the date and one password
-field, on the theme's background.
+`shell/plugins/lock` is. Password only: no fingerprint, no screen
+blanking. Each screen shows the time, the date and one password field, over
+the desktop's wallpaper, blurred and dimmed.
 
 ```
 qs -p $SARISARINAMA_PATH ipc call lock lock
@@ -97,14 +97,21 @@ unlock it. The shell watches the file, so it notices one written later.
 
 ## Looks
 
+Behind everything, the wallpaper the desktop shows (`Wallpapers.current`,
+see [themes](./themes.md#switching-wallpapers)), blurred as omarchy's is,
+under a wash so the time and the field stay readable. With no wallpaper,
+the `background` colour alone.
+
 `style.lock`: the shared font and scale, `gap` between the rows,
-`clockSize` (px, display type outside the type scale) and `field`
-(`width`, `height`, `paddingX`, `radius`, `border`).
+`clockSize` (px, display type outside the type scale), `blur` (px, 64; 0
+keeps the image sharp) and `field` (`width`, `height`, `paddingX`,
+`radius`, `border`).
 
 `theme.surfaces.lock`: `background` (keep its alpha at 1, or the desktop
-shows through), `text`, `muted` (the date and the hint), `field`,
-`fieldBorder` and `urgent`. From omarchy's `[lock]`, without its
-selection colour or its active border.
+shows through), `dim` and `dimAlpha` (the wash, `background` at 0.45),
+`text`, `muted` (the date and the hint), `field`, `fieldBorder` and
+`urgent`. From omarchy's `[lock]`, without its selection colour or its
+active border.
 
 ## Status
 

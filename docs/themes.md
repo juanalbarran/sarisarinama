@@ -105,9 +105,34 @@ The images come from omarchy, each theme's first background:
 Qt as packaged in nixpkgs decodes jpg and png but not webp, which most of
 omarchy's are, so every other format is converted to JPEG at build time.
 `wallpapers.json` holds, per theme, the default and every image, as store
-paths; like `theme.json`, the shell never scans a directory. The shell
+paths, plus `rotate`; like `theme.json`, the shell never scans a directory. The shell
 draws them itself, a layer-shell window on the background layer per
 screen, so it works under Sway and Hyprland alike, with no swaybg.
+
+### Switching wallpapers
+
+Within the current theme, as omarchy's `theme bg next` and its background
+switcher:
+
+```
+qs -p $SARISARINAMA_PATH ipc call wallpaper next      # and previous; both wrap
+qs -p $SARISARINAMA_PATH ipc call wallpaper list
+qs -p $SARISARINAMA_PATH ipc call wallpaper set 1-winding-road.jpg
+```
+
+The root menu's **Wallpaper** row opens the same list as a menu, each row
+with its image as the icon. A file is named as `list` prints it: after
+conversion, so a `.webp` is set as `.jpg`.
+
+The image picked for each theme is remembered, by file name, in
+`$XDG_STATE_HOME/sarisarinama/wallpapers.json`, the shell's own state like
+`current.json`. Selecting a theme shows its pick, or its default when it
+has none or the file is gone from its directory. `theme.rotateWallpapers`
+moves to the next image every so many minutes, `0` (the default) never:
+omarchy has no rotation. A rotation step is remembered like a pick.
+
+The lock screen shows the same image, blurred and dimmed, see
+[lock](./lock.md#looks).
 
 ## Files
 
@@ -126,7 +151,10 @@ screen, so it works under Sway and Hyprland alike, with no swaybg.
 | `wallpapers/<theme>/`                     | The images, one directory per theme |
 | `modules/ui/theme/wallpapers/options.nix` | `theme.wallpapers`, found by name   |
 | `modules/ui/theme/wallpapers/render.nix`  | Converts, writes `wallpapers.json`  |
-| `quickshell/wallpaper/Wallpaper.qml`      | The theme's default, every screen   |
+| `quickshell/wallpaper/Wallpaper.qml`      | The current image, every screen     |
+| `quickshell/wallpaper/WallpaperIpc.qml`   | `wallpaper next`/`set`/`entries`    |
+| `quickshell/theme/Wallpapers.qml`         | Current image, picks, rotation      |
+| `modules/ui/menu/presets/wallpaper.nix`   | The Wallpaper menu                  |
 
 import-tree skips any path holding `_`, so `_lib/` holds plain functions.
 

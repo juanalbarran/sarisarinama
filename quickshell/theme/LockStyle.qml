@@ -35,6 +35,8 @@ QtObject {
     readonly property int gap: root.px(root.cfg.gap, 16)
     // The time is display type, far above the type scale, so it is px.
     readonly property int clockSize: root.px(root.cfg.clockSize, 72)
+    // How far the wallpaper is blurred, in px; 0 shows it sharp.
+    readonly property int blur: root.raw(root.cfg.blur, 64)
 
     readonly property QtObject field: QtObject {
         readonly property int width: root.px(root.group("field").width, 320)

@@ -1,6 +1,7 @@
 # modules/ui/theme/wallpapers/render.nix
 # Renders theme.wallpapers to ~/.config/sarisarinama/wallpapers.json: per
-# theme, the image it starts with and every image it has, as store paths.
+# theme, the image it starts with and every image it has, as store paths,
+# and the rotation interval.
 # Qt as packaged decodes jpg and png but not webp, which is what omarchy
 # ships, so every other format is converted to JPEG here, once, at build
 # time. The shell never scans a directory, as with theme.json.
@@ -50,10 +51,12 @@
         })
         cfg.theme.wallpapers;
 
-      xdg.configFile."sarisarinama/wallpapers.json".text =
-        builtins.toJSON (lib.mapAttrs render (lib.filterAttrs (_: w:
-            builtins.any (f: lib.elem (extension f) images) (lib.attrNames (builtins.readDir w.directory)))
-          cfg.theme.wallpapers));
+      xdg.configFile."sarisarinama/wallpapers.json".text = builtins.toJSON {
+        rotate = cfg.theme.rotateWallpapers;
+        themes = lib.mapAttrs render (lib.filterAttrs (_: w:
+          builtins.any (f: lib.elem (extension f) images) (lib.attrNames (builtins.readDir w.directory)))
+        cfg.theme.wallpapers);
+      };
     };
   };
 }
