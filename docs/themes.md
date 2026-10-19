@@ -82,20 +82,51 @@ one Nix rendered. It assigns `Colors.selected` first and writes the file
 after: the write is asynchronous, so re-reading it would race, and the UI
 must switch now. The file is only how the choice survives a restart.
 
+## Wallpapers
+
+Each theme has a directory of images, `wallpapers/<theme>/` at the root of
+the repository, picked up by name: dropping an image there is enough. When
+a theme is selected its default is shown on every screen, below every
+window; `theme.wallpapers.<theme>.default` names it, and null means the
+first by name, as in omarchy. A config may point a theme at a directory of
+its own with `theme.wallpapers.<theme>.directory`. A theme with no
+wallpaper shows its `background` colour.
+
+The images come from omarchy, each theme's first background:
+
+| Theme             | Image                                                  |
+| ----------------- | ------------------------------------------------------ |
+| `tokyo-night`     | `tokyo-night/0-liftoff.webp`, omarchy's out of the box |
+| `vantablack`      | `vantablack/0-dot-hands.webp`                          |
+| `white`           | `white/1-white.webp`                                   |
+| `kanagawa-dragon` | `kanagawa/1-kanagawa.jpg`                              |
+| `no-clown-fiesta` | `matte-black/0-ship-at-sea.jpg`; omarchy has no ncf    |
+
+Qt as packaged in nixpkgs decodes jpg and png but not webp, which most of
+omarchy's are, so every other format is converted to JPEG at build time.
+`wallpapers.json` holds, per theme, the default and every image, as store
+paths; like `theme.json`, the shell never scans a directory. The shell
+draws them itself, a layer-shell window on the background layer per
+screen, so it works under Sway and Hyprland alike, with no swaybg.
+
 ## Files
 
-| File                                | Role                                |
-| ----------------------------------- | ----------------------------------- |
-| `modules/ui/theme/_lib/mix.nix`     | Hex arithmetic: `mix`, `isLight`    |
-| `modules/ui/theme/_lib/palette.nix` | The cascade                         |
-| `modules/ui/theme/options.nix`      | `theme.default`, `theme.palettes`   |
-| `modules/ui/theme/presets/*.nix`    | One palette each                    |
-| `modules/ui/theme/surfaces.nix`     | `theme.surfaces.*`, the token map   |
-| `modules/ui/theme/render.nix`       | Writes all three kinds of file      |
-| `quickshell/theme/Colors.qml`       | Reads all three, resolves a key     |
-| `quickshell/theme/BarColors.qml`    | The `bar` block, with its defaults  |
-| `quickshell/theme/MenuColors.qml`   | The `menu` block, with its defaults |
-| `quickshell/theme/ThemeIpc.qml`     | `theme get`/`list`/`set` over IPC   |
+| File                                      | Role                                |
+| ----------------------------------------- | ----------------------------------- |
+| `modules/ui/theme/_lib/mix.nix`           | Hex arithmetic: `mix`, `isLight`    |
+| `modules/ui/theme/_lib/palette.nix`       | The cascade                         |
+| `modules/ui/theme/options.nix`            | `theme.default`, `theme.palettes`   |
+| `modules/ui/theme/presets/*.nix`          | One palette each                    |
+| `modules/ui/theme/surfaces.nix`           | `theme.surfaces.*`, the token map   |
+| `modules/ui/theme/render.nix`             | Writes all three kinds of file      |
+| `quickshell/theme/Colors.qml`             | Reads all three, resolves a key     |
+| `quickshell/theme/BarColors.qml`          | The `bar` block, with its defaults  |
+| `quickshell/theme/MenuColors.qml`         | The `menu` block, with its defaults |
+| `quickshell/theme/ThemeIpc.qml`           | `theme get`/`list`/`set` over IPC   |
+| `wallpapers/<theme>/`                     | The images, one directory per theme |
+| `modules/ui/theme/wallpapers/options.nix` | `theme.wallpapers`, found by name   |
+| `modules/ui/theme/wallpapers/render.nix`  | Converts, writes `wallpapers.json`  |
+| `quickshell/wallpaper/Wallpaper.qml`      | The theme's default, every screen   |
 
 import-tree skips any path holding `_`, so `_lib/` holds plain functions.
 

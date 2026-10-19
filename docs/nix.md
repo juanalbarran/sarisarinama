@@ -46,6 +46,7 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | `theme.surfaces.*`                    | `modules/ui/theme/surfaces.nix`        |
 | palette cascade (no options)          | `modules/ui/theme/_lib/`               |
 | theme rendering + assertions          | `modules/ui/theme/render.nix`          |
+| `theme.wallpapers.*`                  | `modules/ui/theme/wallpapers/`         |
 | `lock.idle`                           | `modules/ui/lock/idle.nix`             |
 | `lock.pam.enable`                     | `modules/ui/lock/pam.nix`              |
 | `lock` rendering                      | `modules/ui/lock/render.nix`           |

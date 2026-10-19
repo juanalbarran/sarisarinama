@@ -11,6 +11,7 @@ import "panes/vpn"
 import "panes/battery"
 import "panes/audio"
 import "lock"
+import "wallpaper"
 
 ShellRoot {
     id: shell
@@ -23,6 +24,7 @@ ShellRoot {
     }
     ThemeIpc {}
     LockScreen {}
+    Wallpaper {}
 
     // Fixed component table. No manifests, no discovery: adding a
     // component means adding one line here.

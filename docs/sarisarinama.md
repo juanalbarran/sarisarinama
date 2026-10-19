@@ -55,7 +55,7 @@ For more context [style](./style.md)
 
 Colour, and nothing else. A palette per theme, plus one file saying which
 palette key paints which surface, so a theme is swapped at runtime over IPC
-without a rebuild:
+without a rebuild. Each theme also has a wallpaper, swapped with it:
 
 ```
 qs -p $SARISARINAMA_PATH ipc call theme set vantablack
