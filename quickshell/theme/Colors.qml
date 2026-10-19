@@ -82,4 +82,8 @@ Singleton {
     readonly property PanelColors audio: PanelColors {
         paint: (key, token, color, alpha) => root.paint("audio", key, token, color, alpha)
     }
+
+    readonly property LockColors lock: LockColors {
+        paint: (key, token, color, alpha) => root.paint("lock", key, token, color, alpha)
+    }
 }

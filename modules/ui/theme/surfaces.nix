@@ -57,6 +57,16 @@
       vpn = panel;
       battery = panel;
       audio = panel;
+
+      lock = {
+        background = key "background" "The whole screen behind the lock.";
+        backgroundAlpha = alpha 1.0 "Keep it 1: below that the desktop shows through.";
+        text = key "foreground" "The time and what is typed.";
+        muted = key "dark_foreground" "The date and the field's hint.";
+        field = key "lighter_background" "The password field.";
+        fieldBorder = key "accent" "The field's border.";
+        urgent = key "red" "The border and hint after a wrong password.";
+      };
     };
   };
 }

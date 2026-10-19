@@ -79,4 +79,10 @@ Singleton {
         sharedFont: root.font
         sharedScale: root.spacing.scale
     }
+
+    readonly property LockStyle lock: LockStyle {
+        cfg: root.section("lock")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
 }

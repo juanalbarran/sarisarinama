@@ -10,6 +10,7 @@ import "panes/monitor"
 import "panes/vpn"
 import "panes/battery"
 import "panes/audio"
+import "lock"
 
 ShellRoot {
     id: shell
@@ -21,6 +22,7 @@ ShellRoot {
         onVpnClicked: shell.toggle("vpn", "{}")
     }
     ThemeIpc {}
+    LockScreen {}
 
     // Fixed component table. No manifests, no discovery: adding a
     // component means adding one line here.

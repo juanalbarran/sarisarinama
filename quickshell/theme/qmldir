@@ -12,4 +12,6 @@ NetworkColors NetworkColors.qml
 NetworkStyle NetworkStyle.qml
 BatteryStyle BatteryStyle.qml
 AudioStyle AudioStyle.qml
+LockColors LockColors.qml
+LockStyle LockStyle.qml
 ThemeIpc ThemeIpc.qml

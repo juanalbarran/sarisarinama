@@ -61,6 +61,10 @@
           type = lib.types.attrs;
           default = {};
         };
+        targets.genericLinux.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
         xdg.stateHome = lib.mkOption {
           type = lib.types.str;
           default = "~/.local/state";
