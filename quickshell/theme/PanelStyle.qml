@@ -13,6 +13,8 @@ QtObject {
     property var cfg: ({})
     property FontScale sharedFont: null
     property real sharedScale: 1.0
+    // The card width when style.json has none; a wider panel sets its own.
+    property int defaultWidth: 380
 
     function group(name) {
         var g = cfg[name];
@@ -38,7 +40,7 @@ QtObject {
     readonly property int gap: root.px(root.cfg.gap, 12)
 
     readonly property QtObject card: QtObject {
-        readonly property int width: root.px(root.group("card").width, 380)
+        readonly property int width: root.px(root.group("card").width, root.defaultWidth)
         readonly property int padding: root.px(root.group("card").padding, 18)
         // Radius and border are not scaled; they are strokes, not spaces.
         readonly property int radius: root.raw(root.group("card").radius, 8)

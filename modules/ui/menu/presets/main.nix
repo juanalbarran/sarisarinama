@@ -43,6 +43,11 @@
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";
     }
     {
+      icon = "󰌌 ";
+      label = "Keybinds";
+      menu = "keybinds";
+    }
+    {
       icon = "󰒓 ";
       label = "System";
       menu = "system";

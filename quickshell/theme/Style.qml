@@ -80,6 +80,12 @@ Singleton {
         sharedScale: root.spacing.scale
     }
 
+    readonly property KeybindsStyle keybinds: KeybindsStyle {
+        cfg: root.section("keybinds")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
+
     readonly property LockStyle lock: LockStyle {
         cfg: root.section("lock")
         sharedFont: root.font

@@ -14,5 +14,7 @@ BatteryStyle BatteryStyle.qml
 AudioStyle AudioStyle.qml
 LockColors LockColors.qml
 LockStyle LockStyle.qml
+KeybindsColors KeybindsColors.qml
+KeybindsStyle KeybindsStyle.qml
 ThemeIpc ThemeIpc.qml
 singleton Wallpapers Wallpapers.qml

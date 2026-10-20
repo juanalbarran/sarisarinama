@@ -83,6 +83,10 @@ Singleton {
         paint: (key, token, color, alpha) => root.paint("audio", key, token, color, alpha)
     }
 
+    readonly property KeybindsColors keybinds: KeybindsColors {
+        paint: (key, token, color, alpha) => root.paint("keybinds", key, token, color, alpha)
+    }
+
     readonly property LockColors lock: LockColors {
         paint: (key, token, color, alpha) => root.paint("lock", key, token, color, alpha)
     }

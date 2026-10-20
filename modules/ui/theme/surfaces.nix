@@ -57,6 +57,14 @@
       vpn = panel;
       battery = panel;
       audio = panel;
+      keybinds =
+        panel
+        // {
+          keycap = key "lighter_background" "The face of a keycap.";
+          keycapEdge = key "muted" "A keycap's border and lower edge.";
+          keycapText = key "foreground" "The key's name on a keycap.";
+          match = key "accent" "A group heading, and the words a filter matched.";
+        };
 
       lock = {
         background = key "background" "The whole screen behind the lock.";

@@ -87,6 +87,15 @@ own volume. Read from PipeWire, after omarchy's audio panel.
 
 For more context [audio](./audio.md)
 
+### Keybinds pane
+
+A cheat sheet per application: the `keybinds` menu lists Neovim, Tmux and
+whatever a config adds, and each opens a pane with that app's binds as
+keycaps, filtered as you type. The binds are written in Nix, so a config
+can build its compositor's section from its own keybinds.
+
+For more context [keybinds](./keybinds.md)
+
 ### Lock screen
 
 The session lock, held by the shell like omarchy's: the time, the date and
@@ -109,6 +118,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Battery   | Panel written; not yet checked on screen                    |
 | Audio     | Panel written; not yet checked on screen                    |
 | Lock      | Lock and triggers tested headless; not yet used for real    |
+| Keybinds  | Pane tested headless with canaima's data; not yet on screen |
 
 Open, roughly in the order each blocks something:
 

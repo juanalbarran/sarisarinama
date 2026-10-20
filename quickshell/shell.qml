@@ -10,6 +10,7 @@ import "panes/monitor"
 import "panes/vpn"
 import "panes/battery"
 import "panes/audio"
+import "panes/keybinds"
 import "lock"
 import "wallpaper"
 
@@ -34,7 +35,8 @@ ShellRoot {
             "monitor": monitorLoader,
             "vpn": vpnLoader,
             "battery": batteryLoader,
-            "audio": audioLoader
+            "audio": audioLoader,
+            "keybinds": keybindsLoader
         })
 
     Loader {
@@ -71,6 +73,12 @@ ShellRoot {
         id: audioLoader
         active: false
         sourceComponent: AudioPanel {}
+    }
+
+    Loader {
+        id: keybindsLoader
+        active: false
+        sourceComponent: KeybindsPanel {}
     }
 
     function summon(id, payloadJson) {

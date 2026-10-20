@@ -51,6 +51,10 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | `lock.pam.enable`                         | `modules/ui/lock/pam.nix`              |
 | `lock` rendering                          | `modules/ui/lock/render.nix`           |
 | `style.lock.*`                            | `modules/ui/style/lock.nix`            |
+| `keybinds.<id>`                           | `modules/ui/keybinds/options.nix`      |
+| `cheatsheets.json` + the `keybinds` menu  | `modules/ui/keybinds/render.nix`       |
+| `keybinds.neovim`, `keybinds.tmux`        | `modules/ui/keybinds/presets/`         |
+| `style.keybinds.*`                        | `modules/ui/style/keybinds.nix`        |
 
 The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
 per menu and turns `menu = "system"` into the path of `system.json`. It
