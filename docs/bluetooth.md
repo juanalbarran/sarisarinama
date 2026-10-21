@@ -9,7 +9,7 @@ one. After omarchy quattro's `shell/plugins/panels/bluetooth`.
 qs -p $SARISARINAMA_PATH ipc call shell toggle bluetooth '{}'
 ```
 
-A click on the bar's Bluetooth icon, or the root menu's **Bluetooth** row,
+A click on the bar's Bluetooth icon, or the Services menu's **Bluetooth** row,
 summons it. A right click on the icon turns Bluetooth on or off, as a
 right click on the speaker mutes. The icon is hidden without an adapter.
 

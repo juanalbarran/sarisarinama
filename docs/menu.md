@@ -34,6 +34,20 @@ the entries whose label contains it, ignoring case, and the first match is
 selected. Back is not an entry: it is never counted and never filtered out.
 A new menu starts with an empty filter.
 
+### Root and services menus
+
+`root.json` (`presets/main.nix`) is kept short: Applications, Themes,
+Services and System, in that order. The panels sit one level
+down, in `services.json` (`presets/services.nix`): Network, Bluetooth,
+VPN, Monitors and Sound, each summoning its panel as a click on its bar
+icon does. Projects, Bookmarks, Wallpaper and Keybinds keep their menus but have
+no root row; a config opens them with keybinds of its own, as canaima does
+for Services, Themes and System:
+
+```
+qs -p $SARISARINAMA_PATH ipc call shell toggle menu '{"file":"~/.config/sarisarinama/services.json"}'
+```
+
 ### Command menu
 
 Instead of an array, a file may be one object. Its `command` runs when the
@@ -87,7 +101,7 @@ found under NixOS, which depends on Qt knowing the icon theme.
 
 ### Bookmarks menu
 
-The root menu's **Bookmarks** row. Two levels, as canaima's wofi
+Not in the root menu: a config opens `bookmarks.json` with a keybind. Two levels, as canaima's wofi
 `bookmarks` script had: a row per category, then a row per link. Both are
 plain list menus, rendered by `render.nix` like any other, so the shell
 knows nothing about bookmarks.
@@ -158,8 +172,8 @@ and never scaled. The filter's hint is `menu.placeholder` in
 
 ## Project menu (done)
 
-`sarisarinama-projects-menu [dir]` is the entry point, and what the root
-menu's **Projects** row runs. No `dir` means `projects.root`. A project
+`sarisarinama-projects-menu [dir]` is the entry point, and what a config binds
+to a key (canaima: `mod` + `p`). No `dir` means `projects.root`. A project
 opens straight in tmux; anything else opens the menu at that directory,
 over IPC (`summon`, so an open menu moves there instead of closing):
 

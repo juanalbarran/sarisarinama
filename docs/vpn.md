@@ -10,7 +10,7 @@ the same split.
 qs -p $SARISARINAMA_PATH ipc call shell toggle vpn '{}'
 ```
 
-A click on the bar's VPN icon summons it; the root menu has no row for it.
+A click on the bar's VPN icon, or the Services menu's **VPN** row, summons it.
 
 ## Where the state comes from
 

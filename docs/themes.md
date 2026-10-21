@@ -120,7 +120,7 @@ qs -p $SARISARINAMA_PATH ipc call wallpaper list
 qs -p $SARISARINAMA_PATH ipc call wallpaper set 1-winding-road.jpg
 ```
 
-The root menu's **Wallpaper** row opens the same list as a menu, each row
+The Wallpaper menu (`wallpaper.json`, no root row) opens the same list, each row
 with its image as the icon. A file is named as `list` prints it: after
 conversion, so a `.webp` is set as `.jpg`.
 

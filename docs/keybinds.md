@@ -13,8 +13,8 @@ qs -p $SARISARINAMA_PATH ipc call shell summon keybinds '{"section": "tmux"}'
 ```
 
 The first opens the menu, the second the pane straight on a section. A
-payload without `section` shows the one shown last. The root menu has a
-`Keybinds` row. The shell binds no key itself: canaima binds `mod` + `?`
+payload without `section` shows the one shown last. The root menu has no
+row for it. The shell binds no key itself: canaima binds `mod` + `?`
 (`mod` + `Shift` + `/`) to the menu. Not `mod` + `k`, which is Sway's
 focus up.
 

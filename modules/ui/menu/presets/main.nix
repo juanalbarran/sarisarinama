@@ -1,5 +1,8 @@
 # modules/ui/menu/presets/main.nix
-# The root menu: what the shell opens when summoned without a file.
+# The root menu: what the shell opens when summoned without a file. Kept
+# short: the panels are under Services (services.nix). Projects, bookmarks,
+# wallpapers and keybinds have menus of their own but no row here; a config
+# reaches them through its own keybinds.
 {
   flake.modules.homeManager.sarisarinama.programs.sarisarinama.menus.root = [
     {
@@ -8,49 +11,14 @@
       menu = "applications";
     }
     {
-      icon = "󰈮 ";
-      label = "Projects";
-      action = "sarisarinama-projects-menu";
-    }
-    {
-      icon = "󰃀 ";
-      label = "Bookmarks";
-      menu = "bookmarks";
-    }
-    {
-      icon = "󰖩 ";
-      label = "Network";
-      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";
-    }
-    {
-      icon = "󰂯 ";
-      label = "Bluetooth";
-      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon bluetooth '{}'";
-    }
-    {
-      icon = "󰕾 ";
-      label = "Sound";
-      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon audio '{}'";
-    }
-    {
       icon = "󰏘 ";
       label = "Themes";
       menu = "themes";
     }
     {
-      icon = "󰸉 ";
-      label = "Wallpaper";
-      menu = "wallpaper";
-    }
-    {
-      icon = "󰍹 ";
-      label = "Monitors";
-      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon monitor '{}'";
-    }
-    {
-      icon = "󰌌 ";
-      label = "Keybinds";
-      menu = "keybinds";
+      icon = "󰒋 ";
+      label = "Services";
+      menu = "services";
     }
     {
       icon = "󰒓 ";

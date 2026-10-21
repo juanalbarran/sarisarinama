@@ -9,7 +9,7 @@ every app playing sound with its own volume. After omarchy quattro's
 qs -p $SARISARINAMA_PATH ipc call shell toggle audio '{}'
 ```
 
-A click on the bar's speaker, or the root menu's **Sound** row, summons
+A click on the bar's speaker, or the Services menu's **Sound** row, summons
 it. A right-click on the speaker mutes, as a click did before.
 
 ## Where the state comes from
