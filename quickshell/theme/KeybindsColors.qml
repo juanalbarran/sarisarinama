@@ -1,6 +1,6 @@
 // quickshell/theme/KeybindsColors.qml
 // The `keybinds` block of surfaces.json: every panel's tokens, from
-// PanelColors, plus the keycaps and the filter's matches.
+// PanelColors, plus the keycaps and the group headings.
 import QtQuick
 
 PanelColors {

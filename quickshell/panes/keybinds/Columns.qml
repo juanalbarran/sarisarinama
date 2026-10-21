@@ -35,7 +35,6 @@ Row {
 
                     width: column.width
                     group: modelData
-                    query: root.keys.query
                 }
             }
         }

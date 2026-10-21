@@ -63,7 +63,7 @@
           keycap = key "lighter_background" "The face of a keycap.";
           keycapEdge = key "muted" "A keycap's border and lower edge.";
           keycapText = key "foreground" "The key's name on a keycap.";
-          match = key "accent" "A group heading, and the words a filter matched.";
+          match = key "accent" "A group heading.";
         };
 
       lock = {

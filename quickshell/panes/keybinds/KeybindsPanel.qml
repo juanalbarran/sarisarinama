@@ -2,8 +2,8 @@
 // The keybinds pane, centred on the screen like the panels. Implements the
 // host contract shell.qml expects (open/close/opened); the payload names
 // the section to show, {"section": "<id>"}, and without one the pane
-// shows the section it showed last. Typing filters; there is nothing to
-// select, so Ctrl+N and Ctrl+P scroll instead of moving a cursor.
+// shows the section it showed last. There is nothing to select, so j and k
+// (and Ctrl+N, Ctrl+P) scroll instead of moving a cursor.
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -22,7 +22,6 @@ PanelWindow {
         } catch (e) {}
         if (payload.section)
             keyState.sectionId = payload.section;
-        keyState.query = "";
         body.contentY = 0;
         opened = true;
     }
@@ -40,18 +39,14 @@ PanelWindow {
         body.contentY = Math.max(0, Math.min(body.contentY + dy, bottom));
     }
 
-    // The pane's keys, offered by the filter box before it takes the text.
-    // Leaves the rest unaccepted, so they are typed.
+    // The pane's keys; the card holds the keyboard while the pane is open.
     function handleKey(event) {
         var ctrl = (event.modifiers & Qt.ControlModifier) !== 0;
         var shift = (event.modifiers & Qt.ShiftModifier) !== 0;
         var key = event.key;
         var line = Style.keybinds.font.body * 2;
         if (key === Qt.Key_Escape) {
-            if (keyState.query !== "")
-                keyState.query = "";
-            else
-                close();
+            close();
         } else if (key === Qt.Key_Tab && !shift) {
             keyState.cycle(1);
             body.contentY = 0;
@@ -60,9 +55,9 @@ PanelWindow {
             // on the keymap.
             keyState.cycle(-1);
             body.contentY = 0;
-        } else if ((ctrl && key === Qt.Key_N) || key === Qt.Key_Down) {
+        } else if ((ctrl && key === Qt.Key_N) || (!ctrl && key === Qt.Key_J) || key === Qt.Key_Down) {
             scroll(line * 3);
-        } else if ((ctrl && key === Qt.Key_P) || key === Qt.Key_Up) {
+        } else if ((ctrl && key === Qt.Key_P) || (!ctrl && key === Qt.Key_K) || key === Qt.Key_Up) {
             scroll(-line * 3);
         } else if ((ctrl && key === Qt.Key_D) || key === Qt.Key_PageDown) {
             scroll(body.height / 2);
@@ -75,7 +70,7 @@ PanelWindow {
     }
 
     onOpenedChanged: if (opened)
-        filter.focusInput()
+        card.forceActiveFocus()
 
     // No anchors: a layer-shell window anchored to no edge is centred by
     // the compositor, on Sway and Hyprland alike.
@@ -89,7 +84,7 @@ PanelWindow {
 
     // Everything but the binds, so the binds get what is left of the
     // screen share without a binding through their own height.
-    readonly property int chrome: header.implicitHeight + filter.implicitHeight + separator.height + hints.implicitHeight + 4 * Style.keybinds.gap + 2 * Style.keybinds.card.padding
+    readonly property int chrome: header.implicitHeight + separator.height + hints.implicitHeight + 3 * Style.keybinds.gap + 2 * Style.keybinds.card.padding
     readonly property int maxBody: Math.max(Style.keybinds.font.body * 4, Math.round((root.screen?.height ?? 1080) * Style.keybinds.maxHeight) - chrome)
 
     Rectangle {
@@ -102,6 +97,9 @@ PanelWindow {
         radius: Style.keybinds.card.radius
         border.width: Style.keybinds.card.border
         border.color: Colors.keybinds.border
+
+        focus: true
+        Keys.onPressed: event => root.handleKey(event)
 
         Column {
             id: content
@@ -118,15 +116,8 @@ PanelWindow {
                 onPicked: id => {
                     keyState.sectionId = id;
                     body.contentY = 0;
-                    filter.focusInput();
+                    card.forceActiveFocus();
                 }
-            }
-
-            Filter {
-                id: filter
-                width: parent.width
-                keys: keyState
-                panel: root
             }
 
             Rectangle {
@@ -138,13 +129,13 @@ PanelWindow {
 
             Item {
                 width: parent.width
-                height: keyState.shown > 0 ? body.height : empty.implicitHeight
+                height: keyState.total > 0 ? body.height : empty.implicitHeight
 
                 Flickable {
                     id: body
                     width: parent.width
                     height: Math.min(contentHeight, root.maxBody)
-                    visible: keyState.shown > 0
+                    visible: keyState.total > 0
                     contentWidth: width
                     contentHeight: columns.implicitHeight
                     boundsBehavior: Flickable.StopAtBounds
@@ -171,12 +162,12 @@ PanelWindow {
                 Text {
                     id: empty
                     width: parent.width
-                    visible: keyState.shown === 0
+                    visible: keyState.total === 0
                     topPadding: Style.space(12)
                     bottomPadding: Style.space(12)
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
-                    text: keyState.section ? "Nothing matches “" + keyState.query.trim() + "”" : "No keybinds yet: set programs.sarisarinama.keybinds"
+                    text: "No keybinds yet: set programs.sarisarinama.keybinds"
                     color: Colors.keybinds.muted
                     font.family: Style.keybinds.font.family
                     font.pixelSize: Style.keybinds.font.body

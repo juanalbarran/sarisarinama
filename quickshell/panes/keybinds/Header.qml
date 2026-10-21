@@ -1,7 +1,7 @@
 // quickshell/panes/keybinds/Header.qml
-// The top row: the section's icon and name, how many binds it has (or how
-// many the filter left), and on the right one pill per section, the one in
-// view filled. A click on a pill shows that section.
+// The top row: the section's icon and name, how many binds it has, and on
+// the right one pill per section, the one in view filled. A click on a pill
+// shows that section.
 import QtQuick
 import "../../theme/"
 import "../common/"
@@ -46,13 +46,7 @@ Item {
 
         Text {
             width: parent.width
-            text: {
-                if (!root.keys.section)
-                    return "NOTHING TO SHOW";
-                if (root.keys.query.trim() !== "")
-                    return root.keys.shown + " OF " + root.keys.total + " KEYBINDS";
-                return root.keys.total + " KEYBINDS";
-            }
+            text: root.keys.section ? root.keys.total + " KEYBINDS" : "NOTHING TO SHOW"
             elide: Text.ElideRight
             color: Colors.keybinds.muted
             font.family: Style.keybinds.font.family

@@ -11,7 +11,6 @@ Flow {
     id: root
 
     property string keys: ""
-    property string query: ""
 
     spacing: Style.keybinds.keycap.stepGap
 
@@ -48,7 +47,6 @@ Flow {
                     Keycap {
                         visible: !KeyModel.isPlaceholder(key.modelData)
                         text: key.modelData
-                        lit: KeyModel.lit(key.modelData, root.query)
                     }
 
                     Text {

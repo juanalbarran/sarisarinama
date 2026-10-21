@@ -2,21 +2,19 @@
 // One group of a section: its heading, then one row per bind.
 import QtQuick
 import "../../theme/"
-import "keymodel.js" as KeyModel
 
 Column {
     id: root
 
     required property var group
-    property string query: ""
 
     spacing: Style.space(1)
 
     Text {
         width: root.width
         bottomPadding: Style.space(4)
-        text: KeyModel.highlight(String(root.group.title).toUpperCase(), root.query, Colors.keybinds.text)
-        textFormat: Text.StyledText
+        text: String(root.group.title).toUpperCase()
+        textFormat: Text.PlainText
         elide: Text.ElideRight
         color: Colors.keybinds.match
         font.family: Style.keybinds.font.family
@@ -33,7 +31,6 @@ Column {
 
             width: root.width
             bind: modelData
-            query: root.query
         }
     }
 }

@@ -1,6 +1,6 @@
 // quickshell/panes/keybinds/KeybindsState.qml
-// What the pane shows: the sections of cheatsheets.json, the one in view and
-// the filter over it. The sections only draw it.
+// What the pane shows: the sections of cheatsheets.json and the one in view.
+// The sections only draw it.
 import QtQuick
 import "../../theme/"
 import "keymodel.js" as KeyModel
@@ -18,13 +18,11 @@ QtObject {
 
     // Set by the payload; an unknown id shows the first section.
     property string sectionId: ""
-    property string query: ""
 
     readonly property int index: Math.max(0, sections.findIndex(s => s.id === root.sectionId))
     readonly property var section: sections.length > 0 ? sections[index] : null
-    readonly property var groups: section ? KeyModel.filterGroups(section.groups, query) : []
-    readonly property int total: section ? KeyModel.count(section.groups) : 0
-    readonly property int shown: KeyModel.count(groups)
+    readonly property var groups: section && Array.isArray(section.groups) ? section.groups : []
+    readonly property int total: KeyModel.count(groups)
 
     // Tab and Shift+Tab: the next or the previous section, wrapping round.
     function cycle(step) {

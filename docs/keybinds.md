@@ -3,8 +3,8 @@
 A cheat sheet per application. The `keybinds` menu lists them (Neovim,
 Tmux, and whatever a config adds), and picking one opens a pane with that
 app's binds drawn as keycaps, in groups, in one column. Omarchy quattro
-shows its keybindings as a searchable list in its menu; this keeps the
-search but gives each app its own page, which reads better when the binds
+shows its keybindings as a searchable list in its menu; this drops the
+search and gives each app its own page, which reads better when the binds
 are many and grouped.
 
 ```
@@ -68,30 +68,25 @@ canaima's `modules/ui/keybinds.nix` builds a `sway` section (order 30) from
 
 ## Keys
 
-Typing filters: case-insensitive, on what a bind does and on its keys; a
-group whose title matches keeps all its binds. The matches are picked out
-in the accent colour, keycaps included. The filter stays when the section
-changes, so one word can be looked up across apps.
-
-| Key                          | Does                                     |
-| ---------------------------- | ---------------------------------------- |
-| `Tab` / `Shift+Tab`          | Next / previous section                  |
-| `Ctrl+N` / `Ctrl+P`, `↓`/`↑` | Scroll                                   |
-| `Ctrl+D` / `Ctrl+U`, PgDn/Up | Scroll half the pane                     |
-| `Esc`                        | Clear the filter; on an empty one, close |
+| Key                                     | Does                    |
+| --------------------------------------- | ----------------------- |
+| `Tab` / `Shift+Tab`                     | Next / previous section |
+| `j` / `k`, `Ctrl+N` / `Ctrl+P`, `↓`/`↑` | Scroll                  |
+| `Ctrl+D` / `Ctrl+U`, PgDn/Up            | Scroll half the pane    |
+| `Esc`                                   | Close                   |
 
 There is nothing to select, so unlike the panels there is no cursor and
-`Ctrl+N`/`Ctrl+P` scroll. A click on a section's pill shows it too.
+`j`/`k` scroll. There is no search box either, so nothing takes the
+letters. A click on a section's pill shows it too.
 
 ## Files (`quickshell/panes/keybinds/`)
 
 | File                | Role                                                     |
 | ------------------- | -------------------------------------------------------- |
 | `KeybindsPanel.qml` | PanelWindow; host contract, keys, the scrolling body     |
-| `KeybindsState.qml` | Reads `cheatsheets.json`; section in view, filter        |
-| `keymodel.js`       | Keys to keycaps, the filter, columns, highlighting; pure |
+| `KeybindsState.qml` | Reads `cheatsheets.json`; section in view                |
+| `keymodel.js`       | Keys to keycaps, the bind count, columns; pure           |
 | `Header.qml`        | Icon, name, bind count, one pill per section             |
-| `Filter.qml`        | The filter box; hands the pane's keys to the panel first |
 | `Columns.qml`       | The groups over the columns, down then across            |
 | `GroupBlock.qml`    | A group's heading and rows                               |
 | `BindRow.qml`       | Keys on the left, description on the right               |
@@ -119,13 +114,13 @@ And `modules/ui/keybinds/`: `options.nix` (the option), `render.nix`
 
 `theme.surfaces.keybinds` is every panel's tokens plus `keycap`
 (`lighter_background`), `keycapEdge` (`muted`), `keycapText` (`foreground`)
-and `match` (`accent`: group headings and filter matches).
+and `match` (`accent`: group headings).
 
 ## Status
 
 Checked in a headless Sway with canaima's real data: all three sections,
-filtering, `Tab`/`Shift+Tab`, scrolling, `Esc` twice, and the menu row
-opening the pane. canaima's `mod` + `Shift` + `/` fires in Sway. Not yet
+`Tab`/`Shift+Tab`, scrolling with `j`/`k` (letters with no bind do
+nothing), `Esc` closing, and the menu row opening the pane. canaima's `mod` + `Shift` + `/` fires in Sway. Not yet
 used on a real screen.
 
 - The tmux preset is tmux's defaults; a config that rebinds tmux must add

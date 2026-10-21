@@ -1,7 +1,7 @@
 // quickshell/panes/keybinds/keymodel.js
 // What the keybinds pane computes from cheatsheets.json, with no QML in it:
-// a bind's keys split into keycaps, the filter, the columns and the
-// highlighted text. Kept pure so it can be tested headless.
+// a bind's keys split into keycaps, the bind count and the columns. Kept
+// pure so it can be tested headless.
 .pragma library
 
 // "Ctrl+b c" -> [["Ctrl", "b"], ["c"]]: chords pressed one after the
@@ -18,35 +18,6 @@ function isPlaceholder(key) {
 
 function placeholderText(key) {
     return key.slice(1, -1);
-}
-
-function norm(query) {
-    return String(query || "").trim().toLowerCase();
-}
-
-// The groups with only the binds that match, case-insensitive, on what
-// they do or on their keys. A group whose title matches keeps every bind;
-// a group left with none is dropped.
-function filterGroups(groups, query) {
-    var q = norm(query);
-    if (!Array.isArray(groups))
-        return [];
-    if (q === "")
-        return groups;
-    var out = [];
-    groups.forEach(g => {
-        if (String(g.title).toLowerCase().includes(q)) {
-            out.push(g);
-            return;
-        }
-        var binds = (g.binds || []).filter(b => String(b.description).toLowerCase().includes(q) || String(b.keys).toLowerCase().includes(q));
-        if (binds.length > 0)
-            out.push({
-                title: g.title,
-                binds: binds
-            });
-    });
-    return out;
 }
 
 function count(groups) {
@@ -80,31 +51,4 @@ function columns(groups, n) {
         acc += weight(g);
     });
     return cols.filter(c => c.length > 0);
-}
-
-function escapeHtml(s) {
-    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-// The text as Qt's StyledText, every match of the query bold in `color`.
-function highlight(text, query, color) {
-    var q = norm(query);
-    var s = String(text);
-    if (q === "")
-        return escapeHtml(s);
-    var lower = s.toLowerCase();
-    var out = "";
-    var i = 0;
-    var j;
-    while ((j = lower.indexOf(q, i)) >= 0) {
-        out += escapeHtml(s.slice(i, j)) + "<font color=\"" + color + "\"><b>" + escapeHtml(s.slice(j, j + q.length)) + "</b></font>";
-        i = j + q.length;
-    }
-    return out + escapeHtml(s.slice(i));
-}
-
-// Whether a keycap shows something the filter matched.
-function lit(key, query) {
-    var q = norm(query);
-    return q !== "" && String(key).toLowerCase().includes(q);
 }

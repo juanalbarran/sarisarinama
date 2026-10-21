@@ -19,13 +19,13 @@ Row {
                 show: root.tabs
             },
             {
-                keys: "Ctrl+N Ctrl+P",
+                keys: "j k",
                 label: "scroll",
                 show: true
             },
             {
                 keys: "Esc",
-                label: "clear, close",
+                label: "close",
                 show: true
             }
         ].filter(h => h.show)
