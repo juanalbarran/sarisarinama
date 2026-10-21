@@ -63,6 +63,7 @@
         # Service widgets, on the right
         audio = text "body";
         bell = text "body";
+        bluetooth = text "body";
         battery =
           text "body"
           // {

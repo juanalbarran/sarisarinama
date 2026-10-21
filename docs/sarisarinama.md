@@ -87,6 +87,15 @@ own volume. Read from PipeWire, after omarchy's audio panel.
 
 For more context [audio](./audio.md)
 
+### Bluetooth panel
+
+The radio and its devices: a power switch, the devices connected and
+paired, and what a scan finds while the panel is open; connect,
+disconnect, pair and forget. Read from BlueZ, acted on through
+`bluetoothctl` and rfkill, after omarchy's bluetooth panel.
+
+For more context [bluetooth](./bluetooth.md)
+
 ### Keybinds pane
 
 A cheat sheet per application: the `keybinds` menu lists Neovim, Tmux and
@@ -120,11 +129,12 @@ The aggregate; each component doc carries its own detail and rough edges.
 | --------- | ----------------------------------------------------------- |
 | Style     | Done. One `style.json`, per-component overrides verified    |
 | Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
-| Bar       | Eight widgets, styled; Sway and Hyprland behind one adapter   |
+| Bar       | Nine widgets, styled; Sway and Hyprland behind one adapter    |
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
 | Battery   | Panel written; not yet checked on screen                    |
 | Audio     | Panel written; not yet checked on screen                    |
+| Bluetooth | Tested headless on a mock BlueZ; read-only on the real one  |
 | Lock      | Lock and triggers tested headless; not yet used for real    |
 | Keybinds  | Pane tested headless with canaima's data; not yet on screen |
 | Notices   | Core tested headless on a private bus; opt-in, not yet live |

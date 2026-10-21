@@ -87,6 +87,10 @@ Singleton {
         paint: (key, token, color, alpha) => root.paint("keybinds", key, token, color, alpha)
     }
 
+    readonly property PanelColors bluetooth: PanelColors {
+        paint: (key, token, color, alpha) => root.paint("bluetooth", key, token, color, alpha)
+    }
+
     readonly property PanelColors notifications: PanelColors {
         paint: (key, token, color, alpha) => root.paint("notifications", key, token, color, alpha)
     }

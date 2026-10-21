@@ -23,6 +23,11 @@
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon network '{}'";
     }
     {
+      icon = "󰂯 ";
+      label = "Bluetooth";
+      action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon bluetooth '{}'";
+    }
+    {
       icon = "󰕾 ";
       label = "Sound";
       action = "qs -p \"$SARISARINAMA_PATH\" ipc call shell summon audio '{}'";

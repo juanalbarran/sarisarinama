@@ -21,6 +21,7 @@ directly.
 | `Tray.qml`       | right  | `SystemTray` icons                             | click activates the item        |
 | `Bell.qml`       | right  | bell; badge while unread, crossed out under DND | click opens the notifications panel, right-click flips Do Not Disturb; hidden unless the shell is the daemon |
 | `Vpn.qml`        | right  | VPN glyph, `focused` while a tunnel is up      | click opens the VPN panel; polls `nmcli` every 5 s |
+| `BluetoothStatus.qml` | right | off, on, or `focused` with a device connected | click opens the Bluetooth panel, right-click turns it on or off; hidden without an adapter |
 | `Audio.qml`      | right  | default Pipewire sink: muted or 3 levels       | click opens the audio panel, right-click mutes, wheel ±5% |
 | `Network.qml`    | right  | ethernet, wifi or disconnected                 | polls `nmcli` every 5 s         |
 | `Battery.qml`    | right  | waybar's 9 levels + percent, one charging icon | click opens the battery panel; hidden without a laptop battery |
@@ -86,6 +87,7 @@ one. Both come from `_lib/shared.nix`, see [style](./style.md).
                   "spacing": 7, "paddingX": 2, "animation": 300 },
   "audio":      { "step": "body",    "fontSize": null },
   "bell":       { "step": "body",    "fontSize": null },
+  "bluetooth":  { "step": "body",    "fontSize": null },
   "battery":    { "step": "body",    "fontSize": null,
                   "warning": 30, "critical": 20, "blink": 500 },
   "network":    { "step": "body",    "fontSize": null },
@@ -148,6 +150,7 @@ bar/                    compositor/
     ├── Audio.qml       ├── Sway.qml
     ├── Battery.qml     └── qmldir
     ├── Bell.qml
+    ├── BluetoothStatus.qml
     ├── Clock.qml
     ├── Network.qml
     ├── Tray.qml

@@ -58,6 +58,8 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | `notifications.enable`                    | `modules/ui/notifications/options.nix` |
 | `notifications` rendering                 | `modules/ui/notifications/render.nix`  |
 | `style.notifications.*`                   | `modules/ui/style/notifications.nix`   |
+| `style.bluetooth.*`                       | `modules/ui/style/bluetooth.nix`       |
+| the Bluetooth panel's scripts             | `modules/ui/panes/bluetooth/scripts.nix` |
 
 The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
 per menu and turns `menu = "system"` into the path of `system.json`. It

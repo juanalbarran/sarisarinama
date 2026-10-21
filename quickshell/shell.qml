@@ -12,6 +12,7 @@ import "panes/battery"
 import "panes/audio"
 import "panes/keybinds"
 import "panes/notifications"
+import "panes/bluetooth"
 import "notifications"
 import "lock"
 import "wallpaper"
@@ -25,6 +26,7 @@ ShellRoot {
         onAudioClicked: shell.toggle("audio", "{}")
         onVpnClicked: shell.toggle("vpn", "{}")
         onBellClicked: shell.toggle("notifications", "{}")
+        onBluetoothClicked: shell.toggle("bluetooth", "{}")
     }
     ThemeIpc {}
     LockScreen {}
@@ -41,7 +43,8 @@ ShellRoot {
             "battery": batteryLoader,
             "audio": audioLoader,
             "keybinds": keybindsLoader,
-            "notifications": notificationsLoader
+            "notifications": notificationsLoader,
+            "bluetooth": bluetoothLoader
         })
 
     Loader {
@@ -90,6 +93,12 @@ ShellRoot {
         id: notificationsLoader
         active: false
         sourceComponent: NotificationsPanel {}
+    }
+
+    Loader {
+        id: bluetoothLoader
+        active: false
+        sourceComponent: BluetoothPanel {}
     }
 
     function summon(id, payloadJson) {

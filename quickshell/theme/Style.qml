@@ -86,6 +86,12 @@ Singleton {
         sharedScale: root.spacing.scale
     }
 
+    readonly property PanelStyle bluetooth: PanelStyle {
+        cfg: root.section("bluetooth")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
+
     readonly property NotificationsStyle notifications: NotificationsStyle {
         cfg: root.section("notifications")
         sharedFont: root.font
