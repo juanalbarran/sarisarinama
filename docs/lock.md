@@ -105,7 +105,7 @@ the `background` colour alone.
 `style.lock`: the shared font and scale, `gap` between the rows,
 `clockSize` (px, display type outside the type scale), `blur` (px, 64; 0
 keeps the image sharp) and `field` (`width`, `height`, `paddingX`,
-`radius`, `border`).
+`radius`, `border`, `dotSpacing`: the gap between the password dots, 4).
 
 `theme.surfaces.lock`: `background` (keep its alpha at 1, or the desktop
 shows through), `dim` and `dimAlpha` (the wash, `background` at 0.45),

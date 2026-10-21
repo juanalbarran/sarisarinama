@@ -45,5 +45,7 @@ QtObject {
         // Radius and border are not scaled; they are strokes, not spaces.
         readonly property int radius: root.raw(root.group("field").radius, 8)
         readonly property int border: root.raw(root.group("field").border, 2)
+        // Space between the password dots; px() would turn 0 into 1.
+        readonly property int dotSpacing: Math.round(root.raw(root.group("field").dotSpacing, 4) * root.scale)
     }
 }

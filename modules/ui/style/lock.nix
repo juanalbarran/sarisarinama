@@ -25,6 +25,7 @@
           paddingX = px 14 "Horizontal padding inside the field.";
           radius = px 8 "Corner radius; not scaled.";
           border = px 2 "Border width; not scaled.";
+          dotSpacing = px 4 "Space between the password dots; 0 lets them touch.";
         };
       };
   };

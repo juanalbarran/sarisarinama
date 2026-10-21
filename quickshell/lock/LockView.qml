@@ -106,6 +106,7 @@ Rectangle {
                 color: Colors.lock.text
                 font.family: Style.lock.font.family
                 font.pixelSize: Style.lock.font.title
+                font.letterSpacing: Style.lock.field.dotSpacing
 
                 onTextChanged: if (text !== "")
                     root.edited()
