@@ -55,7 +55,10 @@ Two presets ship (`modules/ui/keybinds/presets/`):
 
 - `neovim` (order 10): the base flavor of
   [kukenan](https://github.com/juanalbarran/kukenan), from its
-  `docs/keybinds.md`. Leader is Space.
+  `docs/keybinds.md`. Leader is Space. The `Zdiff view` group is
+  zdiff.nvim's own defaults, live only in its buffer: kukenan sets the
+  `Space z` launchers and leaves the plugin's keys alone, so check them
+  against the plugin at the commit kukenan pins.
 - `tmux` (order 20): tmux's defaults, Ctrl+b prefix and vi copy mode,
   checked against `tmux list-keys`.
 

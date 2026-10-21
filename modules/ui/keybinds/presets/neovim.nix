@@ -1,6 +1,7 @@
 # modules/ui/keybinds/presets/neovim.nix
 # Neovim: the base flavor of kukenan (github:juanalbarran/kukenan), from its
-# docs/keybinds.md. The leader is Space. Language flavors add their own
+# docs/keybinds.md, plus zdiff.nvim's defaults in its buffer. The leader is
+# Space. Language flavors add their own
 # binds; a config adds them as groups of its own.
 {
   flake.modules.homeManager.sarisarinama.programs.sarisarinama.keybinds.neovim = {
@@ -239,11 +240,53 @@
         binds = [
           {
             keys = "Space z d";
-            description = "Diff of uncommitted changes";
+            description = "zdiff of uncommitted changes";
           }
           {
             keys = "Space z D";
-            description = "Diff against main";
+            description = "zdiff against main";
+          }
+        ];
+      }
+      {
+        # zdiff.nvim's own defaults, set on its buffer only; kukenan keeps them.
+        title = "Zdiff view";
+        binds = [
+          {
+            keys = "Enter";
+            description = "Go to the file and line";
+          }
+          {
+            keys = "Tab";
+            description = "Expand or collapse the file";
+          }
+          {
+            keys = "m";
+            description = "Toggle uncommitted / against main";
+          }
+          {
+            keys = "R";
+            description = "Refresh";
+          }
+          {
+            keys = "g y";
+            description = "Yank a file:line reference";
+          }
+          {
+            keys = "g y";
+            description = "Yank a file:line range (visual)";
+          }
+          {
+            keys = "?";
+            description = "Show zdiff's keymaps";
+          }
+          {
+            keys = "Esc";
+            description = "Close the keymaps popup (q, Enter too)";
+          }
+          {
+            keys = "q";
+            description = "Close zdiff";
           }
         ];
       }
