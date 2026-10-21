@@ -27,7 +27,7 @@
         columns = {
           count = lib.mkOption {
             type = lib.types.ints.positive;
-            default = 2;
+            default = 1;
             description = "Columns the groups are spread over.";
           };
           gap = px 28 "Gap between the columns.";

@@ -2,7 +2,7 @@
 
 A cheat sheet per application. The `keybinds` menu lists them (Neovim,
 Tmux, and whatever a config adds), and picking one opens a pane with that
-app's binds drawn as keycaps, in groups, over two columns. Omarchy quattro
+app's binds drawn as keycaps, in groups, in one column. Omarchy quattro
 shows its keybindings as a searchable list in its menu; this keeps the
 search but gives each app its own page, which reads better when the binds
 are many and grouped.
@@ -109,7 +109,7 @@ And `modules/ui/keybinds/`: `options.nix` (the option), `render.nix`
 
 | Key                               | Default | Meaning                               |
 | --------------------------------- | ------- | ------------------------------------- |
-| `columns.count`                   | 2       | Columns the groups spread over        |
+| `columns.count`                   | 1       | Columns the groups spread over        |
 | `columns.gap`, `columns.groupGap` | 28, 18  | Between columns, between groups       |
 | `columns.keysWidth`               | 0.38    | Share of a column the keys take       |
 | `keycap.paddingX`, `.paddingY`    | 6, 2    | Inside a keycap                       |
