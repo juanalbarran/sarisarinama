@@ -16,5 +16,6 @@ LockColors LockColors.qml
 LockStyle LockStyle.qml
 KeybindsColors KeybindsColors.qml
 KeybindsStyle KeybindsStyle.qml
+NotificationsStyle NotificationsStyle.qml
 ThemeIpc ThemeIpc.qml
 singleton Wallpapers Wallpapers.qml

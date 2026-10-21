@@ -57,6 +57,9 @@
       vpn = panel;
       battery = panel;
       audio = panel;
+      # The toasts paint from the same block: background, border (urgent on a
+      # critical one), text, muted, accent for the icon tile.
+      notifications = panel;
       keybinds =
         panel
         // {

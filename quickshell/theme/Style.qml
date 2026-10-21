@@ -86,6 +86,12 @@ Singleton {
         sharedScale: root.spacing.scale
     }
 
+    readonly property NotificationsStyle notifications: NotificationsStyle {
+        cfg: root.section("notifications")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
+
     readonly property LockStyle lock: LockStyle {
         cfg: root.section("lock")
         sharedFont: root.font

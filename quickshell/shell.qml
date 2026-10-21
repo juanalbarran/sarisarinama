@@ -11,6 +11,8 @@ import "panes/vpn"
 import "panes/battery"
 import "panes/audio"
 import "panes/keybinds"
+import "panes/notifications"
+import "notifications"
 import "lock"
 import "wallpaper"
 
@@ -22,10 +24,12 @@ ShellRoot {
         onBatteryClicked: shell.toggle("battery", "{}")
         onAudioClicked: shell.toggle("audio", "{}")
         onVpnClicked: shell.toggle("vpn", "{}")
+        onBellClicked: shell.toggle("notifications", "{}")
     }
     ThemeIpc {}
     LockScreen {}
     Wallpaper {}
+    ToastStack {}
 
     // Fixed component table. No manifests, no discovery: adding a
     // component means adding one line here.
@@ -36,7 +40,8 @@ ShellRoot {
             "vpn": vpnLoader,
             "battery": batteryLoader,
             "audio": audioLoader,
-            "keybinds": keybindsLoader
+            "keybinds": keybindsLoader,
+            "notifications": notificationsLoader
         })
 
     Loader {
@@ -79,6 +84,12 @@ ShellRoot {
         id: keybindsLoader
         active: false
         sourceComponent: KeybindsPanel {}
+    }
+
+    Loader {
+        id: notificationsLoader
+        active: false
+        sourceComponent: NotificationsPanel {}
     }
 
     function summon(id, payloadJson) {

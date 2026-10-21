@@ -14,6 +14,7 @@ PanelWindow {
     signal batteryClicked
     signal audioClicked
     signal vpnClicked
+    signal bellClicked
 
     anchors {
         bottom: true
@@ -36,8 +37,8 @@ PanelWindow {
         anchors.centerIn: parent
     }
 
-    // right — tray, vpn, audio, network, battery; battery at the edge, as in
-    // canaima's waybar
+    // right — tray, bell, vpn, audio, network, battery; battery at the edge,
+    // as in canaima's waybar
     Row {
         anchors.right: parent.right
         anchors.rightMargin: Style.bar.paddingRight
@@ -46,6 +47,10 @@ PanelWindow {
 
         Tray {
             anchors.verticalCenter: parent.verticalCenter
+        }
+        Bell {
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: root.bellClicked()
         }
         Vpn {
             anchors.verticalCenter: parent.verticalCenter

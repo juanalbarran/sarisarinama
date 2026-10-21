@@ -91,10 +91,18 @@ For more context [audio](./audio.md)
 
 A cheat sheet per application: the `keybinds` menu lists Neovim, Tmux and
 whatever a config adds, and each opens a pane with that app's binds as
-keycaps, filtered as you type. The binds are written in Nix, so a config
+keycaps, scrolled with `j`/`k`. The binds are written in Nix, so a config
 can build its compositor's section from its own keybinds.
 
 For more context [keybinds](./keybinds.md)
+
+### Notifications
+
+The shell as the notification daemon, opt-in: toasts in the top-right
+corner with omarchy's timings and the sender's buttons, a history panel
+behind the bar's bell, and Do Not Disturb. After omarchy's notifications.
+
+For more context [notifications](./notifications.md)
 
 ### Lock screen
 
@@ -112,13 +120,14 @@ The aggregate; each component doc carries its own detail and rough edges.
 | --------- | ----------------------------------------------------------- |
 | Style     | Done. One `style.json`, per-component overrides verified    |
 | Theme     | Done. Cascade matches omarchy on all 22; switching over IPC |
-| Bar       | Seven widgets, styled; Sway and Hyprland behind one adapter   |
+| Bar       | Eight widgets, styled; Sway and Hyprland behind one adapter   |
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
 | Battery   | Panel written; not yet checked on screen                    |
 | Audio     | Panel written; not yet checked on screen                    |
 | Lock      | Lock and triggers tested headless; not yet used for real    |
 | Keybinds  | Pane tested headless with canaima's data; not yet on screen |
+| Notices   | Core tested headless on a private bus; opt-in, not yet live |
 
 Open, roughly in the order each blocks something:
 
