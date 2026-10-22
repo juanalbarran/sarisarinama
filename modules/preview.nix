@@ -57,6 +57,18 @@
           type = lib.types.attrs;
           default = {};
         };
+        programs.tmux.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
+        programs.tmux.package = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.tmux;
+        };
+        programs.tmux.extraConfig = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+        };
         home.activation = lib.mkOption {
           type = lib.types.attrs;
           default = {};
@@ -81,6 +93,7 @@
           programs.sarisarinama.enable = true;
           programs.sarisarinama.style.menu.font.size = 16;
           programs.foot.enable = true;
+          programs.tmux.enable = true;
           programs.sarisarinama.bookmarks.categories = {
             code.links = [
               {

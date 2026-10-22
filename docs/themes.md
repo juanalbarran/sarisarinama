@@ -134,6 +134,57 @@ omarchy has no rotation. A rotation step is remembered like a pick.
 The lock screen shows the same image, blurred and dimmed, see
 [lock](./lock.md#looks).
 
+## Applications
+
+The theme reaches past the shell through integrations: each is a script
+the shell runs after a `theme set`, with the theme's name, by listing
+itself in `theme.onSet`, and Home Manager runs on every switch, so a
+changed palette lands without a `set`. Each is
+`programs.sarisarinama.integrations.<name>.enable`, as omarchy's
+`bin/omarchy-theme-set-*` are each one program.
+
+| Integration | Follows the theme                         | On by default                |
+| ----------- | ----------------------------------------- | ---------------------------- |
+| `foot`      | colours, open windows included            | with `programs.foot.enable`  |
+| `tmux`      | panes, bar, borders, `COLORFGBG`          | with `programs.tmux.enable`  |
+| `palette`   | `palette.json`, what Neovim reads         | yes                          |
+| `mode`      | dark or light, for GTK and the portal     | yes                          |
+
+### foot and tmux
+
+Both read their config only at start, so both have the same two halves:
+every palette is rendered as a file of their own, `foot/<name>.ini` and
+`tmux/<name>.conf`, and their config includes one copy of it in
+`$XDG_STATE_HOME/sarisarinama/`, which a switch replaces. That covers what
+starts later; what is running is repainted too. foot gets the colours as
+OSC sequences; tmux sources the copy into its server, so every session
+changes at once. The sixteen colours are mapped once, in
+`integrations/_lib/ansi.nix`, so foot's colour 4 is tmux's.
+
+tmux paints its panes itself, with `window-style` and `pane-colours`, so
+they follow the theme in any terminal. The bar and borders take
+omarchy's `config/tmux/tmux.conf`: its `brightblack` is `muted` and its
+`blue` is `accent`. The copy is sourced last in tmux's config, so its
+styles win over earlier ones. `COLORFGBG`, `15;0` dark and `0;15` light,
+is how a program in a new pane tells which it is in.
+
+### Neovim
+
+kukenan reads `palette.json`, which the `palette` integration rewrites on
+every switch, and paints itself through aether.nvim, as omarchy's
+`default/themed/neovim.lua.tpl` does. It watches the file, so an open
+Neovim changes too, and sets `background` from `mode`.
+
+### Dark and light
+
+A palette's `mode` is written to dconf, as omarchy's
+`omarchy-theme-set-gnome`: `color-scheme` is `prefer-dark` or
+`prefer-light`, and `gtk-theme` is `Adwaita-dark` or `Adwaita`. GTK reads
+the second; the settings portal hands the first to whatever asks —
+Firefox, Chromium, GTK 4 and libadwaita apps — which switch while open.
+dconf needs the session bus; with none, as from a TTY, the script does
+nothing and the next `set` or switch catches up.
+
 ## Files
 
 | File                                      | Role                                |
@@ -155,6 +206,14 @@ The lock screen shows the same image, blurred and dimmed, see
 | `quickshell/wallpaper/WallpaperIpc.qml`   | `wallpaper next`/`set`/`entries`    |
 | `quickshell/theme/Wallpapers.qml`         | Current image, picks, rotation      |
 | `modules/ui/menu/presets/wallpaper.nix`   | The Wallpaper menu                  |
+| `integrations/_lib/current-theme.sh`      | Which theme a script applies        |
+| `integrations/_lib/ansi.nix`              | The sixteen colours, by palette key |
+| `integrations/foot/`                      | foot: files, script, activation     |
+| `integrations/tmux/`                      | tmux: files, script, activation     |
+| `integrations/palette/`                   | `palette.json`, for Neovim          |
+| `integrations/mode/`                      | Dark or light, in dconf             |
+
+`integrations/` is `modules/ui/theme/integrations/`.
 
 import-tree skips any path holding `_`, so `_lib/` holds plain functions.
 
@@ -175,3 +234,9 @@ are still to port.
 Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on
 every start although that file is meant to be absent until the first `set`.
+
+Applications: foot, tmux, Neovim and dark or light follow a `set`. The
+tmux and dark-or-light scripts are tested on a private tmux server and a
+private session bus, and canaima builds with them; not yet seen on screen.
+Unchecked: whether an open GTK 3 app switches without a restart. Qt
+apps have no integration of their own.
