@@ -22,19 +22,48 @@
         + builtins.readFile ./_lib/theme-tmux.sh;
     };
   in {
-    options.programs.sarisarinama.integrations.tmux.enable =
-      lib.mkEnableOption "tmux following the sarisarinama theme, running sessions included"
-      // {
-        default = config.programs.tmux.enable;
-        defaultText = lib.literalExpression "config.programs.tmux.enable";
+    options.programs.sarisarinama.integrations.tmux = {
+      enable =
+        lib.mkEnableOption "tmux following the sarisarinama theme, running sessions included"
+        // {
+          default = config.programs.tmux.enable;
+          defaultText = lib.literalExpression "config.programs.tmux.enable";
+        };
+
+      roles = lib.mkOption {
+        type = lib.types.attrsOf (lib.types.submodule {
+          options = {
+            subtle = lib.mkOption {
+              type = lib.types.str;
+              default = "muted";
+              description = "Paints the other windows' names and the pane borders.";
+            };
+            highlight = lib.mkOption {
+              type = lib.types.str;
+              default = "accent";
+              description = "Paints the current window, the active border and messages.";
+            };
+          };
+        });
+        default = {};
+        example = lib.literalExpression ''{ no-clown-fiesta.subtle = "dark_foreground"; }'';
+        description = ''
+          Per theme, which palette key, or literal #rrggbb, paints tmux's
+          bar and borders. A theme whose `muted` is too dark to read there
+          names another key.
+        '';
       };
+    };
 
     config = lib.mkIf (cfg.enable && cfg.integrations.tmux.enable) {
       home.packages = [script];
 
+      # Every theme has roles, the defaults unless it set its own.
+      programs.sarisarinama.integrations.tmux.roles = lib.mapAttrs (_: _: {}) cfg.theme.palettes;
+
       xdg.configFile = lib.mapAttrs' (name: raw:
         lib.nameValuePair "sarisarinama/tmux/${name}.conf" {
-          text = tmuxConf (resolve raw);
+          text = tmuxConf cfg.integrations.tmux.roles.${name} (resolve raw);
         })
       cfg.theme.palettes;
 

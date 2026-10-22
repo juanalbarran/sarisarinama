@@ -164,7 +164,12 @@ changes at once. The sixteen colours are mapped once, in
 tmux paints its panes itself, with `window-style` and `pane-colours`, so
 they follow the theme in any terminal. The bar and borders take
 omarchy's `config/tmux/tmux.conf`: its `brightblack` is `muted` and its
-`blue` is `accent`. The copy is sourced last in tmux's config, so its
+`blue` is `accent`. A theme can repoint either with
+`integrations.tmux.roles.<theme>.subtle` (other windows' names, pane
+borders) or `.highlight` (the current window, the active border,
+messages), a palette key or a literal `#rrggbb`. `no-clown-fiesta` sets
+`subtle` to `dark_foreground`: its `muted`, `#373737`, is too dark to read on
+`#0d0d0d`. The copy is sourced last in tmux's config, so its
 styles win over earlier ones. `COLORFGBG`, `15;0` dark and `0;15` light,
 is how a program in a new pane tells which it is in.
 
@@ -238,5 +243,7 @@ every start although that file is meant to be absent until the first `set`.
 Applications: foot, tmux, Neovim and dark or light follow a `set`. The
 tmux and dark-or-light scripts are tested on a private tmux server and a
 private session bus, and canaima builds with them; not yet seen on screen.
-Unchecked: whether an open GTK 3 app switches without a restart. Qt
-apps have no integration of their own.
+GTK 3 is left at `gtk-theme`, unchecked live: the GTK 3 apps installed
+(Lutris, Blueman, nm-connection-editor, GParted) are rarely open. Chrome and
+Slack are not GTK 3; they follow `color-scheme`. qutebrowser has its own
+key for dark pages, `,d`. Qt apps have no integration of their own.

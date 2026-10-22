@@ -31,5 +31,9 @@
       blue = "#bad7ff";
       magenta = "#aa759f";
     };
+
+    # muted (#373737) is too dark for tmux's other window names and pane
+    # borders on #0d0d0d; the comment colour reads there.
+    programs.sarisarinama.integrations.tmux.roles.no-clown-fiesta.subtle = "dark_foreground";
   };
 }

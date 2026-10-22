@@ -3,9 +3,14 @@
 # background, cursor and sixteen colours from tmux itself, so they look the
 # same in any terminal and a switch repaints them without touching their
 # programs. The bar and borders follow omarchy's config/tmux/tmux.conf:
-# brightblack there is `muted` here, blue is `accent`.
-lib: palette: let
-  c = key: palette.${key};
+# brightblack there is `muted` here, blue is `accent`, unless the theme's
+# `roles` say otherwise: see tmux.nix.
+lib: roles: palette: let
+  # A palette key, or a literal #rrggbb, as in surfaces.json.
+  c = key:
+    if lib.hasPrefix "#" key
+    then key
+    else palette.${key};
   ansi = import ../../_lib/ansi.nix;
   # What a program reads to tell a dark terminal from a light one,
   # "foreground;background" as colour numbers, as omarchy sets it.
@@ -22,14 +27,14 @@ in
     ++ lib.imap0 (i: key: ''set -g pane-colours[${toString i}] "${c key}"'') ansi
     ++ [
       ''set -g status-style "fg=${c "foreground"},bg=${c "background"}"''
-      ''set -g window-status-style "fg=${c "muted"}"''
-      ''set -g window-status-current-style "fg=${c "accent"},bold"''
-      ''set -g pane-border-style "fg=${c "muted"}"''
-      ''set -g pane-active-border-style "fg=${c "accent"}"''
-      ''set -g message-style "fg=${c "accent"},bg=${c "background"}"''
-      ''set -g message-command-style "fg=${c "accent"},bg=${c "background"}"''
+      ''set -g window-status-style "fg=${c roles.subtle}"''
+      ''set -g window-status-current-style "fg=${c roles.highlight},bold"''
+      ''set -g pane-border-style "fg=${c roles.subtle}"''
+      ''set -g pane-active-border-style "fg=${c roles.highlight}"''
+      ''set -g message-style "fg=${c roles.highlight},bg=${c "background"}"''
+      ''set -g message-command-style "fg=${c roles.highlight},bg=${c "background"}"''
       ''set -g mode-style "fg=${c "foreground"},bg=${c "selection"}"''
-      ''set -g clock-mode-colour "${c "accent"}"''
+      ''set -g clock-mode-colour "${c roles.highlight}"''
       ''set-environment -g COLORFGBG "${colorfgbg}"''
     ]
   )
