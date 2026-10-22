@@ -69,6 +69,14 @@
           type = lib.types.lines;
           default = "";
         };
+        programs.qutebrowser.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
+        programs.qutebrowser.extraConfig = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+        };
         home.activation = lib.mkOption {
           type = lib.types.attrs;
           default = {};

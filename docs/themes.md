@@ -143,12 +143,13 @@ changed palette lands without a `set`. Each is
 `programs.sarisarinama.integrations.<name>.enable`, as omarchy's
 `bin/omarchy-theme-set-*` are each one program.
 
-| Integration | Follows the theme                         | On by default                |
-| ----------- | ----------------------------------------- | ---------------------------- |
-| `foot`      | colours, open windows included            | with `programs.foot.enable`  |
-| `tmux`      | panes, bar, borders, `COLORFGBG`          | with `programs.tmux.enable`  |
-| `palette`   | `palette.json`, what Neovim reads         | yes                          |
-| `mode`      | dark or light, for GTK and the portal     | yes                          |
+| Integration   | Follows the theme                     | On by default                      |
+| ------------- | ------------------------------------- | ---------------------------------- |
+| `foot`        | colours, open windows included        | with `programs.foot.enable`        |
+| `tmux`        | panes, bar, borders, `COLORFGBG`      | with `programs.tmux.enable`        |
+| `palette`     | `palette.json`, what Neovim reads     | yes                                |
+| `mode`        | dark or light, for GTK and the portal | yes                                |
+| `qutebrowser` | dark pages, the setting `,d` cycles   | with `programs.qutebrowser.enable` |
 
 ### foot and tmux
 
@@ -190,6 +191,22 @@ Firefox, Chromium, GTK 4 and libadwaita apps — which switch while open.
 dconf needs the session bus; with none, as from a TTY, the script does
 nothing and the next `set` or switch catches up.
 
+### qutebrowser
+
+Dark pages follow `mode`: `colors.webpage.darkmode.enabled`, the setting
+the `,d` key cycles, is on with a dark theme and off with a light one. Like
+Neovim, qutebrowser reads `palette.json` itself, so there is no script: a
+few lines appended to its `config.py` read it at start and watch its
+directory, and an open qutebrowser changes at once (QtWebEngine 6.7 or
+newer; older ones need a restart). The setting changes only when the
+mode does, so a page toggled with `,d` stays as it is until the next
+switch between dark and light; a wallpaper rotation writing beside
+`palette.json` leaves it alone.
+
+The other way, sending `:set` to the running qutebrowser, is how commands
+reach it from outside, and it raises the window: under Sway the window is
+marked urgent on every switch. Tested on a headless Sway.
+
 ## Files
 
 | File                                      | Role                                |
@@ -217,6 +234,7 @@ nothing and the next `set` or switch catches up.
 | `integrations/tmux/`                      | tmux: files, script, activation     |
 | `integrations/palette/`                   | `palette.json`, for Neovim          |
 | `integrations/mode/`                      | Dark or light, in dconf             |
+| `integrations/qutebrowser/`               | Dark pages, from `palette.json`     |
 
 `integrations/` is `modules/ui/theme/integrations/`.
 
@@ -240,10 +258,12 @@ Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on
 every start although that file is meant to be absent until the first `set`.
 
-Applications: foot, tmux, Neovim and dark or light follow a `set`. The
-tmux and dark-or-light scripts are tested on a private tmux server and a
-private session bus, and canaima builds with them; not yet seen on screen.
+Applications: foot, tmux, Neovim, qutebrowser and dark or light follow a
+`set`. The tmux and dark-or-light scripts are tested on a private tmux
+server and a private session bus, qutebrowser on a headless Sway with
+canaima's own `config.py`, and canaima builds with all of them; not yet
+seen on screen.
 GTK 3 is left at `gtk-theme`, unchecked live: the GTK 3 apps installed
 (Lutris, Blueman, nm-connection-editor, GParted) are rarely open. Chrome and
 Slack are not GTK 3; they follow `color-scheme`. qutebrowser has its own
-key for dark pages, `,d`. Qt apps have no integration of their own.
+integration; other Qt apps have none.

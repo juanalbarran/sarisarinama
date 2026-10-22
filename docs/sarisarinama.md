@@ -128,7 +128,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Component | State                                                       |
 | --------- | ----------------------------------------------------------- |
 | Style     | Done. One `style.json`, per-component overrides verified    |
-| Theme     | Done; foot, tmux, Neovim and dark/light follow a `set`      |
+| Theme     | Done; terminals, Neovim, qutebrowser, dark/light follow it  |
 | Bar       | Nine widgets, styled; Sway and Hyprland behind one adapter    |
 | Menu      | Options, command, project and bookmarks menus done          |
 | VPN panel | Written; not yet checked on screen                          |
