@@ -1,0 +1,41 @@
+# modules/ui/theme/presets/catppuccin-latte.nix
+# omarchy themes/catppuccin-latte/colors.toml, verbatim but for the
+# background: white's #ffffff instead of Latte's #eff1f5 (#42), so the
+# surfaces are as white as the white theme's.
+{
+  flake.modules.homeManager.sarisarinama = {
+    programs.sarisarinama.theme.palettes.catppuccin-latte = {
+      mode = "light";
+
+      accent = "#1e66f5";
+      selection = "#ccd0da";
+      muted = "#acb0be";
+
+      background = "#ffffff"; # white's; Latte's is #eff1f5
+      dark_background = "#e3e4e8";
+      darker_background = "#d7d8dc";
+      lighter_background = "#dce0e8";
+
+      foreground = "#4c4f69";
+      dark_foreground = "#9ca0b0";
+      light_foreground = "#5c5f77";
+      bright_foreground = "#4c4f69";
+
+      red = "#d20f39";
+      yellow = "#df8e1d";
+      orange = "#d84e2b";
+      green = "#40a02b";
+      cyan = "#179299";
+      blue = "#1e66f5";
+      magenta = "#ea76cb";
+      brown = "#6c2715";
+
+      bright_red = "#d20f39";
+      bright_yellow = "#df8e1d";
+      bright_green = "#40a02b";
+      bright_cyan = "#179299";
+      bright_blue = "#1e66f5";
+      bright_magenta = "#ea76cb";
+    };
+  };
+}
