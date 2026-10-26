@@ -206,12 +206,14 @@ A directory is a **project** when it holds any of `.git`, `devenv.nix`,
 subdirectories, hidden ones skipped, and a branch row opens the same menu
 one level down. Back appears only below the directory it was opened at.
 
-Rows most opened this session come first: a project counts its own opens,
-a branch the opens of every project inside it, and ties keep name order.
-`open-project.sh` logs each open to
-`$XDG_RUNTIME_DIR/sarisarinama/projects-opened`, which is emptied at
-logout, and `projects.sh` reads it. One `jq` builds every row, so listing
-`~/dev` takes about 10 ms.
+Rows most opened come first: a project counts its own opens, a branch the
+opens of every project inside it. Ties go to the one opened last, then name
+order. `open-project.sh` logs each open to
+`$XDG_STATE_HOME/sarisarinama/projects-opened`, so the order outlives a
+logout, and keeps only the last 1000, so old habits fade; `projects.sh`
+reads it. Every project menu shares the log, whatever its root. Only the
+project menu is ordered this way; every other menu keeps the order it is
+written in. One `jq` builds every row, so listing `~/dev` takes about 10 ms.
 
 ### Opening a project
 
