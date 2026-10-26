@@ -27,7 +27,7 @@ FileView {
 
     readonly property Applications apps: Applications {
         onEntriesChanged: if (active)
-            root.entries = entries
+            root.show(entries)
     }
 
     // A rebuild that rewrites the file is picked up while the menu is open.
@@ -60,8 +60,11 @@ FileView {
             else if (parsed && parsed.command)
                 root.source.run(parsed, root.arg);
             else if (parsed && parsed.source === "applications") {
+                // Opened before the first scan settled: the rows come
+                // through onEntriesChanged
                 root.apps.active = true;
-                root.show(root.apps.entries);
+                if (root.apps.ready)
+                    root.show(root.apps.entries);
             } else {
                 console.warn("menu: neither entries nor a command in", root.path);
                 root.show([]);

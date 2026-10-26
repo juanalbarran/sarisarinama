@@ -91,11 +91,15 @@ The file names a source instead of a command:
 
 The shell builds the rows itself from Quickshell's `DesktopEntries`; no
 command runs, so `{}`, `{arg}` and `{shell}` mean nothing here.
-`DesktopEntries` scans in the background and adds one app at a time, so the
-list fills in while the menu is open. It is longer than `list.filterAbove`,
-so typing filters it, as wofi's search box does. A row shows the app's icon
-from the icon theme, or the `󰀻` glyph when the theme has none. Enter
-launches the app through the entry's own `execute()`, and the menu closes.
+`DesktopEntries` scans in the background and adds one app at a time. The
+scan starts with the shell, and the rows are built once it has been quiet
+for 100 ms, not once per app: rebuilding every row for every app made the
+first open take most of a second. An app installed later rebuilds them once
+more. Opened before the first build, the menu waits for it. It is longer
+than `list.filterAbove`, so typing filters it, as wofi's search box does.
+A row shows the app's icon from the icon theme, or the `󰀻` glyph when the
+theme has none. Enter launches the app through the entry's own `execute()`,
+and the menu closes.
 
 In Nix it is `menus.applications = { source = "applications"; }`, in
 `modules/ui/menu/presets/applications.nix`. A command menu takes exactly one
