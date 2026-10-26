@@ -4,19 +4,42 @@
 # A subdirectory holding any marker is a project: its row launches it and the
 # menu closes. Anything else is a branch: its row reopens this same menu one
 # level down, so the same test runs again at every level.
+#
+# Rows most opened this session come first: a project counts the times it
+# was opened, a branch the opens of every project inside it. Ties keep name
+# order. The opens are what open-project.sh logged.
 
 dir="${1:-}"
 dir="${dir:-${SARISARINAMA_PROJECTS_ROOT:-$HOME/dev}}"
 dir="${dir/#\~/$HOME}"
+# Spelled as open-project.sh logs it, so the paths compare equal
+dir="$(realpath -s -- "$dir")"
 menu="${SARISARINAMA_PROJECTS_MENU:-$HOME/.config/sarisarinama/projects.json}"
-{
-    while IFS= read -r name; do
-        if is_project "$dir/$name"; then
-            jq -nc --arg l "$name" --arg p "$dir/$name" \
-                '{icon:"", label:$l, action:("sarisarinama-open-project " + ($p|@sh))}'
-        else
-            jq -nc --arg l "$name" --arg p "$dir/$name" --arg m "$menu" \
-                '{icon:"", label:$l, menu:$m, arg:$p}'
-        fi
-    done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -printf '%f\n' | sort)
-} | jq -sc .
+opened="${XDG_RUNTIME_DIR:-/tmp}/sarisarinama/projects-opened"
+
+# One "<kind><tab><name>" line per subdirectory, then a single jq builds
+# every row: one jq per row was most of the time the menu took to open
+while IFS= read -r name; do
+    if is_project "$dir/$name"; then
+        printf 'project\t%s\n' "$name"
+    else
+        printf 'branch\t%s\n' "$name"
+    fi
+done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -printf '%f\n' | sort) |
+    jq -Rnc --arg d "$dir" --arg m "$menu" \
+        --rawfile log <(cat -- "$opened" 2>/dev/null || true) '
+        ($log | split("\n")) as $opens
+        | [inputs] | to_entries | map(
+            (.value | index("\t")) as $tab
+            | (.value[:$tab]) as $kind
+            | (.value[$tab + 1:]) as $name
+            | ($d + "/" + $name) as $p
+            | {
+                order: .key,
+                uses: ($opens | map(select(. == $p or startswith($p + "/"))) | length),
+                row: (if $kind == "project"
+                    then {icon: "", label: $name, action: ("sarisarinama-open-project " + ($p | @sh))}
+                    else {icon: "", label: $name, menu: $m, arg: $p}
+                    end)
+            })
+        | sort_by(-.uses, .order) | map(.row)'

@@ -47,9 +47,11 @@ ShellRoot {
             "bluetooth": bluetoothLoader
         })
 
+    // Built at startup, not on the first summon: the menu is the one opened
+    // most, and its first open then costs no more than any other
     Loader {
         id: menuLoader
-        active: false
+        active: true
         sourceComponent: Menu {}
     }
 

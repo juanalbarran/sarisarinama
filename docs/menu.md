@@ -68,6 +68,12 @@ as one shell word, so one file can serve many directories. The command
 re-runs on every open, so the list is never stale. Nothing checks its exit
 code: a command that prints an error to stdout makes a row of that error.
 
+The menu window waits for the command's rows before it appears, so it never
+opens empty and then grows; a command slower than 300 ms opens it anyway,
+and its rows fill in when they arrive. Moving between command menus keeps
+the old rows until the new ones are in. The menu window itself is built when
+the shell starts, so the first open costs no more than the rest.
+
 Stdout that parses as a JSON array is taken as the entries themselves, so
 one command can mix rows that act with rows that open a submenu; a row may
 carry an `arg` for the menu it opens. `"backWithin": true` limits Back to
@@ -186,6 +192,13 @@ A directory is a **project** when it holds any of `.git`, `devenv.nix`,
 `_lib/is-project.sh`. Anything else is a **branch**: the menu lists its
 subdirectories, hidden ones skipped, and a branch row opens the same menu
 one level down. Back appears only below the directory it was opened at.
+
+Rows most opened this session come first: a project counts its own opens,
+a branch the opens of every project inside it, and ties keep name order.
+`open-project.sh` logs each open to
+`$XDG_RUNTIME_DIR/sarisarinama/projects-opened`, which is emptied at
+logout, and `projects.sh` reads it. One `jq` builds every row, so listing
+`~/dev` takes about 10 ms.
 
 ### Opening a project
 

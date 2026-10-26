@@ -132,6 +132,12 @@ if ! tmux has-session -t "=$session" 2>/dev/null; then
     exit 1
 fi
 
+# One line per open, read by projects.sh to put the most used rows first.
+# The runtime dir is emptied at logout, so the count lasts one session
+opened="${XDG_RUNTIME_DIR:-/tmp}/sarisarinama/projects-opened"
+mkdir -p "${opened%/*}"
+realpath -s -- "$dir" >>"$opened"
+
 # Run or raise, one terminal for every project: one already showing this
 # session is raised; failing that, the last one used switches to it; only
 # with no terminal at all is a new one opened

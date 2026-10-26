@@ -14,6 +14,9 @@ Process {
     property string arg: ""
     property var entries: []
 
+    // Every run ends here, rows or none, so a waiting menu can open
+    signal finished
+
     // One shell word whatever the text holds: spaces stay, $(...) is not run
     function quote(text) {
         return "'" + text.split("'").join("'\\''") + "'";
@@ -25,12 +28,16 @@ Process {
         return template.split("{shell}").join(Quickshell.shellDir).split("{arg}").join(root.quote(root.arg)).split("{}").join(line);
     }
 
+    // The rows of the last run stay until this run's arrive, so a menu
+    // never shows empty in between
     function run(newSpec, newArg) {
-        root.entries = [];
         root.spec = newSpec || {};
         root.arg = newArg || "";
-        if (!root.spec.command)
+        if (!root.spec.command) {
+            root.entries = [];
+            root.finished();
             return;
+        }
         root.command = ["bash", "-lc", root.fill(root.spec.command, "")];
         root.running = true;
     }
@@ -41,6 +48,7 @@ Process {
                 var parsed = JSON.parse(text);
                 if (Array.isArray(parsed)) {
                     root.entries = parsed;
+                    root.finished();
                     return;
                 }
             } catch (e) {}
@@ -56,6 +64,7 @@ Process {
                     });
             }
             root.entries = out;
+            root.finished();
         }
     }
 }

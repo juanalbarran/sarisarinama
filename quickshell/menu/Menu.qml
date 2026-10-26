@@ -21,15 +21,37 @@ PanelWindow {
         } catch (e) {}
         model.navStack = [];
         model.show(payload.file || "", payload.arg || "");
-        opened = true;
+        if (model.file.loading)
+            waiting.restart();
+        else
+            opened = true;
     }
 
     function close() {
+        waiting.stop();
         opened = false;
     }
 
     Model {
         id: model
+    }
+
+    // Opens once the rows are in, so the menu never shows empty and then
+    // grows; a command slower than this opens it anyway, and fills it later
+    Timer {
+        id: waiting
+        interval: 300
+        onTriggered: root.opened = true
+    }
+
+    Connections {
+        target: model.file
+        function onLoadingChanged() {
+            if (!model.file.loading && waiting.running) {
+                waiting.stop();
+                root.opened = true;
+            }
+        }
     }
 
     implicitWidth: card.implicitWidth

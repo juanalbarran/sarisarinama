@@ -14,12 +14,12 @@
     isProject = builtins.readFile ../_lib/is-project.sh;
     classify = pkgs.writeShellApplication {
       name = "sarisarinama-projects";
-      runtimeInputs = with pkgs; [jq findutils];
+      runtimeInputs = with pkgs; [jq findutils coreutils];
       text = isProject + builtins.readFile ../_lib/projects.sh;
     };
     open = pkgs.writeShellApplication {
       name = "sarisarinama-open-project";
-      runtimeInputs = with pkgs; [jq libnotify procps];
+      runtimeInputs = with pkgs; [jq libnotify procps coreutils];
       runtimeEnv.SARISARINAMA_TERMINAL = cfg.projects.terminal;
       text = builtins.readFile ../_lib/open-project.sh;
     };
