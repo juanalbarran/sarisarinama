@@ -1,7 +1,7 @@
 # Keybinds pane
 
 A cheat sheet per application. The `keybinds` menu lists them (Neovim,
-Tmux, and whatever a config adds), and picking one opens a pane with that
+Tmux, Yazi, and whatever a config adds), and picking one opens a pane with that
 app's binds drawn as keycaps, in groups, in one column. Omarchy quattro
 shows its keybindings as a searchable list in its menu; this drops the
 search and gives each app its own page, which reads better when the binds
@@ -51,7 +51,7 @@ to a preset with `lib.mkAfter [ ... ]` and replaces the preset's groups
 with `lib.mkForce [ ... ]`. `order` sorts the sections (lower first, ties
 by name); a section with no binds is left out of the file and the menu.
 
-Two presets ship (`modules/ui/keybinds/presets/`):
+Three presets ship (`modules/ui/keybinds/presets/`):
 
 - `neovim` (order 10): the base flavor of
   [kukenan](https://github.com/juanalbarran/kukenan), from its
@@ -61,6 +61,11 @@ Two presets ship (`modules/ui/keybinds/presets/`):
   against the plugin at the commit kukenan pins.
 - `tmux` (order 20): tmux's defaults, Ctrl+b prefix and vi copy mode,
   checked against `tmux list-keys`.
+- `yazi` (order 25): yazi's defaults, picked from the manager keymap of
+  yazi 26.5.6 (`yazi-config/preset/keymap-default.toml`), every key checked
+  against it. `s` needs `fd`, `z` `fzf` and `Z` `zoxide` on PATH; canaima
+  installs none of them. `,` and `m` are prefixes: each opens a list of
+  sort orders or line modes, shown here as one row.
 
 The compositor's section is the config's to build, from its own binds.
 canaima's `modules/ui/keybinds.nix` builds a `sway` section (order 30) from
@@ -127,4 +132,7 @@ used on a real screen.
   its own group (canaima does, by hand, so it can drift from its tmux
   config).
 - Neovim's binds are copied from kukenan's docs, not read from Neovim.
+- The yazi preset is yazi's defaults, as the tmux one is tmux's. A newer
+  yazi may move a key; re-check against its `keymap-default.toml`. The
+  pane was drawn in a headless Sway, not yet used on a real screen.
 - Hyprland has no section: canaima builds one from Sway's table only.
