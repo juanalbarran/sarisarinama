@@ -54,12 +54,6 @@ Rectangle {
         precision: SystemClock.Minutes
     }
 
-    // A click anywhere gives the field back its focus.
-    MouseArea {
-        anchors.fill: parent
-        onClicked: input.forceActiveFocus()
-    }
-
     Column {
         anchors.centerIn: parent
         spacing: Style.lock.gap
@@ -102,6 +96,8 @@ Rectangle {
                 echoMode: TextInput.Password
                 passwordCharacter: "●"
                 passwordMaskDelay: 0
+                // No caret: the dots alone show what is typed.
+                cursorDelegate: Item {}
                 readOnly: root.checking
                 color: Colors.lock.text
                 font.family: Style.lock.font.family
@@ -138,5 +134,13 @@ Rectangle {
                 font.pixelSize: Style.lock.font.body
             }
         }
+    }
+
+    // Over everything, so no pointer shows anywhere, the field included,
+    // and a click anywhere gives the field back its focus.
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.BlankCursor
+        onClicked: input.forceActiveFocus()
     }
 }

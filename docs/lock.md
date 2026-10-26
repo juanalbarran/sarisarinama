@@ -102,6 +102,10 @@ see [themes](./themes.md#switching-wallpapers)), blurred as omarchy's is,
 under a wash so the time and the field stay readable. With no wallpaper,
 the `background` colour alone.
 
+No cursor shows, neither the mouse pointer nor the field's text caret: a
+`MouseArea` over the whole screen sets `Qt.BlankCursor`, and the field's
+`cursorDelegate` is an empty `Item`. The pointer is back once unlocked.
+
 `style.lock`: the shared font and scale, `gap` between the rows,
 `clockSize` (px, display type outside the type scale), `blur` (px, 64; 0
 keeps the image sharp) and `field` (`width`, `height`, `paddingX`,
