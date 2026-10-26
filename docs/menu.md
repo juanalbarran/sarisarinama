@@ -32,7 +32,9 @@ current one in view. One with more entries than `list.filterAbove` (5) gets
 a filter box above the list. The box holds the keyboard: what is typed keeps
 the entries whose label contains it, ignoring case, and the first match is
 selected. Back is not an entry: it is never counted and never filtered out.
-A new menu starts with an empty filter.
+A new menu starts with an empty filter. The box has the selected row's
+fill, so a menu with a filter marks the current row by its text colour
+(`selectedText`) alone, with no fill behind it.
 
 ### Root and services menus
 

@@ -24,7 +24,10 @@ ListView {
     // here rather than left to the highlight, whose follow is animated.
     onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
+    // The filter box has this same fill, so a filtered menu marks the
+    // current row by its text colour alone.
     highlight: Rectangle {
+        visible: !root.menu.filterable
         color: Colors.menu.selectedBackground
         radius: 4
     }
