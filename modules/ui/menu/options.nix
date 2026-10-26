@@ -43,6 +43,15 @@
             Exclusive with `command`.
           '';
         };
+        terminal = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          example = "ghostty -e";
+          description = ''
+            With `source = "applications"`: the terminal, with the flags it
+            needs before a command, that runs an entry marked Terminal=true.
+          '';
+        };
         icon = lib.mkOption {
           type = lib.types.str;
           default = "";

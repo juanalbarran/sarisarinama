@@ -16,6 +16,9 @@ FileView {
     property string arg: ""
     // A command menu's `backWithin`: Back only returns to this same file
     property bool backWithin: false
+    // The applications menu's `terminal`, split into words: the command a
+    // Terminal=true entry is appended to
+    property var terminal: []
     // From load() until the rows of the file it loads are in: the menu
     // waits on it, so it never opens empty and then grows
     property bool loading: false
@@ -55,6 +58,7 @@ FileView {
         try {
             var parsed = JSON.parse(text());
             root.backWithin = !Array.isArray(parsed) && !!(parsed && parsed.backWithin);
+            root.terminal = String((parsed && parsed.terminal) || "").split(/\s+/).filter(w => w !== "");
             if (Array.isArray(parsed))
                 root.show(parsed);
             else if (parsed && parsed.command)

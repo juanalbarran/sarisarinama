@@ -23,7 +23,7 @@
     renderMenu = m:
       if builtins.isList m
       then map renderEntry m
-      else {inherit (m) command source icon action backWithin;};
+      else {inherit (m) command source terminal icon action backWithin;};
     menuFiles = lib.mapAttrs' (name: m:
       lib.nameValuePair "sarisarinama/${name}.json" {
         text = builtins.toJSON (renderMenu m);

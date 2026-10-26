@@ -62,6 +62,18 @@ QtObject {
         root.show(previous.path, previous.arg);
     }
 
+    // execute() ignores Terminal=true, so those entries run in the terminal
+    // themselves; with no terminal configured they start without one
+    function launch(app) {
+        if (!app.runInTerminal || root.file.terminal.length === 0)
+            app.execute();
+        else
+            Quickshell.execDetached({
+                command: root.file.terminal.concat(Array.from(app.command)),
+                workingDirectory: app.workingDirectory
+            });
+    }
+
     // Returns true when an action ran and the menu should close.
     function activate(index) {
         var row = root.rows[index];
@@ -74,7 +86,7 @@ QtObject {
         else if (row.action)
             Quickshell.execDetached(["bash", "-lc", row.action]);
         else if (row.app)
-            row.app.execute();
+            root.launch(row.app);
         return !!row.action || !!row.app;
     }
 }

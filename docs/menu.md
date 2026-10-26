@@ -101,13 +101,20 @@ A row shows the app's icon from the icon theme, or the `󰀻` glyph when the
 theme has none. Enter launches the app through the entry's own `execute()`,
 and the menu closes.
 
-In Nix it is `menus.applications = { source = "applications"; }`, in
-`modules/ui/menu/presets/applications.nix`. A command menu takes exactly one
-of `command` or `source`, and `render.nix` asserts it.
+An app marked `Terminal=true` (htop, vim, yazi) runs in a terminal, as wofi
+runs it. `execute()` ignores that key (Quickshell 0.3.0 says so in its
+docs), so the menu builds the command itself: the file's `terminal`, split
+on spaces, then the entry's command, from the entry's working directory.
+`terminal` is `projects.terminal`, the same `foot` or `ghostty -e` a project
+opens in. A file with no `terminal` starts those apps without one.
 
-Not yet checked on screen. Two things are open: whether `execute()` opens
-a terminal for an app marked `Terminal=true`, and whether the icons are
-found under NixOS, which depends on Qt knowing the icon theme.
+In Nix it is `menus.applications = { source = "applications"; terminal =
+cfg.projects.terminal; }`, in `modules/ui/menu/presets/applications.nix`. A
+command menu takes exactly one of `command` or `source`, and `render.nix`
+asserts it.
+
+Not yet checked on screen. One thing is open: whether the icons are found
+under NixOS, which depends on Qt knowing the icon theme.
 
 ### Bookmarks menu
 
