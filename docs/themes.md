@@ -260,8 +260,8 @@ it, but the background darkened to `#0d0d0d` and the six bright hues
 derived, since upstream has none; #46), `tokyo-night` (omarchy's own default), `vantablack`
 and `white` (both 21:1, the highest contrast omarchy ships) and `kanagawa-dragon`
 (not an omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same
-way omarchy maps wave) and `catppuccin-latte` (omarchy's, but on white's
-`#ffffff` background instead of Latte's `#eff1f5`, #42). Four of those six
+way omarchy maps wave) and `catppuccin-latte` (omarchy's, verbatim: #42 had
+it on white's `#ffffff`, which #48 took back to Latte's `#eff1f5`). Four of those six
 are omarchy's, so 18 of its 22 are still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
