@@ -47,10 +47,75 @@ function admit(row, dnd) {
     return isEphemeral(row) ? "drop" : "keep";
 }
 
+function entities(s) {
+    return String(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&#39;|&apos;/g, "'").replace(/&amp;/g, "&");
+}
+
 // Senders send markup even to a server that does not ask for it; the shell
 // draws plain text, so tags go and entities are read.
 function plainText(s) {
-    return String(s || "").replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&#39;|&apos;/g, "'").replace(/&amp;/g, "&").trim();
+    return entities(String(s || "").replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "")).trim();
+}
+
+// An address written out in plain text. What ends it is the sentence's:
+// a trailing full stop or closing bracket is not part of the address.
+var URL_RE = /\b(?:https?:\/\/|www\.)[^\s<>"']+/gi;
+
+function trimUrl(u) {
+    return u.replace(/[.,;:!?)\]}]+$/, "");
+}
+
+function hrefOf(u) {
+    return /^www\./i.test(u) ? "https://" + u : u;
+}
+
+// Only what a browser or a mail client opens; a sender's file: or custom
+// scheme is not followed.
+function isOpenable(href) {
+    return /^(https?:\/\/|mailto:)/i.test(href);
+}
+
+// Every link a notification carries, in order, once each: the href of each
+// <a> in its markup, which plainText drops, then the addresses written out.
+function links(summary, body) {
+    var out = [];
+    var add = h => {
+        if (isOpenable(h) && out.indexOf(h) < 0)
+            out.push(h);
+    };
+    var raw = String(summary || "") + "\n" + String(body || "");
+    var anchor = /<a\s[^>]*href\s*=\s*(["'])(.*?)\1/gi;
+    var m;
+    while ((m = anchor.exec(raw)) !== null)
+        add(entities(m[2]).trim());
+    (plainText(raw).match(URL_RE) || []).forEach(u => add(hrefOf(trimUrl(u))));
+    return out;
+}
+
+function escapeHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+// Plain text as styled text, for the message panel: escaped, its line
+// breaks kept, and every address written out a link.
+function linkified(text) {
+    var s = String(text || "");
+    var out = "";
+    var last = 0;
+    s.replace(URL_RE, (match, offset) => {
+        var u = trimUrl(match);
+        out += escapeHtml(s.slice(last, offset)) + "<a href=\"" + escapeHtml(hrefOf(u)) + "\">" + escapeHtml(u) + "</a>";
+        last = offset + u.length;
+        return match;
+    });
+    out += escapeHtml(s.slice(last));
+    return out.replace(/\n/g, "<br>");
+}
+
+// A link as a short label: no scheme, cut to `max` characters.
+function linkLabel(href, max) {
+    var s = String(href).replace(/^https?:\/\//i, "").replace(/^mailto:/i, "");
+    return s.length > max ? s.slice(0, max - 1) + "…" : s;
 }
 
 // The notification's picture: a sender's image ("image://qsimage/…" for one
@@ -107,6 +172,7 @@ function snapshot(n, key, now) {
         transient: n.transient === true || hints.transient === true || hints.transient === 1,
         actions: JSON.stringify(actions),
         hasDefault: hasDefault,
+        links: JSON.stringify(links(n.summary, n.body)),
         duration: durationFor(Number(n.urgency), n.expireTimeout),
         ts: now
     };

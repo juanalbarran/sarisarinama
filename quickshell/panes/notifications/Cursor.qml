@@ -1,7 +1,7 @@
 // quickshell/panes/notifications/Cursor.qml
 // The notifications panel's cursor: a LineCursor whose lines are the Do Not
 // Disturb switch, then one per notification in the history. Enter flips the
-// switch, or on a notification still on screen runs its default action.
+// switch, or on a notification asks for it in full.
 // j and k move like Ctrl+N and Ctrl+P; x forgets the notification under the
 // cursor, c forgets them all, d flips Do Not Disturb from anywhere.
 import QtQuick
@@ -24,6 +24,8 @@ LineCursor {
     // The history's first notification, else the switch.
     startLine: lines => lines.length > 1 ? 1 : 0
 
+    signal messageRequested(string key)
+
     function keyOf(line) {
         return line.startsWith("n:") ? line.slice(2) : "";
     }
@@ -31,8 +33,8 @@ LineCursor {
     onActivated: line => {
         if (line === "dnd")
             NotificationCenter.setDnd(!NotificationCenter.dnd);
-        else if (NotificationCenter.isShown(root.keyOf(line)))
-            NotificationCenter.activate(root.keyOf(line));
+        else
+            root.messageRequested(root.keyOf(line));
     }
 
     onOtherKey: event => {

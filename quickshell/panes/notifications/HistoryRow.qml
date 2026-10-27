@@ -1,7 +1,7 @@
 // quickshell/panes/notifications/HistoryRow.qml
 // One notification in the history: its icon, the app and when, the summary
-// and the first lines of the body. A dot marks one still on screen; a click
-// on it runs its default action, as on the toast. A middle click forgets it.
+// and the first lines of the body. A dot marks one still on screen. A click
+// opens it in full, through the cursor; a middle click forgets it.
 import QtQuick
 import "../../theme/"
 import "../common/"
@@ -12,7 +12,7 @@ Rectangle {
     id: root
 
     required property var row
-    required property LineCursor cursor
+    required property Cursor cursor
     // The panel's clock, so "5m" moves on while the panel is open.
     property real now: Date.now()
 
@@ -31,13 +31,13 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.MiddleButton
-        cursorShape: root.onScreen ? Qt.PointingHandCursor : Qt.ArrowCursor
+        cursorShape: Qt.PointingHandCursor
         onEntered: root.cursor.select(root.line, 0)
         onClicked: mouse => {
             if (mouse.button === Qt.MiddleButton)
                 NotificationCenter.forget(root.row.key);
-            else if (root.onScreen)
-                NotificationCenter.activate(root.row.key);
+            else
+                root.cursor.messageRequested(root.row.key);
         }
     }
 

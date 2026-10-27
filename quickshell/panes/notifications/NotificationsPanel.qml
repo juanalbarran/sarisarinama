@@ -3,7 +3,8 @@
 // Disturb and the history. Implements the host contract shell.qml expects
 // (open/close/opened). NotificationCenter holds everything; the sections
 // only draw it. Opening it marks the history read, which clears the bar's
-// badge.
+// badge. A notification clicked, or picked with Enter, opens in full in a
+// MessagePanel over this one, which takes the keyboard until Escape.
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -16,19 +17,43 @@ PanelWindow {
     property bool opened: false
     visible: opened
 
+    // The notification open in full, "" for none.
+    property string messageKey: ""
+    readonly property var messageRow: {
+        var key = root.messageKey;
+        return key === "" ? null : NotificationCenter.history.find(h => h.key === key) || null;
+    }
+
     // The panel takes no payload yet; the argument keeps the host contract.
     function open(payloadJson) {
         opened = true;
     }
 
     function close() {
+        messageKey = "";
         opened = false;
     }
 
     Cursor {
         id: panelCursor
         onCloseRequested: root.close()
+        onMessageRequested: key => root.messageKey = key
     }
+
+    MessagePanel {
+        screen: root.screen
+        row: root.opened ? root.messageRow : null
+        now: clock.now
+        onBackRequested: {
+            root.messageKey = "";
+            card.forceActiveFocus();
+        }
+        onDoneRequested: root.close()
+    }
+
+    // A notification forgotten while open in full: back to the list.
+    onMessageRowChanged: if (root.messageKey !== "" && root.messageRow === null)
+        root.messageKey = ""
 
     onOpenedChanged: {
         if (opened) {
@@ -66,7 +91,8 @@ PanelWindow {
 
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "sarisarinama-notifications-panel"
-    WlrLayershell.keyboardFocus: opened ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+    // The message over it takes the keyboard while it is open.
+    WlrLayershell.keyboardFocus: opened && messageKey === "" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     Rectangle {
         id: card

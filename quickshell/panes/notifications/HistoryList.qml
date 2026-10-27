@@ -9,7 +9,7 @@ import "../../notifications/"
 Item {
     id: root
 
-    required property LineCursor cursor
+    required property Cursor cursor
     property real now: Date.now()
 
     readonly property bool empty: NotificationCenter.history.length === 0

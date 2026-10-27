@@ -85,14 +85,43 @@ Opening it marks everything read.
 | Key                            | Does                                          |
 | ------------------------------ | --------------------------------------------- |
 | `j` / `k`, `Ctrl+N` / `Ctrl+P` | Move between the switch and the notifications |
-| `Enter`                        | Flip the switch, or run a shown one's action  |
+| `Enter`                        | Flip the switch, or open the message          |
 | `x` / `Delete`                 | Forget the notification (closing it if shown) |
 | `c`                            | Forget them all, closing every toast          |
 | `d`                            | Flip Do Not Disturb                           |
 | `Esc`                          | Close                                         |
 
-A click on a shown notification runs its action, a middle click forgets
-it. The history is in memory only, like Do Not Disturb.
+A click on a notification opens the message, a middle click forgets it.
+The history is in memory only, like Do Not Disturb.
+
+### The message
+
+A notification clicked, or picked with `Enter`, opens in full in a second
+card over the panel (`MessagePanel.qml`), since the toast and the row cut
+it short (#47). It shows the app, the age, the whole summary and the whole
+body, scrolling past `history.maxHeight`. Every `http(s)://` or `www.`
+address written in it is a link; a click opens it in the browser
+(`Qt.openUrlExternally`) and closes the panel.
+
+Below the body, `LINKS` holds every link the notification carries, in
+order, once each: the `href` of each `<a>` a sender put in its markup
+(the shell draws plain text, so those addresses are otherwise lost), then
+the addresses written out. Only `http`, `https` and `mailto` are followed.
+While the notification is still on screen, `ACTIONS` holds its buttons,
+the default action first as `Open`; running one closes the panel, as on
+the toast. A notification already gone has no actions left to run.
+
+| Key                 | Does                                   |
+| ------------------- | -------------------------------------- |
+| `Ctrl+N` / `Ctrl+P` | Move between the links and the actions |
+| `h` / `l`           | Move along a row                       |
+| `Enter`             | Open the link, or run the action       |
+| `j` / `k`           | Scroll the message                     |
+| `Esc`               | Back to the list, cursor where it was  |
+
+The cursor starts on the actions, so `Enter` twice from the list runs
+`Open`, as one `Enter` did before; with no actions it starts on the links.
+The panel underneath gives the message the keyboard while it is open.
 
 ## IPC
 
@@ -121,7 +150,7 @@ The `notifications` target answers:
 | File                     | Role                                                        |
 | ------------------------ | ----------------------------------------------------------- |
 | `NotificationCenter.qml` | Singleton: the server, toasts, history, DND, the IPC target |
-| `notifmodel.js`          | Timings, the quiet rules, a notification as a row; pure     |
+| `notifmodel.js`          | Timings, quiet rules, a notification as a row, links; pure  |
 | `ToastStack.qml`         | The top-right window; only the cards take the pointer       |
 | `Toast.qml`              | One toast: icon, app, summary, body, buttons, countdown     |
 | `NoticeIcon.qml`         | Picture, theme icon or letter; shared with the panel        |
@@ -135,6 +164,7 @@ The `notifications` target answers:
 | `HistoryList.qml`        | The history, scrolling, following the cursor         |
 | `HistoryRow.qml`         | One notification                                     |
 | `Cursor.qml`             | `LineCursor`, plus j/k, x, c, d                      |
+| `MessagePanel.qml`       | One notification in full, its links and actions      |
 
 Live `Notification` objects are kept in a plain map, never a model role:
 the sender may close one at any time, and a role would dangle (omarchy's
