@@ -88,5 +88,15 @@
         `toggle menu '{"file": "<path>"}'` IPC call.
       '';
     };
+    options.programs.sarisarinama.remember = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      example = ["bookmarks"];
+      description = ''
+        Menus whose rows come most opened first, ties to the one opened
+        last. A row that opens a submenu counts every open made inside it.
+        The rest keep the order they are written in.
+      '';
+    };
   };
 }

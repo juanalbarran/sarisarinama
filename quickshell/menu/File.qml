@@ -1,7 +1,8 @@
 // quickshell/menu/File.qml
 // Reads one menu file and exposes its parsed entries. A missing file or bad
 // JSON is logged and yields an empty menu instead of a crash. The file is
-// an array of entries, or an object with `command` that produces them.
+// an array of entries, or an object with `command` that produces them, or
+// one with `entries` when it carries a flag too.
 // `arg` is what the row that opened this menu carried, for a command menu
 // that serves many directories from one file.
 import Quickshell
@@ -16,6 +17,8 @@ FileView {
     property string arg: ""
     // A command menu's `backWithin`: Back only returns to this same file
     property bool backWithin: false
+    // Rows ordered by how often they were opened; Model does the ordering
+    property bool remember: false
     // The applications menu's `terminal`, split into words: the command a
     // Terminal=true entry is appended to
     property var terminal: []
@@ -54,13 +57,17 @@ FileView {
     // A command menu keeps the rows shown until its own arrive
     onLoaded: {
         root.backWithin = false;
+        root.remember = false;
         root.apps.active = false;
         try {
             var parsed = JSON.parse(text());
             root.backWithin = !Array.isArray(parsed) && !!(parsed && parsed.backWithin);
+            root.remember = !Array.isArray(parsed) && !!(parsed && parsed.remember);
             root.terminal = String((parsed && parsed.terminal) || "").split(/\s+/).filter(w => w !== "");
             if (Array.isArray(parsed))
                 root.show(parsed);
+            else if (parsed && Array.isArray(parsed.entries))
+                root.show(parsed.entries);
             else if (parsed && parsed.command)
                 root.source.run(parsed, root.arg);
             else if (parsed && parsed.source === "applications") {
@@ -81,6 +88,7 @@ FileView {
 
     onLoadFailed: function (error) {
         console.warn("menu: cannot read", root.path, error);
+        root.remember = false;
         root.apps.active = false;
         root.show([]);
     }

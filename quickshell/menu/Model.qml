@@ -10,20 +10,24 @@ import "../theme/"
 QtObject {
     id: root
     readonly property File file: File {}
+    readonly property Opens opens: Opens {}
     property var navStack: []
     // A backWithin menu goes Back only to itself, so where it was first
     // opened, from another menu or over IPC, there is no Back row
     readonly property bool canGoBack: navStack.length > 0 && (!file.backWithin || navStack[navStack.length - 1].path === file.path)
 
+    // A remembered menu shows the rows opened most first
+    readonly property var entries: file.remember ? opens.order(file.path, file.entries) : file.entries
+
     // A menu with more entries than filterAbove gets a filter. Back is not
     // an entry: it is never counted and never filtered out.
-    readonly property bool filterable: file.entries.length > Style.menu.list.filterAbove
+    readonly property bool filterable: entries.length > Style.menu.list.filterAbove
     property string query: ""
     readonly property var shown: {
         var q = root.query.toLowerCase();
         if (!root.filterable || q === "")
-            return root.file.entries;
-        return root.file.entries.filter(e => String(e.label).toLowerCase().indexOf(q) !== -1);
+            return root.entries;
+        return root.entries.filter(e => String(e.label).toLowerCase().indexOf(q) !== -1);
     }
 
     // The shown entries plus a synthetic Back row when opened from another menu.
@@ -48,7 +52,8 @@ QtObject {
         root.navStack = root.navStack.concat([
             {
                 path: root.file.path,
-                arg: root.file.arg
+                arg: root.file.arg,
+                remember: root.file.remember
             }
         ]);
         root.show(path, arg);
@@ -74,11 +79,37 @@ QtObject {
             });
     }
 
+    // A remembered menu logs the row run in it, and every remembered menu on
+    // the way there the row that led on, so a submenu counts every open
+    // made inside it
+    function remember(row) {
+        var trail = root.navStack.concat([
+            {
+                path: root.file.path,
+                arg: root.file.arg,
+                remember: root.file.remember
+            }
+        ]);
+        var records = [];
+        trail.forEach((at, i) => {
+            var next = trail[i + 1];
+            if (at.remember)
+                records.push({
+                    menu: at.path,
+                    row: next ? root.opens.menuKey(next.path, next.arg) : root.opens.key(row)
+                });
+        });
+        if (records.length > 0)
+            root.opens.add(records);
+    }
+
     // Returns true when an action ran and the menu should close.
     function activate(index) {
         var row = root.rows[index];
         if (!row)
             return false;
+        if (row.action || row.app)
+            root.remember(row);
         if (row.back)
             root.goBack();
         else if (row.menu)

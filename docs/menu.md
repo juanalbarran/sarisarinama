@@ -25,6 +25,32 @@ has `icon`, `label` and exactly one of:
 A submenu shows a synthetic **Back** row, the only way back. Keys:
 `Ctrl+N`/`Ctrl+P` move, Enter activates, Escape closes; nothing else.
 
+### Most opened first
+
+A menu named in `programs.sarisarinama.remember` shows the rows opened
+most first; ties go to the one opened last, then to the written order. A
+row that opens a submenu counts every open made inside it, at any depth,
+as a project menu branch does. Only an action or an app is an open; moving
+between menus is not. The bookmarks menus and the applications menu are
+remembered; every other menu keeps the order it is written in.
+
+`render.nix` writes the flag into the file: a command menu gets
+`"remember": true`, and a list menu becomes an object, with its rows under
+`entries`:
+
+```json
+{
+  "entries": [{ "icon": "󰉋 ", "label": "code", "menu": "..." }],
+  "remember": true
+}
+```
+
+The shell logs each open to `$XDG_STATE_HOME/sarisarinama/menus-opened`,
+one JSON line per remembered menu on the way there: `{"menu": <file>,
+"row": <key>}`, the key being the row's action, its app id, or the
+submenu it opens. So the order outlives a logout, and only the last 1000
+lines stay, so old habits fade. The project menu keeps a log of its own.
+
 ### Long menus
 
 A menu shows at most `list.maxRows` rows (8) and scrolls to keep the
@@ -99,6 +125,8 @@ for 100 ms, not once per app: rebuilding every row for every app made the
 first open take most of a second. An app installed later rebuilds them once
 more. Opened before the first build, the menu waits for it. It is longer
 than `list.filterAbove`, so typing filters it, as wofi's search box does.
+It is remembered: the apps launched most come first, the rest by name, and
+a filter keeps that order.
 A row shows the app's icon from the icon theme, or the `󰀻` glyph when the
 theme has none. Enter launches the app through the entry's own `execute()`,
 and the menu closes.
@@ -145,7 +173,9 @@ programs.sarisarinama.bookmarks = {
 ```
 
 Each category becomes `bookmarks-<name>.json`, and `bookmarks.json` lists
-them, in attribute order, which Nix sorts by name. A category's `label` is
+them. Both levels are remembered: the links opened most come first, and
+the categories with the most opened inside them; the rest keep attribute
+order, which Nix sorts by name. A category's `label` is
 its name unless set. A link row runs the category's `browser`, or
 `bookmarks.browser` (`xdg-open` by default), with the URL quoted as one
 shell word; the menu closes. A browser already open gets the URL in its
@@ -172,6 +202,7 @@ Not yet checked on screen.
 | `File.qml`         | FileView wrapper: path expansion, JSON parsing, error handling      |
 | `Command.qml`      | Runs a command menu's `command`, turns its lines into entries       |
 | `Applications.qml` | The `applications` source: desktop entries as rows, sorted          |
+| `Opens.qml`        | The opens log of remembered menus, and their order                  |
 
 Data flows down (window, card, list, row); events flow up as signals.
 Nothing below `Menu.qml` knows about the window.
@@ -211,9 +242,9 @@ opens of every project inside it. Ties go to the one opened last, then name
 order. `open-project.sh` logs each open to
 `$XDG_STATE_HOME/sarisarinama/projects-opened`, so the order outlives a
 logout, and keeps only the last 1000, so old habits fade; `projects.sh`
-reads it. Every project menu shares the log, whatever its root. Only the
-project menu is ordered this way; every other menu keeps the order it is
-written in. One `jq` builds every row, so listing `~/dev` takes about 10 ms.
+reads it. Every project menu shares the log, whatever its root. The
+bookmarks and applications menus are ordered the same way, by the shell
+(see Most opened first). One `jq` builds every row, so listing `~/dev` takes about 10 ms.
 
 ### Opening a project
 

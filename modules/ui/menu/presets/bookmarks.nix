@@ -1,6 +1,8 @@
 # modules/ui/menu/presets/bookmarks.nix
 # Bookmarks: one submenu per category, one row per link. They are plain list
-# menus, rendered like any other, so the shell needs nothing new.
+# menus, rendered like any other, so the shell needs nothing new. Every one
+# is remembered: the most opened links come first, and the categories with
+# the most opened inside them.
 {
   flake.modules.homeManager.sarisarinama = {
     config,
@@ -70,6 +72,8 @@
         description = "One submenu per attribute, listed in attribute order.";
       };
     };
+
+    config.programs.sarisarinama.remember = ["bookmarks"] ++ map menuName (lib.attrNames cfg.categories);
 
     config.programs.sarisarinama.menus =
       {

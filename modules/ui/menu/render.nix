@@ -20,13 +20,22 @@
       // lib.optionalAttrs (e.action != null) {inherit (e) action;}
       // lib.optionalAttrs (e.menu != null) {menu = "${menuDir}/${e.menu}.json";};
 
-    renderMenu = m:
+    # A remembered list menu becomes an object, to carry the flag
+    renderMenu = name: m: let
+      remember = lib.elem name cfg.remember;
+    in
       if builtins.isList m
-      then map renderEntry m
-      else {inherit (m) command source terminal icon action backWithin;};
+      then
+        if remember
+        then {
+          entries = map renderEntry m;
+          inherit remember;
+        }
+        else map renderEntry m
+      else {inherit (m) command source terminal icon action backWithin;} // {inherit remember;};
     menuFiles = lib.mapAttrs' (name: m:
       lib.nameValuePair "sarisarinama/${name}.json" {
-        text = builtins.toJSON (renderMenu m);
+        text = builtins.toJSON (renderMenu name m);
       })
     cfg.menus;
 
@@ -48,6 +57,10 @@
         {
           assertion = danglingRefs == [];
           message = "programs.sarisarinama: unknown menu referenced: ${lib.concatStringsSep ", " danglingRefs}";
+        }
+        {
+          assertion = lib.all (n: cfg.menus ? ${n}) cfg.remember;
+          message = "programs.sarisarinama: unknown menu in `remember`: ${lib.concatStringsSep ", " (lib.filter (n: !(cfg.menus ? ${n})) cfg.remember)}";
         }
         {
           assertion = cfg.menus ? root;
