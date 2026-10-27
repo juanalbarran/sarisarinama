@@ -182,6 +182,12 @@ every switch, and paints itself through aether.nvim, as omarchy's
 `default/themed/neovim.lua.tpl` does. It watches the file, so an open
 Neovim changes too, and sets `background` from `mode`.
 
+A theme that is itself a Neovim colorscheme is painted by that one instead,
+keyed on the palette's `name`: aether maps the 26 keys onto groups of its
+own, so it never looks like the original. Today that is `no-clown-fiesta`:
+kukenan loads no-clown-fiesta.nvim with only its `bg` set to the palette's
+`background` (#46).
+
 ### Dark and light
 
 A palette's `mode` is written to dconf, as omarchy's
@@ -248,8 +254,10 @@ omarchy themes: 572 of 572 keys identical. Surfaces, `Colors.qml` and
 switching over IPC are in and verified: a `set` repoints `paletteFile`,
 every bound surface follows, and the choice survives a restart.
 
-Six presets: `no-clown-fiesta` (the default: from the neovim theme, background
-darkened to `#0d0d0d`), `tokyo-night` (omarchy's own default), `vantablack`
+Six presets: `no-clown-fiesta` (the default: every key an upstream colour
+from no-clown-fiesta.nvim's `dark` palette, mapped as its highlights use
+it, but the background darkened to `#0d0d0d` and the six bright hues
+derived, since upstream has none; #46), `tokyo-night` (omarchy's own default), `vantablack`
 and `white` (both 21:1, the highest contrast omarchy ships) and `kanagawa-dragon`
 (not an omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same
 way omarchy maps wave) and `catppuccin-latte` (omarchy's, but on white's
