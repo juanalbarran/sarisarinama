@@ -1,7 +1,7 @@
 # Keybinds pane
 
 A cheat sheet per application. The `keybinds` menu lists them (Neovim,
-Tmux, Yazi, and whatever a config adds), and picking one opens a pane with that
+Tmux, Yazi, Foot, Ghostty, and whatever a config adds), and picking one opens a pane with that
 app's binds drawn as keycaps, in groups, in one column. Omarchy quattro
 shows its keybindings as a searchable list in its menu; this drops the
 search and gives each app its own page, which reads better when the binds
@@ -51,7 +51,7 @@ to a preset with `lib.mkAfter [ ... ]` and replaces the preset's groups
 with `lib.mkForce [ ... ]`. `order` sorts the sections (lower first, ties
 by name); a section with no binds is left out of the file and the menu.
 
-Three presets ship (`modules/ui/keybinds/presets/`):
+Five presets ship (`modules/ui/keybinds/presets/`):
 
 - `neovim` (order 10): the base flavor of
   [kukenan](https://github.com/juanalbarran/kukenan), from its
@@ -66,6 +66,14 @@ Three presets ship (`modules/ui/keybinds/presets/`):
   against it. `s` needs `fd`, `z` `fzf` and `Z` `zoxide` on PATH; canaima
   installs none of them. `,` and `m` are prefixes: each opens a list of
   sort orders or line modes, shown here as one row.
+- `foot` (order 26): foot's defaults, from the `key-bindings`,
+  `search-bindings` and `url-bindings` sections of the `foot.ini` that
+  foot 1.27.0 ships. The search and URL keys work only once `Ctrl+Shift+r`
+  or `Ctrl+Shift+o` has started that mode.
+- `ghostty` (order 27): ghostty's Linux defaults, from
+  `ghostty +list-keybinds --default` of ghostty 1.3.1. Where ghostty binds
+  several keys to one action (next tab is also `Ctrl+PgDn` and
+  `Ctrl+Shift+→`), only the first is shown.
 
 The compositor's section is the config's to build, from its own binds.
 canaima's `modules/ui/keybinds.nix` builds a `sway` section (order 30) from
@@ -135,4 +143,9 @@ used on a real screen.
 - The yazi preset is yazi's defaults, as the tmux one is tmux's. A newer
   yazi may move a key; re-check against its `keymap-default.toml`. The
   pane was drawn in a headless Sway, not yet used on a real screen.
+- The foot and ghostty presets are their defaults too: re-check them
+  against `foot.ini` and `ghostty +list-keybinds --default` after an
+  upgrade. A config that rebinds either adds its own group (canaima does,
+  by hand). Both panes were drawn in a headless Sway, not yet used on a real
+  screen.
 - Hyprland has no section: canaima builds one from Sway's table only.
