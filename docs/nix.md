@@ -15,7 +15,8 @@ shell from the checkout, see [development.md](./development.md).
 - `modules.homeManager.sarisarinama`: the Home Manager module.
 - `modules.nixos.sarisarinama`: the NixOS module, for what Home Manager
   cannot do there; today only the lock's PAM service.
-- `devShells.default`: quickshell and qt tooling.
+- `devShells.default`: quickshell and qt tooling, with qtimageformats on
+  `QT_PLUGIN_PATH` as the module's quickshell has it.
 
 `flake.modules.<class>.<name>` comes from `inputs.flake-parts.flakeModules.modules`,
 imported in `flake.nix`. It merges many files into one module; the default
@@ -30,7 +31,7 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 
 | Option                                    | File                                   |
 | ----------------------------------------- | -------------------------------------- |
-| `enable`, `package`                       | `modules/home-manager.nix`             |
+| `enable`, `package`, quickshell's wrapper | `modules/home-manager.nix`             |
 | `menus` (entries or a command)            | `modules/ui/menu/options.nix`          |
 | menu rendering + assertions               | `modules/ui/menu/render.nix`           |
 | `systemMenu.*`                            | `modules/ui/menu/presets/system.nix`   |
@@ -60,6 +61,8 @@ it is and `theme/` what it is painted with. There is no `modules/ui/bar/`.
 | `style.notifications.*`                   | `modules/ui/style/notifications.nix`   |
 | `style.bluetooth.*`                       | `modules/ui/style/bluetooth.nix`       |
 | the Bluetooth panel's scripts             | `modules/ui/panes/bluetooth/scripts.nix` |
+| `image.enable`, the viewer's mime entries | `modules/ui/panes/image/viewer.nix`    |
+| `style.image.*`                           | `modules/ui/style/image.nix`           |
 
 The menu `render.nix` writes one `xdg.configFile."sarisarinama/<name>.json"`
 per menu and turns `menu = "system"` into the path of `system.json`. It

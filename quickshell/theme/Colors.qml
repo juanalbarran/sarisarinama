@@ -95,6 +95,10 @@ Singleton {
         paint: (key, token, color, alpha) => root.paint("notifications", key, token, color, alpha)
     }
 
+    readonly property ImageColors image: ImageColors {
+        paint: (key, token, color, alpha) => root.paint("image", key, token, color, alpha)
+    }
+
     readonly property LockColors lock: LockColors {
         paint: (key, token, color, alpha) => root.paint("lock", key, token, color, alpha)
     }

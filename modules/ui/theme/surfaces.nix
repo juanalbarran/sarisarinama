@@ -58,6 +58,13 @@
       battery = panel;
       audio = panel;
       bluetooth = panel;
+      # The caption card paints from the panel keys.
+      image =
+        panel
+        // {
+          backdrop = key "background" "The wash over the desktop behind the image.";
+          backdropAlpha = alpha 0.92 "0 shows the desktop as is, 1 hides it.";
+        };
       # The toasts paint from the same block: background, border (urgent on a
       # critical one), text, muted, accent for the icon tile.
       notifications = panel;

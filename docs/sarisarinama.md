@@ -96,6 +96,15 @@ disconnect, pair and forget. Read from BlueZ, acted on through
 
 For more context [bluetooth](./bluetooth.md)
 
+### Image viewer
+
+The default application for images: `xdg-open`, and Yazi through it, show
+a picture fitted over the dimmed desktop instead of in the browser. `h`
+and `l` step through its folder, with zoom and pan. Omarchy hands images to
+imv; this keeps them in the shell.
+
+For more context [image](./image.md)
+
 ### Keybinds pane
 
 A cheat sheet per application: the `keybinds` menu lists Neovim, Tmux and
@@ -135,6 +144,7 @@ The aggregate; each component doc carries its own detail and rough edges.
 | Battery   | Panel written; not yet checked on screen                    |
 | Audio     | Panel written; not yet checked on screen                    |
 | Bluetooth | Tested headless on a mock BlueZ; read-only on the real one  |
+| Image     | Tested headless, through xdg-open; not yet on screen        |
 | Lock      | Lock and triggers tested headless; not yet used for real    |
 | Keybinds  | Pane tested headless with canaima's data; not yet on screen |
 | Notices   | Core tested headless on a private bus; opt-in, not yet live |

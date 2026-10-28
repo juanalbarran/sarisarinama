@@ -85,6 +85,14 @@
           type = lib.types.bool;
           default = false;
         };
+        xdg.desktopEntries = lib.mkOption {
+          type = lib.types.attrsOf lib.types.attrs;
+          default = {};
+        };
+        xdg.mimeApps.defaultApplications = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = {};
+        };
         xdg.stateHome = lib.mkOption {
           type = lib.types.str;
           default = "~/.local/state";

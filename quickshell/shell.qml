@@ -13,6 +13,7 @@ import "panes/audio"
 import "panes/keybinds"
 import "panes/notifications"
 import "panes/bluetooth"
+import "panes/image"
 import "notifications"
 import "lock"
 import "wallpaper"
@@ -44,7 +45,8 @@ ShellRoot {
             "audio": audioLoader,
             "keybinds": keybindsLoader,
             "notifications": notificationsLoader,
-            "bluetooth": bluetoothLoader
+            "bluetooth": bluetoothLoader,
+            "image": imageLoader
         })
 
     // Built at startup, not on the first summon: the menu is the one opened
@@ -101,6 +103,12 @@ ShellRoot {
         id: bluetoothLoader
         active: false
         sourceComponent: BluetoothPanel {}
+    }
+
+    Loader {
+        id: imageLoader
+        active: false
+        sourceComponent: ImagePanel {}
     }
 
     function summon(id, payloadJson) {

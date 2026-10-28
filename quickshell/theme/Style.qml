@@ -98,6 +98,12 @@ Singleton {
         sharedScale: root.spacing.scale
     }
 
+    readonly property ImageStyle image: ImageStyle {
+        cfg: root.section("image")
+        sharedFont: root.font
+        sharedScale: root.spacing.scale
+    }
+
     readonly property LockStyle lock: LockStyle {
         cfg: root.section("lock")
         sharedFont: root.font
