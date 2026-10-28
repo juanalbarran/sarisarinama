@@ -94,6 +94,13 @@ groups both without any other change. The menu file is one command,
 `ipc call theme entries {arg}`, that reopens itself with the family as
 `{arg}`, `""` at the top, as the project menu does with a directory.
 
+The menu is remembered (#58), as the project menus are: the themes picked
+most come first at both levels, ties to the one picked last, then the
+order above. A family counts every pick made inside it, so `catppuccin`
+rises with `latte` and `mocha`. Only a pick from the menu counts; a
+`theme set` over IPC from elsewhere does not. See
+[menu](./menu.md#most-opened-first).
+
 ## Wallpapers
 
 Each theme has a directory of images at the root of the repository,

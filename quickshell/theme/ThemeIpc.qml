@@ -42,10 +42,13 @@ IpcHandler {
         var familyOf = name => name.split("-")[0];
         var members = group => root.available().filter(name => familyOf(name) === group);
         var shell = "qs -p '" + Quickshell.shellDir + "' ipc call theme set ";
+        // `key` is what the menu counts the pick under: the action names
+        // the store path, which every rebuild changes
         var row = (name, label) => ({
                     icon: "󰏘",
                     label: label,
-                    action: shell + "'" + name + "'"
+                    action: shell + "'" + name + "'",
+                    key: "theme " + name
                 });
         if (family !== "")
             return JSON.stringify(members(family).map(name => row(name, name === family ? Colors.themeFile.value("modes", {})[name] || name : name.slice(family.length + 1))));

@@ -31,8 +31,9 @@ A menu named in `programs.sarisarinama.remember` shows the rows opened
 most first; ties go to the one opened last, then to the written order. A
 row that opens a submenu counts every open made inside it, at any depth,
 as a project menu branch does. Only an action or an app is an open; moving
-between menus is not. The bookmarks menus and the applications menu are
-remembered; every other menu keeps the order it is written in.
+between menus is not. The bookmarks menus, the applications menu and the
+themes menu are remembered; every other menu keeps the order it is written
+in.
 
 `render.nix` writes the flag into the file: a command menu gets
 `"remember": true`, and a list menu becomes an object, with its rows under
@@ -47,8 +48,10 @@ remembered; every other menu keeps the order it is written in.
 
 The shell logs each open to `$XDG_STATE_HOME/sarisarinama/menus-opened`,
 one JSON line per remembered menu on the way there: `{"menu": <file>,
-"row": <key>}`, the key being the row's action, its app id, or the
-submenu it opens. So the order outlives a logout, and only the last 1000
+"row": <key>}`, the key being the row's own `key` when it has one, else
+its action, its app id, or the submenu it opens. A theme row carries
+`"key": "theme <name>"`: its action names the store path, so a rebuild
+would otherwise start its count over. So the order outlives a logout, and only the last 1000
 lines stay, so old habits fade. The project menu keeps a log of its own.
 
 ### Long menus

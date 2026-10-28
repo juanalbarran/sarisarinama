@@ -37,7 +37,11 @@ FileView {
         return "menu " + p + (arg ? "\t" + arg : "");
     }
 
+    // A row may carry its own `key`, for an action that changes when
+    // nothing the user picked did: a theme's names the store path
     function key(row) {
+        if (row.key)
+            return String(row.key);
         if (row.app)
             return "app " + row.app.id;
         if (row.menu)

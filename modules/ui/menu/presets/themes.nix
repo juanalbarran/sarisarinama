@@ -4,8 +4,13 @@
 # writing the names twice. A family of themes (catppuccin-latte and
 # catppuccin-mocha) is one row that reopens this menu with the family as
 # `{arg}`, "" at the top (#52). {shell} is the running config path.
+# Remembered: the themes picked most come first, and a family rises with
+# the flavors picked inside it (#58).
 {
-  flake.modules.homeManager.sarisarinama.programs.sarisarinama.menus.themes = {
-    command = "qs -p {shell} ipc call theme entries {arg}";
+  flake.modules.homeManager.sarisarinama.programs.sarisarinama = {
+    menus.themes = {
+      command = "qs -p {shell} ipc call theme entries {arg}";
+    };
+    remember = ["themes"];
   };
 }
