@@ -43,15 +43,16 @@ ListView {
         }
     }
 
-    // The four keys the menu answers to. Search.qml calls this too, so they
-    // work while the filter box holds the keyboard; any other key is left
-    // unaccepted, for the box to type.
+    // The keys the menu answers to: Ctrl+N or Down, Ctrl+P or Up, Enter and
+    // Escape. Search.qml calls this too, so they work while the filter box
+    // holds the keyboard; any other key is left unaccepted, for the box to
+    // type.
     function handleKey(event) {
         const ctrl = (event.modifiers & Qt.ControlModifier) !== 0;
         const key = event.key;
-        if (ctrl && key === Qt.Key_N)
+        if ((ctrl && key === Qt.Key_N) || key === Qt.Key_Down)
             root.incrementCurrentIndex();
-        else if (ctrl && key === Qt.Key_P)
+        else if ((ctrl && key === Qt.Key_P) || key === Qt.Key_Up)
             root.decrementCurrentIndex();
         else if (key === Qt.Key_Return || key === Qt.Key_Enter)
             root.activated(root.currentIndex);

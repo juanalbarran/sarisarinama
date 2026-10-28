@@ -34,9 +34,10 @@ error on its row until the next one.
 
 ## Keys
 
-`Ctrl+N`/`Ctrl+P` move between profiles, Enter brings the one under the
-cursor up or down, `r` reads the profiles again, Escape closes. The
-connected profile is listed first, and the cursor starts on it.
+`Ctrl+N`/`Ctrl+P` or `Down`/`Up` move between profiles, Enter brings the
+one under the cursor up or down, `r` reads the profiles again, Escape
+closes. The connected profile is listed first, and the cursor starts on
+it.
 
 ## Files (`quickshell/panes/vpn/`)
 

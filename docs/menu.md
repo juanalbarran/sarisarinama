@@ -23,7 +23,8 @@ has `icon`, `label` and exactly one of:
 - `menu`: the path of another menu file; opened as a submenu.
 
 A submenu shows a synthetic **Back** row, the only way back. Keys:
-`Ctrl+N`/`Ctrl+P` move, Enter activates, Escape closes; nothing else.
+`Ctrl+N`/`Ctrl+P` or `Down`/`Up` move, Enter activates, Escape closes;
+nothing else. The arrows work in the filter box too (#59).
 
 ### Most opened first
 

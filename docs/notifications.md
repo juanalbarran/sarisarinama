@@ -87,7 +87,7 @@ column. Opening it marks everything read.
 
 | Key                            | Does                                          |
 | ------------------------------ | --------------------------------------------- |
-| `j` / `k`, `Ctrl+N` / `Ctrl+P` | Move between the switch and the notifications |
+| `j` / `k`, `Ctrl+N` / `Ctrl+P`, `↓` / `↑` | Move between the switch and the notifications |
 | `Enter`                        | Flip the switch, or give the message the keys |
 | `x` / `Delete`                 | Forget the notification (closing it if shown) |
 | `c`                            | Forget them all, closing every toast          |
@@ -121,7 +121,7 @@ the toast. A notification already gone has no actions left to run.
 | `Ctrl+N` / `Ctrl+P` | Move between the links and the actions |
 | `h` / `l`           | Move along a row                       |
 | `Enter`             | Open the link, or run the action       |
-| `j` / `k`           | Scroll the message                     |
+| `j` / `k`, `↓` / `↑` | Scroll the message                   |
 | `Esc`               | Back to the list, cursor where it was  |
 
 These are the message's keys once `Enter` has given it the keyboard. Its

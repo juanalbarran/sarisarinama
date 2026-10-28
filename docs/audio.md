@@ -43,10 +43,10 @@ open; an unbound node has no live volume.
 
 ## Keys
 
-`Ctrl+N`/`Ctrl+P` move between lines, top to bottom: the output slider,
-the outputs, the input slider, the inputs, the apps. On a slider or an
-app, `h`/`l` move the volume 5% and Enter mutes; on a device, Enter makes
-it the default. Escape closes.
+`Ctrl+N`/`Ctrl+P` or `Down`/`Up` move between lines, top to bottom: the
+output slider, the outputs, the input slider, the inputs, the apps. On a
+slider or an app, `h`/`l` move the volume 5% and Enter mutes; on a
+device, Enter makes it the default. Escape closes.
 
 ## Files (`quickshell/panes/audio/`)
 

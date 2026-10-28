@@ -60,7 +60,7 @@ One action runs at a time.
 
 | Key                            | Does                                            |
 | ------------------------------ | ----------------------------------------------- |
-| `j` / `k`, `Ctrl+N` / `Ctrl+P` | Move between the switch and the devices         |
+| `j` / `k`, `Ctrl+N` / `Ctrl+P`, `↓` / `↑` | Move between the switch and the devices |
 | `h` / `l`                      | Move to and from Forget, on a remembered device |
 | `Enter`                        | Flip the switch, or connect / disconnect / pair |
 | `x` / `Delete`                 | Forget the device                               |

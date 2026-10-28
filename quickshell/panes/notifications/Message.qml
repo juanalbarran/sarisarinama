@@ -83,6 +83,8 @@ Item {
             }
         ] : [])
         startLine: lines => Math.max(0, lines.findIndex(l => l.id === "actions"))
+        // The arrows scroll the message, below, with j and k
+        arrows: false
         onCloseRequested: root.backRequested()
         onActivated: (line, stop) => {
             if (line === "links")
