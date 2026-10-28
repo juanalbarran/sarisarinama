@@ -73,6 +73,7 @@ in QML.
 
 ```
 qs -p $SARISARINAMA_PATH ipc call theme list
+qs -p $SARISARINAMA_PATH ipc call theme entries catppuccin
 qs -p $SARISARINAMA_PATH ipc call theme get
 qs -p $SARISARINAMA_PATH ipc call theme set vantablack
 ```
@@ -81,6 +82,17 @@ qs -p $SARISARINAMA_PATH ipc call theme set vantablack
 one Nix rendered. It assigns `Colors.selected` first and writes the file
 after: the write is asynchronous, so re-reading it would race, and the UI
 must switch now. The file is only how the choice survives a restart.
+
+`entries` is the Themes menu, a JSON array of rows (#52). A theme's family
+is its name up to the first dash, and a family of two or more is one row
+that opens a level of its own: `catppuccin` holds `latte` and `mocha`,
+`gruvbox` holds `dark` and `light`. A flavor is labelled by the rest of its
+name, and the one named as the family, which has no rest, by its mode, from
+`theme.json`'s `modes`. A theme alone in its family, such as
+`kanagawa-dragon`, stays a row of its own, so a second flavor added later
+groups both without any other change. The menu file is one command,
+`ipc call theme entries {arg}`, that reopens itself with the family as
+`{arg}`, `""` at the top, as the project menu does with a directory.
 
 ## Wallpapers
 

@@ -31,6 +31,40 @@ IpcHandler {
         return root.available().join("\n");
     }
 
+    // The themes menu: a JSON array of rows, the top level for "" and one
+    // family's flavors otherwise. A theme's family is its name up to the
+    // first dash, and a family of two or more is one row that reopens the
+    // menu file a level down: catppuccin-latte and catppuccin-mocha under
+    // catppuccin. A flavor is labelled by the rest of its name, and the one
+    // named as the family by its mode. The helpers are local: every
+    // function on an IpcHandler is exported, and an untyped one warns.
+    function entries(family: string): string {
+        var familyOf = name => name.split("-")[0];
+        var members = group => root.available().filter(name => familyOf(name) === group);
+        var shell = "qs -p '" + Quickshell.shellDir + "' ipc call theme set ";
+        var row = (name, label) => ({
+                    icon: "󰏘",
+                    label: label,
+                    action: shell + "'" + name + "'"
+                });
+        if (family !== "")
+            return JSON.stringify(members(family).map(name => row(name, name === family ? Colors.themeFile.value("modes", {})[name] || name : name.slice(family.length + 1))));
+        var rows = [];
+        root.available().forEach(name => {
+            var group = familyOf(name);
+            if (members(group).length < 2)
+                rows.push(row(name, name));
+            else if (!rows.some(r => r.arg === group))
+                rows.push({
+                    icon: "󰉋",
+                    label: group,
+                    menu: Quickshell.env("HOME") + "/.config/sarisarinama/themes.json",
+                    arg: group
+                });
+        });
+        return JSON.stringify(rows);
+    }
+
     function set(name: string): string {
         if (root.available().indexOf(name) < 0)
             return "unknown theme: " + name;

@@ -30,6 +30,8 @@
           "sarisarinama/theme.json".text = builtins.toJSON {
             default = cfg.theme.default;
             available = lib.attrNames cfg.theme.palettes;
+            # The themes menu labels a family's bare-named flavor by its mode
+            modes = lib.mapAttrs (_: raw: (resolve raw).mode) cfg.theme.palettes;
             onSet = cfg.theme.onSet;
           };
           "sarisarinama/surfaces.json".text = builtins.toJSON cfg.theme.surfaces;
