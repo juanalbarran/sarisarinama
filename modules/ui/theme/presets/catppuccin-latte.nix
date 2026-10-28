@@ -1,9 +1,6 @@
 # modules/ui/theme/presets/catppuccin-latte.nix
-# omarchy themes/catppuccin-latte/colors.toml, with Catppuccin Latte's own
-# colours wherever omarchy strays from the palette (#48): Base #eff1f5 for
-# the background (#42 had white's #ffffff), Peach for orange, Mantle and
-# Crust for the dark backgrounds. Catppuccin has no brown; Rosewater, its
-# closest hue, stands in.
+# omarchy themes/catppuccin-latte/colors.toml, verbatim, background
+# included: Latte's own #eff1f5 (#48; #42 had white's #ffffff, too bright).
 {
   flake.modules.homeManager.sarisarinama = {
     programs.sarisarinama.theme.palettes.catppuccin-latte = {
@@ -14,8 +11,8 @@
       muted = "#acb0be";
 
       background = "#eff1f5";
-      dark_background = "#e6e9ef";
-      darker_background = "#dce0e8";
+      dark_background = "#e3e4e8";
+      darker_background = "#d7d8dc";
       lighter_background = "#dce0e8";
 
       foreground = "#4c4f69";
@@ -25,12 +22,12 @@
 
       red = "#d20f39";
       yellow = "#df8e1d";
-      orange = "#fe640b";
+      orange = "#d84e2b";
       green = "#40a02b";
       cyan = "#179299";
       blue = "#1e66f5";
       magenta = "#ea76cb";
-      brown = "#dc8a78";
+      brown = "#6c2715";
 
       bright_red = "#d20f39";
       bright_yellow = "#df8e1d";
