@@ -100,6 +100,7 @@ The images come from omarchy, each theme's first background:
 | `vantablack`       | `vantablack/0-dot-hands.webp`                          |
 | `white`            | `white/1-white.webp`                                   |
 | `catppuccin-latte` | `catppuccin-latte/1-color-fade.webp`                   |
+| `catppuccin-mocha` | `catppuccin/1-totoro.webp`                              |
 | `kanagawa-dragon`  | `kanagawa/1-kanagawa.jpg`                              |
 | `no-clown-fiesta`  | `matte-black/0-ship-at-sea.jpg`; omarchy has no ncf    |
 
@@ -254,15 +255,17 @@ omarchy themes: 572 of 572 keys identical. Surfaces, `Colors.qml` and
 switching over IPC are in and verified: a `set` repoints `paletteFile`,
 every bound surface follows, and the choice survives a restart.
 
-Six presets: `no-clown-fiesta` (the default: every key an upstream colour
+Seven presets: `no-clown-fiesta` (the default: every key an upstream colour
 from no-clown-fiesta.nvim's `dark` palette, mapped as its highlights use
 it, but the background darkened to `#0d0d0d` and the six bright hues
 derived, since upstream has none; #46), `tokyo-night` (omarchy's own default), `vantablack`
 and `white` (both 21:1, the highest contrast omarchy ships) and `kanagawa-dragon`
 (not an omarchy theme; mapped from kanagawa.nvim's dragon `term` table the same
-way omarchy maps wave) and `catppuccin-latte` (omarchy's, verbatim: #42 had
-it on white's `#ffffff`, which #48 took back to Latte's `#eff1f5`). Four of those six
-are omarchy's, so 18 of its 22 are still to port.
+way omarchy maps wave), `catppuccin-latte` (omarchy's, verbatim: #42 had
+it on white's `#ffffff`, which #48 took back to Latte's `#eff1f5`) and
+`catppuccin-mocha` (omarchy's `catppuccin`, verbatim, with its three
+backgrounds; #50). Five of those seven are omarchy's, so 17 of its 22 are
+still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on
