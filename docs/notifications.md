@@ -78,28 +78,33 @@ a badge while there are notifications the panel has not shown, and is
 crossed out under Do Not Disturb. A click opens the panel, a right click
 flips Do Not Disturb (as a right click on the speaker mutes).
 
-The panel lists the history, newest first, up to 100 entries: app, age,
-summary and the first lines of the body. A dot marks one still on screen.
-Opening it marks everything read.
+The panel has two columns (#53). On the left, the switch and the history,
+newest first, up to 100 entries: app, age, summary and the first lines of
+the body. A dot marks one still on screen. On the right, the notification
+under the cursor in full, the newest when the panel opens; on the switch,
+the one last under the cursor stays. With no history there is no right
+column. Opening it marks everything read.
 
 | Key                            | Does                                          |
 | ------------------------------ | --------------------------------------------- |
 | `j` / `k`, `Ctrl+N` / `Ctrl+P` | Move between the switch and the notifications |
-| `Enter`                        | Flip the switch, or open the message          |
+| `Enter`                        | Flip the switch, or give the message the keys |
 | `x` / `Delete`                 | Forget the notification (closing it if shown) |
 | `c`                            | Forget them all, closing every toast          |
 | `d`                            | Flip Do Not Disturb                           |
 | `Esc`                          | Close                                         |
 
-A click on a notification opens the message, a middle click forgets it.
-The history is in memory only, like Do Not Disturb.
+A click on a notification shows it on the right, a middle click forgets
+it. Hovering does not move the cursor, or crossing the list on the way to
+the message would swap the message under the pointer. The history is in
+memory only, like Do Not Disturb.
 
 ### The message
 
-A notification clicked, or picked with `Enter`, opens in full in a second
-card over the panel (`MessagePanel.qml`), since the toast and the row cut
-it short (#47). It shows the app, the age, the whole summary and the whole
-body, scrolling past `history.maxHeight`. Every `http(s)://` or `www.`
+The right column (`Message.qml`) shows the notification in full, since the
+toast and the row cut it short (#47; a second card over the panel until
+#53). It shows the app, the age, the whole summary and the whole body,
+scrolling past `history.maxHeight`. Every `http(s)://` or `www.`
 address written in it is a link; a click opens it in the browser
 (`Qt.openUrlExternally`) and closes the panel.
 
@@ -119,9 +124,10 @@ the toast. A notification already gone has no actions left to run.
 | `j` / `k`           | Scroll the message                     |
 | `Esc`               | Back to the list, cursor where it was  |
 
-The cursor starts on the actions, so `Enter` twice from the list runs
-`Open`, as one `Enter` did before; with no actions it starts on the links.
-The panel underneath gives the message the keyboard while it is open.
+These are the message's keys once `Enter` has given it the keyboard. Its
+cursor starts on the actions, so `Enter` twice from the list runs `Open`;
+with no actions it starts on the links. While the list has the keys no
+pill is ringed; a pointer works on either column at any time.
 
 ## IPC
 
@@ -164,7 +170,7 @@ The `notifications` target answers:
 | `HistoryList.qml`        | The history, scrolling, following the cursor         |
 | `HistoryRow.qml`         | One notification                                     |
 | `Cursor.qml`             | `LineCursor`, plus j/k, x, c, d                      |
-| `MessagePanel.qml`       | One notification in full, its links and actions      |
+| `Message.qml`            | The right column: one notification in full           |
 
 Live `Notification` objects are kept in a plain map, never a model role:
 the sender may close one at any time, and a role would dangle (omarchy's
@@ -177,7 +183,7 @@ And `modules/ui/notifications/`: `options.nix` (`enable`) and `render.nix`
 ## Looks
 
 `style.notifications` is every panel's keys from `_lib/panel.nix` for the
-panel, with a card 420 px wide, plus:
+panel, with a card 420 px wide for the left column, plus:
 
 | Key                                | Default   | Meaning                                |
 | ---------------------------------- | --------- | -------------------------------------- |
@@ -188,6 +194,7 @@ panel, with a card 420 px wide, plus:
 | `toast.bodyLines`                  | 3         | Body lines before it is cut            |
 | `toast.max`                        | 5         | Toasts on screen at once               |
 | `history.maxHeight`, `.iconSize`   | 420, 28   | Panel list height, its icons           |
+| `message.width`                    | 480       | The right column                       |
 
 `theme.surfaces.notifications` is a plain panel block; the toasts paint
 from it too: `background`, `border` (`urgent` on a critical one), `text`,

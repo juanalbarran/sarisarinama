@@ -1,6 +1,7 @@
 // quickshell/theme/NotificationsStyle.qml
 // The `notifications` section of style.json: every panel's keys, from
-// PanelStyle, for the history panel, plus the toasts and the history list.
+// PanelStyle, for the history panel, plus the toasts, the history list and
+// the message beside it.
 import QtQuick
 
 PanelStyle {
@@ -28,5 +29,10 @@ PanelStyle {
         // Past this height the history scrolls instead of growing the panel.
         readonly property int maxHeight: root.px(root.group("history").maxHeight, 420)
         readonly property int iconSize: root.px(root.group("history").iconSize, 28)
+    }
+
+    // The notification shown in full, the panel's right column.
+    readonly property QtObject message: QtObject {
+        readonly property int width: root.px(root.group("message").width, 480)
     }
 }

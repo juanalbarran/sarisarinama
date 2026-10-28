@@ -1,7 +1,9 @@
 // quickshell/panes/notifications/HistoryRow.qml
 // One notification in the history: its icon, the app and when, the summary
 // and the first lines of the body. A dot marks one still on screen. A click
-// opens it in full, through the cursor; a middle click forgets it.
+// puts the cursor on it, which shows it in full beside the list; a middle
+// click forgets it. Hovering does not move the cursor, or crossing the list
+// on the way to the message would swap the message under the pointer.
 import QtQuick
 import "../../theme/"
 import "../common/"
@@ -29,15 +31,13 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
-        onEntered: root.cursor.select(root.line, 0)
         onClicked: mouse => {
             if (mouse.button === Qt.MiddleButton)
                 NotificationCenter.forget(root.row.key);
             else
-                root.cursor.messageRequested(root.row.key);
+                root.cursor.select(root.line, 0);
         }
     }
 

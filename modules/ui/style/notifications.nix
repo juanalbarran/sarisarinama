@@ -26,7 +26,7 @@
         card =
           panel.card
           // {
-            width = px 420 "History panel width in design px.";
+            width = px 420 "Width of the history column in design px; the message adds its own.";
           };
 
         toast = {
@@ -44,6 +44,10 @@
         history = {
           maxHeight = px 420 "Past this height the history scrolls.";
           iconSize = px 28 "Size of an icon in the history.";
+        };
+
+        message = {
+          width = px 480 "Width of the notification shown in full, right of the history.";
         };
       };
   };
