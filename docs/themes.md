@@ -101,6 +101,8 @@ The images come from omarchy, each theme's first background:
 | `white`            | `white/1-white.webp`                                   |
 | `catppuccin-latte` | `catppuccin-latte/1-color-fade.webp`                   |
 | `catppuccin-mocha` | `catppuccin/1-totoro.webp`                              |
+| `gruvbox`          | `gruvbox/1-the-backwater.jpg`                          |
+| `gruvbox-light`    | none; omarchy has no light gruvbox                     |
 | `kanagawa-dragon`  | `kanagawa/1-kanagawa.jpg`                              |
 | `no-clown-fiesta`  | `matte-black/0-ship-at-sea.jpg`; omarchy has no ncf    |
 
@@ -255,7 +257,7 @@ omarchy themes: 572 of 572 keys identical. Surfaces, `Colors.qml` and
 switching over IPC are in and verified: a `set` repoints `paletteFile`,
 every bound surface follows, and the choice survives a restart.
 
-Seven presets: `no-clown-fiesta` (the default: every key an upstream colour
+Nine presets: `no-clown-fiesta` (the default: every key an upstream colour
 from no-clown-fiesta.nvim's `dark` palette, mapped as its highlights use
 it, but the background darkened to `#0d0d0d` and the six bright hues
 derived, since upstream has none; #46), `tokyo-night` (omarchy's own default), `vantablack`
@@ -264,8 +266,11 @@ and `white` (both 21:1, the highest contrast omarchy ships) and `kanagawa-dragon
 way omarchy maps wave), `catppuccin-latte` (omarchy's, verbatim: #42 had
 it on white's `#ffffff`, which #48 took back to Latte's `#eff1f5`) and
 `catppuccin-mocha` (omarchy's `catppuccin`, verbatim, with its three
-backgrounds; #50). Five of those seven are omarchy's, so 17 of its 22 are
-still to port.
+backgrounds; #50), `gruvbox` (omarchy's, verbatim, with its five
+backgrounds) and `gruvbox-light` (not an omarchy theme: omarchy's gruvbox
+mirrored, gruvbox's light ramp where it has the dark one and
+gruvbox-material's light hues where it has the dark ones; #51). Six of
+those nine are omarchy's, so 16 of its 22 are still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on
