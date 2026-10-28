@@ -117,6 +117,8 @@ The images come from omarchy, each theme's first background:
 | `gruvbox-light`    | none; omarchy has no light gruvbox                     |
 | `everforest`       | `everforest/1-tree-tops.webp`                          |
 | `everforest-light` | none; omarchy has no light everforest                  |
+| `rose-pine-dawn`   | `rose-pine/1-funky-shapes.webp`                        |
+| `rose-pine`        | none; omarchy has no dark rose-pine                    |
 | `kanagawa-dragon`  | `kanagawa/1-kanagawa.jpg`                              |
 | `no-clown-fiesta`  | `matte-black/0-ship-at-sea.jpg`; omarchy has no ncf    |
 
@@ -271,7 +273,7 @@ omarchy themes: 572 of 572 keys identical. Surfaces, `Colors.qml` and
 switching over IPC are in and verified: a `set` repoints `paletteFile`,
 every bound surface follows, and the choice survives a restart.
 
-Eleven presets: `no-clown-fiesta` (the default: every key an upstream colour
+Thirteen presets: `no-clown-fiesta` (the default: every key an upstream colour
 from no-clown-fiesta.nvim's `dark` palette, mapped as its highlights use
 it, but the background darkened to `#0d0d0d` and the six bright hues
 derived, since upstream has none; #46), `tokyo-night` (omarchy's own default), `vantablack`
@@ -287,8 +289,12 @@ gruvbox-material's light hues where it has the dark ones; #51),
 `everforest` (omarchy's, verbatim, with its one background) and
 `everforest-light` (not an omarchy theme: omarchy's everforest mirrored onto
 everforest's light ramp and hues, with `muted` and `dark_foreground` picked
-by contrast where the flatter light ramp would hide them; #54). Seven of
-those eleven are omarchy's, so 15 of its 22 are still to port.
+by contrast where the flatter light ramp would hide them; #54),
+`rose-pine-dawn` (omarchy's `rose-pine`, with rose-pine/neovim's current
+text and subtle in place of its older two, and its three backgrounds) and
+`rose-pine` (not an omarchy theme: rose-pine/neovim's main, keyed as
+omarchy keys Dawn, and no moon; #55). Eight of those thirteen are omarchy's, so 14 of
+its 22 are still to port.
 
 Two rough edges: the shell paints its QML defaults for a tick at startup
 before the palette loads, and `ConfigFile` warns about `current.json` on
