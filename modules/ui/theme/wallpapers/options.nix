@@ -3,11 +3,34 @@
 # and which of them the theme starts with. Every directory under the
 # repository's wallpapers/ is picked up for the theme of the same name, so
 # adding an image there is enough; a config may point a theme elsewhere.
+# A family's directory holds one per flavor instead, named as the themes
+# menu labels it: catppuccin/latte for catppuccin-latte, gruvbox/dark for
+# gruvbox, the flavor named as the family, by its mode.
 # theme.rotateWallpapers moves to the next image on a timer.
 {
-  flake.modules.homeManager.sarisarinama = {lib, ...}: let
+  flake.modules.homeManager.sarisarinama = {
+    config,
+    lib,
+    ...
+  }: let
     root = ../../../../wallpapers;
-    shipped = lib.filterAttrs (_: type: type == "directory") (builtins.readDir root);
+    resolve = import ../_lib/palette.nix lib;
+    palettes = config.programs.sarisarinama.theme.palettes;
+    directories = path: lib.attrNames (lib.filterAttrs (_: type: type == "directory") (builtins.readDir path));
+
+    # A flavor's theme is family-flavor, unless only the family itself
+    # exists and the flavor is its mode.
+    themeOf = family: flavor:
+      if !(palettes ? "${family}-${flavor}") && palettes ? ${family} && (resolve palettes.${family}).mode == flavor
+      then family
+      else "${family}-${flavor}";
+    shipped = lib.listToAttrs (lib.concatMap (name: let
+      flavors = directories (root + "/${name}");
+    in
+      if flavors == []
+      then [(lib.nameValuePair name (root + "/${name}"))]
+      else map (flavor: lib.nameValuePair (themeOf name flavor) (root + "/${name}/${flavor}")) flavors)
+    (directories root));
   in {
     options.programs.sarisarinama.theme.wallpapers = lib.mkOption {
       type = lib.types.attrsOf (lib.types.submodule {
@@ -46,6 +69,6 @@
     };
 
     config.programs.sarisarinama.theme.wallpapers =
-      lib.mapAttrs (name: _: {directory = lib.mkDefault (root + "/${name}");}) shipped;
+      lib.mapAttrs (_: directory: {directory = lib.mkDefault directory;}) shipped;
   };
 }

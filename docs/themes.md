@@ -96,13 +96,28 @@ groups both without any other change. The menu file is one command,
 
 ## Wallpapers
 
-Each theme has a directory of images, `wallpapers/<theme>/` at the root of
-the repository, picked up by name: dropping an image there is enough. When
-a theme is selected its default is shown on every screen, below every
-window; `theme.wallpapers.<theme>.default` names it, and null means the
-first by name, as in omarchy. A config may point a theme at a directory of
-its own with `theme.wallpapers.<theme>.directory`. A theme with no
-wallpaper shows its `background` colour.
+Each theme has a directory of images at the root of the repository,
+picked up by name: dropping an image there is enough. A theme alone in its
+family has `wallpapers/<theme>/`; a family of flavors has one directory
+with a subdirectory per flavor, named as the themes menu labels it (#56):
+
+| Directory                    | Theme                                 |
+| ---------------------------- | ------------------------------------- |
+| `white/`                     | `white`                               |
+| `catppuccin/latte/`          | `catppuccin-latte`                    |
+| `catppuccin/mocha/`          | `catppuccin-mocha`                    |
+| `gruvbox/dark/`, `light/`    | `gruvbox` (its mode), `gruvbox-light` |
+| `everforest/dark/`, `light/` | `everforest`, `everforest-light`      |
+| `rose-pine/dark/`, `dawn/`   | `rose-pine`, `rose-pine-dawn`         |
+
+A subdirectory is `<family>-<flavor>` when that theme exists, else the
+family's own theme when the flavor is its mode. When a theme is selected
+its default is shown on every screen, below every window;
+`theme.wallpapers.<theme>.default` names it, and null means the first by
+name, as in omarchy. A config may point a theme at a directory of its own
+with `theme.wallpapers.<theme>.directory`. A theme with no wallpaper, no
+directory or one with no image in it, shows its `background` colour; the
+empty flavors keep a `.gitkeep` so the directory is there to drop into.
 
 The images come from omarchy, each theme's first background:
 
@@ -112,7 +127,7 @@ The images come from omarchy, each theme's first background:
 | `vantablack`       | `vantablack/0-dot-hands.webp`                          |
 | `white`            | `white/1-white.webp`                                   |
 | `catppuccin-latte` | `catppuccin-latte/1-color-fade.webp`                   |
-| `catppuccin-mocha` | `catppuccin/1-totoro.webp`                              |
+| `catppuccin-mocha` | `catppuccin/1-totoro.webp`                             |
 | `gruvbox`          | `gruvbox/1-the-backwater.jpg`                          |
 | `gruvbox-light`    | none; omarchy has no light gruvbox                     |
 | `everforest`       | `everforest/1-tree-tops.webp`                          |
@@ -235,32 +250,32 @@ marked urgent on every switch. Tested on a headless Sway.
 
 ## Files
 
-| File                                      | Role                                |
-| ----------------------------------------- | ----------------------------------- |
-| `modules/ui/theme/_lib/mix.nix`           | Hex arithmetic: `mix`, `isLight`    |
-| `modules/ui/theme/_lib/palette.nix`       | The cascade                         |
-| `modules/ui/theme/options.nix`            | `theme.default`, `theme.palettes`   |
-| `modules/ui/theme/presets/*.nix`          | One palette each                    |
-| `modules/ui/theme/surfaces.nix`           | `theme.surfaces.*`, the token map   |
-| `modules/ui/theme/render.nix`             | Writes all three kinds of file      |
-| `quickshell/theme/Colors.qml`             | Reads all three, resolves a key     |
-| `quickshell/theme/BarColors.qml`          | The `bar` block, with its defaults  |
-| `quickshell/theme/MenuColors.qml`         | The `menu` block, with its defaults |
-| `quickshell/theme/ThemeIpc.qml`           | `theme get`/`list`/`set` over IPC   |
-| `wallpapers/<theme>/`                     | The images, one directory per theme |
-| `modules/ui/theme/wallpapers/options.nix` | `theme.wallpapers`, found by name   |
-| `modules/ui/theme/wallpapers/render.nix`  | Converts, writes `wallpapers.json`  |
-| `quickshell/wallpaper/Wallpaper.qml`      | The current image, every screen     |
-| `quickshell/wallpaper/WallpaperIpc.qml`   | `wallpaper next`/`set`/`entries`    |
-| `quickshell/theme/Wallpapers.qml`         | Current image, picks, rotation      |
-| `modules/ui/menu/presets/wallpaper.nix`   | The Wallpaper menu                  |
-| `integrations/_lib/current-theme.sh`      | Which theme a script applies        |
-| `integrations/_lib/ansi.nix`              | The sixteen colours, by palette key |
-| `integrations/foot/`                      | foot: files, script, activation     |
-| `integrations/tmux/`                      | tmux: files, script, activation     |
-| `integrations/palette/`                   | `palette.json`, for Neovim          |
-| `integrations/mode/`                      | Dark or light, in dconf             |
-| `integrations/qutebrowser/`               | Dark pages, from `palette.json`     |
+| File                                        | Role                                |
+| ------------------------------------------- | ----------------------------------- |
+| `modules/ui/theme/_lib/mix.nix`             | Hex arithmetic: `mix`, `isLight`    |
+| `modules/ui/theme/_lib/palette.nix`         | The cascade                         |
+| `modules/ui/theme/options.nix`              | `theme.default`, `theme.palettes`   |
+| `modules/ui/theme/presets/*.nix`            | One palette each                    |
+| `modules/ui/theme/surfaces.nix`             | `theme.surfaces.*`, the token map   |
+| `modules/ui/theme/render.nix`               | Writes all three kinds of file      |
+| `quickshell/theme/Colors.qml`               | Reads all three, resolves a key     |
+| `quickshell/theme/BarColors.qml`            | The `bar` block, with its defaults  |
+| `quickshell/theme/MenuColors.qml`           | The `menu` block, with its defaults |
+| `quickshell/theme/ThemeIpc.qml`             | `theme get`/`list`/`set` over IPC   |
+| `wallpapers/<theme>/`, `<family>/<flavor>/` | The images, one directory per theme |
+| `modules/ui/theme/wallpapers/options.nix`   | `theme.wallpapers`, found by name   |
+| `modules/ui/theme/wallpapers/render.nix`    | Converts, writes `wallpapers.json`  |
+| `quickshell/wallpaper/Wallpaper.qml`        | The current image, every screen     |
+| `quickshell/wallpaper/WallpaperIpc.qml`     | `wallpaper next`/`set`/`entries`    |
+| `quickshell/theme/Wallpapers.qml`           | Current image, picks, rotation      |
+| `modules/ui/menu/presets/wallpaper.nix`     | The Wallpaper menu                  |
+| `integrations/_lib/current-theme.sh`        | Which theme a script applies        |
+| `integrations/_lib/ansi.nix`                | The sixteen colours, by palette key |
+| `integrations/foot/`                        | foot: files, script, activation     |
+| `integrations/tmux/`                        | tmux: files, script, activation     |
+| `integrations/palette/`                     | `palette.json`, for Neovim          |
+| `integrations/mode/`                        | Dark or light, in dconf             |
+| `integrations/qutebrowser/`                 | Dark pages, from `palette.json`     |
 
 `integrations/` is `modules/ui/theme/integrations/`.
 
