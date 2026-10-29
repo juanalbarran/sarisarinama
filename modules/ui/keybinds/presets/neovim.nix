@@ -1,7 +1,7 @@
 # modules/ui/keybinds/presets/neovim.nix
 # Neovim: the base flavor of kukenan (github:juanalbarran/kukenan), from its
-# docs/keybinds.md, plus zdiff.nvim's defaults in its buffer. The leader is
-# Space. Language flavors add their own
+# docs/keybinds.md, plus zdiff.nvim's defaults in its buffer and the java
+# flavor's binds. The leader is Space. Other language flavors add their own
 # binds; a config adds them as groups of its own.
 {
   flake.modules.homeManager.sarisarinama.programs.sarisarinama.keybinds.neovim = {
@@ -287,6 +287,133 @@
           {
             keys = "q";
             description = "Close zdiff";
+          }
+        ];
+      }
+      {
+        # The java flavor's keybinds-java.lua: these in any buffer.
+        title = "Java";
+        binds = [
+          {
+            keys = "Space j c";
+            description = "New class";
+          }
+          {
+            keys = "Space j i";
+            description = "New interface";
+          }
+          {
+            keys = "Space j e";
+            description = "New enum";
+          }
+          {
+            keys = "Space j r";
+            description = "New record";
+          }
+          {
+            keys = "Space j a";
+            description = "New abstract class";
+          }
+          {
+            keys = "Space j n";
+            description = "New Java file";
+          }
+          {
+            keys = "Space j b";
+            description = "Spring beans";
+          }
+          {
+            keys = "Space j w";
+            description = "Web endpoints";
+          }
+          {
+            keys = "Space j R";
+            description = "Restart the app in the server window";
+          }
+          {
+            keys = "Space j q";
+            description = "Toggle the database UI";
+          }
+        ];
+      }
+      {
+        # These and the next two groups in Java buffers only, once jdtls is attached.
+        title = "Java code";
+        binds = [
+          {
+            keys = "Space i o";
+            description = "Organize imports";
+          }
+          {
+            keys = "Space j v";
+            description = "Extract a variable (visual)";
+          }
+          {
+            keys = "Space j m";
+            description = "Extract a method (visual)";
+          }
+          {
+            keys = "Space j g s";
+            description = "Generate getters and setters";
+          }
+          {
+            keys = "Space j g c";
+            description = "Generate a constructor";
+          }
+          {
+            keys = "Space j g t";
+            description = "Generate toString";
+          }
+          {
+            keys = "Space j g h";
+            description = "Generate hashCode and equals";
+          }
+        ];
+      }
+      {
+        title = "Java tests";
+        binds = [
+          {
+            keys = "Space j t c";
+            description = "Run the file's tests";
+          }
+          {
+            keys = "Space j t m";
+            description = "Run the nearest test";
+          }
+          {
+            keys = "Space j t d";
+            description = "Debug the nearest test";
+          }
+          {
+            keys = "Space j t s";
+            description = "Toggle the test summary";
+          }
+          {
+            keys = "Space j t o";
+            description = "Toggle the test output";
+          }
+        ];
+      }
+      {
+        # Run in the session's console tmux window.
+        title = "Maven";
+        binds = [
+          {
+            keys = "Space j m t";
+            description = "mvnd test";
+          }
+          {
+            keys = "Space j m c";
+            description = "mvnd clean";
+          }
+          {
+            keys = "Space j m b";
+            description = "mvnd install";
+          }
+          {
+            keys = "Space j m p";
+            description = "mvnd package";
           }
         ];
       }

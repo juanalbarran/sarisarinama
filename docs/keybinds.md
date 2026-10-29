@@ -58,7 +58,11 @@ Five presets ship (`modules/ui/keybinds/presets/`):
   `docs/keybinds.md`. Leader is Space. The `Zdiff view` group is
   zdiff.nvim's own defaults, live only in its buffer: kukenan sets the
   `Space z` launchers and leaves the plugin's keys alone, so check them
-  against the plugin at the commit kukenan pins.
+  against the plugin at the commit kukenan pins. The `Java`, `Java code`,
+  `Java tests` and `Maven` groups are the java flavor's, from its
+  `keybinds-java.lua`: `Java` works in any buffer, the other three only in
+  Java buffers with jdtls attached. Maven runs in the session's `console`
+  tmux window.
 - `tmux` (order 20): tmux's defaults, Ctrl+b prefix and vi copy mode,
   checked against `tmux list-keys`.
 - `yazi` (order 25): yazi's defaults, picked from the manager keymap of
@@ -139,7 +143,8 @@ used on a real screen.
 - The tmux preset is tmux's defaults; a config that rebinds tmux must add
   its own group (canaima does, by hand, so it can drift from its tmux
   config).
-- Neovim's binds are copied from kukenan's docs, not read from Neovim.
+- Neovim's binds are copied from kukenan's docs and the java flavor's
+  `keybinds-java.lua`, not read from Neovim.
 - The yazi preset is yazi's defaults, as the tmux one is tmux's. A newer
   yazi may move a key; re-check against its `keymap-default.toml`. The
   pane was drawn in a headless Sway, not yet used on a real screen.
