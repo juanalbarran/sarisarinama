@@ -118,7 +118,18 @@ init() {
         notify "A command in .tmux-init.conf failed (exit $?)"
 }
 
+# Several devenv shells starting at once race on .devenv/gc and one fails
+# with "Failed to remove existing GC root". Building the env once, before
+# any window, leaves the windows nothing to race over
+warm_devenv() {
+    if [ -e "$dir/devenv.nix" ]; then
+        (cd "$dir" && devenv shell true) >/dev/null 2>&1 ||
+            notify "devenv shell failed; the windows will show why"
+    fi
+}
+
 if ! tmux has-session -t "=$session" 2>/dev/null; then
+    warm_devenv
     if [ -e "$dir/.tmux-init.conf" ]; then
         init
     else
