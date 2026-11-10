@@ -120,9 +120,11 @@ init() {
 
 # Several devenv shells starting at once race on .devenv/gc and one fails
 # with "Failed to remove existing GC root". Building the env once, before
-# any window, leaves the windows nothing to race over
+# any window, leaves the windows nothing to race over. Nothing is on screen
+# yet, and a first build can take minutes, so a toast says what is going on
 warm_devenv() {
     if [ -e "$dir/devenv.nix" ]; then
+        notify "Building the devenv environment, the windows open when it is ready"
         (cd "$dir" && devenv shell true) >/dev/null 2>&1 ||
             notify "devenv shell failed; the windows will show why"
     fi
