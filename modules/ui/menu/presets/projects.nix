@@ -21,7 +21,7 @@
       name = "sarisarinama-open-project";
       runtimeInputs = with pkgs; [jq libnotify procps coreutils];
       runtimeEnv.SARISARINAMA_TERMINAL = cfg.projects.terminal;
-      text = builtins.readFile ../_lib/open-project.sh;
+      text = builtins.readFile ../_lib/raise-session.sh + builtins.readFile ../_lib/open-project.sh;
     };
     entry = pkgs.writeShellApplication {
       name = "sarisarinama-projects-menu";

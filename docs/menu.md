@@ -193,6 +193,16 @@ rebuild; there is no runtime file to edit.
 The options and both menus are `modules/ui/menu/presets/bookmarks.nix`.
 Not yet checked on screen.
 
+### Sessions menu
+
+Not in the root menu: a config opens `sessions.json` with a keybind
+(canaima: `mod` + `t`). A command menu: `sarisarinama-sessions` prints the
+running tmux sessions as a JSON array, the one attached last first, so the
+current session is the first row and the previous one the second. A row
+runs `sarisarinama-open-session <name>`: run or raise, as a project does
+(`_lib/raise-session.sh`, shared with `open-project.sh`). No tmux server
+means an empty menu. The menu and both scripts are `presets/sessions.nix`.
+
 ### Files (`quickshell/menu/`)
 
 | File               | Role                                                                |
