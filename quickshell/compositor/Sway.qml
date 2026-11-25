@@ -13,6 +13,9 @@ import QtQuick
 QtObject {
     id: root
 
+    // The display with the focus, by name; "" before Sway says.
+    readonly property string focusedOutput: I3.focusedMonitor ? I3.focusedMonitor.name : ""
+
     function workspace(n) {
         return I3.workspaces.values.find(w => w.num === n) ?? null;
     }

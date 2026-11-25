@@ -1,7 +1,8 @@
 # modules/ui/panes/monitor/_lib/lid.sh
 # sarisarinama-lid closed|open: puts the laptop panel in the state the lid
-# asks for. Closed with an external output active turns the panel off;
-# anything else turns it on, so the last screen is never switched off.
+# asks for. Closed with an external output active turns the panel off, and
+# so does open when the monitor pane turned it off; anything else turns it
+# on, so the last screen is never switched off.
 # The compositor's lid bind passes the state: /proc/acpi/button/lid can lie.
 #
 # swaymsg and hyprctl come from PATH: only the running compositor's own
@@ -35,7 +36,14 @@ active=$(jq -r --arg name "$internal" \
 externals=$(jq -r --arg re "$internal_re" \
   '[.[] | select((.name | test($re) | not) and .active)] | length' <<<"$outputs")
 
-if [ "$state" = closed ] && [ "$externals" -gt 0 ]; then
+# The panel turned off in the monitor pane stays off when the lid opens: that
+# is the user's choice, and the lid only stands in for it. Some laptops also
+# report a quick close and open as their panel powers down, which would turn
+# it straight back on. outputs.json is the shell's, see OutputMemory.qml.
+saved="${XDG_STATE_HOME:-$HOME/.local/state}/sarisarinama/outputs.json"
+kept_off=$(jq -r --arg name "$internal" '.[$name].active == false' "$saved" 2>/dev/null || echo false)
+
+if [ "$externals" -gt 0 ] && { [ "$state" = closed ] || [ "$kept_off" = true ]; }; then
   want=false
 else
   want=true

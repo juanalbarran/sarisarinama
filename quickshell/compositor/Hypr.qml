@@ -14,6 +14,9 @@ import QtQuick
 QtObject {
     id: root
 
+    // The display with the focus, by name; "" before Hyprland says.
+    readonly property string focusedOutput: Hyprland.focusedMonitor ? Hyprland.focusedMonitor.name : ""
+
     function workspace(n) {
         return Hyprland.workspaces.values.find(w => w.id === n) ?? null;
     }

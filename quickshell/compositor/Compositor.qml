@@ -40,6 +40,9 @@ Singleton {
     readonly property var gaps: root.backend.item ? root.backend.item.gaps : ({ top: 0, right: 0, bottom: 0, left: 0 })
     readonly property int rounding: root.backend.item ? root.backend.item.rounding : 0
 
+    // The display with the focus, by name, live.
+    readonly property string focusedOutput: root.backend.item ? root.backend.item.focusedOutput : ""
+
     // Every output, the disabled ones too:
     // [{name, description, active, focused, scale, width, height}].
     // Not live: it changes when refreshOutputs() has read them again, which

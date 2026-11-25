@@ -97,6 +97,16 @@ dark. Displays turn on first, then scales, then off, and a saved state that
 would leave no display on is not applied at all. A display that comes back
 on is set to its saved scale, since it returns at the compositor's own.
 Changes made outside the panel, as the lid script's, are not remembered.
+The lid script reads the file, though: opening the lid keeps the laptop
+panel off when the monitor panel turned it off and an external display is
+on. Without that, the lid undid the choice; Hyprland's log on the work
+laptop shows a quick lid close and open right after the panel powers down,
+so the panel came straight back.
+
+The monitor panel opens on the focused display, by `Compositor.focusedOutput`,
+and closes itself when that display goes, as turning it off from the panel
+does. Otherwise it stayed open with no window, and the next summon closed it
+instead of showing it.
 
 ## Tokens (the `bar` section of `style.json`)
 

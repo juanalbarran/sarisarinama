@@ -6,6 +6,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "../../theme/"
+import "../../compositor/"
 import "../common/"
 
 PanelWindow {
@@ -16,7 +17,20 @@ PanelWindow {
 
     // The panel takes no payload yet; the argument keeps the host contract.
     function open(payloadJson) {
+        // On the focused display, named, so the panel knows when it goes.
+        root.screen = Quickshell.screens.find(s => s.name === Compositor.focusedOutput) ?? null;
         opened = true;
+    }
+
+    // Turning off the display the panel is on takes its window with it.
+    // Closed here too, or the panel would stay open with nothing on screen
+    // and the next summon would close it instead of showing it.
+    Connections {
+        target: Quickshell
+        function onScreensChanged() {
+            if (root.opened && Quickshell.screens.indexOf(root.screen) < 0)
+                root.close();
+        }
     }
 
     function close() {
