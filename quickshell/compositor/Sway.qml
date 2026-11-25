@@ -42,14 +42,10 @@ QtObject {
         root.run(["swaymsg", "output", name, "scale", String(scale)]);
     }
 
-    // Sway draws no gaps, rounded corners or border here, so the bar stays
+    // Sway draws no gaps or rounded corners here, so the bar stays
     // flush with the screen edge.
     readonly property var gaps: ({ top: 0, right: 0, bottom: 0, left: 0 })
     readonly property int rounding: 0
-    readonly property var border: ({ size: 0, colors: [], angle: 0 })
-
-    // Sway's borders are its config's; the theme does not reach them.
-    function applyTheme(name) {}
 
     // Changes run one at a time, in the order they were asked for; a change
     // asked for while another runs waits its turn instead of being lost.

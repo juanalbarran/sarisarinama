@@ -267,14 +267,13 @@ border stays the config's. Every palette is rendered as
 `settings`, so the theme's colour wins over the config's own. The script
 swaps the copy, which is what a reload or a new session reads.
 
-The running Hyprland is not repainted by the script. `hyprctl reload`
-would rerun the config's `exec` lines, and canaima's restarts the shell.
-Instead `theme set` calls `Compositor.applyTheme`, and the Hyprland backend
-runs `hyprctl keyword source` on the theme's file, which changes the
-borders at once and reloads nothing. The shell then reads them back, so the
-bar's border follows (see [bar](./bar.md)). Under Sway it is a no-op. A
-palette changed by a rebuild reaches the copy, and the live borders at the
-next `set` or reload.
+The script then repaints the running Hyprland with `hyprctl keyword
+source` on the copy, which changes the borders at once and reloads
+nothing: `hyprctl reload` would rerun the config's `exec` lines, and
+canaima's restarts the shell. It does so only with
+`HYPRLAND_INSTANCE_SIGNATURE` set, so under Sway, or from a Home Manager
+switch, it only swaps the copy; a palette changed by a rebuild reaches the
+live borders at the next `set` or reload.
 
 `source` is hyprlang, so the integration is off by default on a Lua
 config.

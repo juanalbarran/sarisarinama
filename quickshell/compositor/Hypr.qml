@@ -7,7 +7,6 @@
 // disabled ones, and changed with `hyprctl keyword monitor`. Untested:
 // Hyprland is not ported yet, and a Hyprland on the Lua config rejects
 // `hyprctl keyword`.
-import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
@@ -45,17 +44,18 @@ QtObject {
     }
 
     // How the windows look, asked of Hyprland so the bar follows its config:
-    // gaps_out in CSS order (top right bottom left), the corner radius, and
-    // the focused window's border, `colors` as #AARRGGBB and `angle` in deg.
+    // gaps_out in CSS order (top right bottom left) and the corner radius.
     property var gaps: ({ top: 0, right: 0, bottom: 0, left: 0 })
     property int rounding: 0
-    property var border: ({ size: 0, colors: [], angle: 0 })
+
+    // The config was reloaded, which resets every display to its rules.
+    signal reloaded
 
     // One batched call; the answers come back as JSON objects separated by
     // blank lines, in the order they were asked.
     property Process looksReader: Process {
         running: true
-        command: ["hyprctl", "-j", "--batch", "getoption general:gaps_out; getoption decoration:rounding; getoption general:border_size; getoption general:col.active_border"]
+        command: ["hyprctl", "-j", "--batch", "getoption general:gaps_out; getoption decoration:rounding"]
         stdout: StdioCollector {
             onStreamFinished: {
                 try {
@@ -63,38 +63,27 @@ QtObject {
                     var g = o[0].custom.split(" ").map(Number);
                     root.gaps = { top: g[0], right: g[1], bottom: g[2], left: g[3] };
                     root.rounding = o[1].int;
-                    // "ee33ccff ee00ff99 45deg": colors, then an optional angle
-                    var c = o[3].custom.split(" ");
-                    var angle = c[c.length - 1].endsWith("deg") ? parseFloat(c.pop()) : 0;
-                    root.border = { size: o[2].int, colors: c.map(x => "#" + x), angle: angle };
                 } catch (e) {
-                    console.warn("hyprland: cannot read gaps, rounding or border", e);
+                    console.warn("hyprland: cannot read gaps or rounding", e);
                 }
             }
         }
     }
 
-    // A `hyprctl reload` can change all of them, so read them again.
+    // A `hyprctl reload` can change both, so read them again.
     property Connections reload: Connections {
         target: Hyprland
         function onRawEvent(event) {
-            if (event.name === "configreloaded")
+            if (event.name === "configreloaded") {
                 root.looksReader.running = true;
+                root.reloaded();
+            }
         }
-    }
-
-    // The theme's borders, from the file the hyprland integration rendered
-    // for it. Sourced, never reloaded: a reload reruns the config's `exec`
-    // lines, which restart the shell. No file, integration off: nothing.
-    function applyTheme(name) {
-        var file = Quickshell.env("HOME") + "/.config/sarisarinama/hyprland/" + name + ".conf";
-        root.run(["sh", "-c", '[ ! -e "$1" ] || hyprctl keyword source "$1"', "sh", file]);
     }
 
     // Changes run one at a time, in the order they were asked for; a change
     // asked for while another runs waits its turn instead of being lost.
-    // The outputs and the windows' looks are read again once the last one is
-    // done, so the bar's border follows a theme as soon as Hyprland has it.
+    // The outputs are read again once the last one is done.
     property var queue: []
 
     function run(command) {
@@ -106,7 +95,6 @@ QtObject {
     function next() {
         if (root.queue.length === 0) {
             root.refreshOutputs();
-            root.looksReader.running = true;
             return;
         }
         root.writer.command = root.queue[0];

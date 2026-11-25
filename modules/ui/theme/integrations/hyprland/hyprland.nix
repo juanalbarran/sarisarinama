@@ -2,8 +2,7 @@
 # Hyprland's window borders follow the theme. Every palette is rendered as a
 # hyprland file, and Hyprland's config sources one mutable copy, last, so its
 # colours win over the config's own; sarisarinama-theme-hyprland swaps that
-# copy on every theme set. The running Hyprland is repainted by the shell,
-# which sources the theme's file itself: see Hypr.qml.
+# copy on every theme set and sources it into the running Hyprland.
 {
   flake.modules.homeManager.sarisarinama = {
     config,
