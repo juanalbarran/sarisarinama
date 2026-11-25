@@ -49,8 +49,10 @@
       programs.sarisarinama.theme.onSet = [(lib.getExe script)];
 
       # The copy exists before Hyprland first reads its config, and a
-      # changed palette reaches it on every switch.
-      home.activation.sarisarinamaHyprland = lib.hm.dag.entryAfter ["linkGeneration"] ''
+      # changed palette reaches it on every switch. Before onFilesChange,
+      # where Home Manager reloads Hyprland for a changed config: a copy
+      # still missing then is a `source=` error until the next reload.
+      home.activation.sarisarinamaHyprland = lib.hm.dag.entryBetween ["onFilesChange"] ["linkGeneration"] ''
         run ${lib.getExe script}
       '';
     };
