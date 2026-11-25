@@ -32,6 +32,13 @@ Singleton {
             root.backend.item.activate(n);
     }
 
+    // How the windows look: their distance from the screen edges, their
+    // corner radius and their border {size, colors, angle}. All zero on Sway,
+    // which draws none of them.
+    readonly property var gaps: root.backend.item ? root.backend.item.gaps : ({ top: 0, right: 0, bottom: 0, left: 0 })
+    readonly property int rounding: root.backend.item ? root.backend.item.rounding : 0
+    readonly property var border: root.backend.item ? root.backend.item.border : ({ size: 0, colors: [], angle: 0 })
+
     // Every output, the disabled ones too:
     // [{name, description, active, focused, scale, width, height}].
     // Not live: it changes when refreshOutputs() has read them again, which

@@ -42,6 +42,12 @@ QtObject {
         root.run(["swaymsg", "output", name, "scale", String(scale)]);
     }
 
+    // Sway draws no gaps, rounded corners or border here, so the bar stays
+    // flush with the screen edge.
+    readonly property var gaps: ({ top: 0, right: 0, bottom: 0, left: 0 })
+    readonly property int rounding: 0
+    readonly property var border: ({ size: 0, colors: [], angle: 0 })
+
     // Changes run one at a time, in the order they were asked for; a change
     // asked for while another runs waits its turn instead of being lost.
     // The outputs are read again once the last one is done.

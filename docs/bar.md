@@ -9,6 +9,17 @@ left, the clock in the centre, service icons on the right.
 It lays out the widgets and imports them with `import "./widgets/"`;
 nothing else in the tree imports that directory.
 
+The bar looks like the compositor's windows. On Hyprland it keeps the
+windows' `gaps_out` from the edges as layer-shell `margins`, and
+`BarFrame.qml` paints it with their `rounding` and their focused border
+(`border_size`, `col.active_border`). On Sway all of those are zero, so the
+bar is flush and flat. The window itself is transparent; `BarFrame` is the
+bar's body. Its border is a ring between two rounded rectangles filled with
+a `LinearGradient`, because a `Rectangle`'s border takes one color and
+Hyprland's takes several. The gradient follows Hyprland's border shader, not
+CSS: on a wide bar a 45° angle runs almost top to bottom, as it does on a
+window that shape.
+
 `widgets/` holds one self-contained element per file, each importing
 `"../../theme/"` and knowing nothing about the window. `Workspaces.qml`
 also imports `"../../compositor/"`; no widget imports a compositor module
@@ -49,8 +60,8 @@ loads one backend behind it.
 | ---------------- | ---------------------------------------------- |
 | `qmldir`         | Registers `Compositor`, and nothing else       |
 | `Compositor.qml` | Detects, loads one backend, forwards two calls |
-| `Sway.qml`       | `Quickshell.I3`; workspaces by `num`           |
-| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`      |
+| `Sway.qml`       | `Quickshell.I3`; workspaces by `num`; no gaps, rounding or border |
+| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`; gaps, rounding and border from one batched `hyprctl getoption`, read again on `configreloaded` |
 
 Two rules hold this together.
 
@@ -146,9 +157,10 @@ key each token points at is [themes](./themes.md); the defaults in
 ```
 bar/                    compositor/
 ├── Bar.qml             ├── Compositor.qml
-└── widgets/            ├── Hypr.qml
-    ├── Audio.qml       ├── Sway.qml
-    ├── Battery.qml     └── qmldir
+├── BarFrame.qml        ├── Hypr.qml
+└── widgets/            ├── Sway.qml
+    ├── Audio.qml       └── qmldir
+    ├── Battery.qml
     ├── Bell.qml
     ├── BluetoothStatus.qml
     ├── Clock.qml

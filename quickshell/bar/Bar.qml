@@ -4,6 +4,7 @@
 import Quickshell
 import QtQuick
 import "../theme/"
+import "../compositor/"
 import "./widgets/"
 
 PanelWindow {
@@ -22,8 +23,19 @@ PanelWindow {
         left: true
         right: true
     }
+    // As far from the edges as the windows are; zero on Sway.
+    margins {
+        left: Compositor.gaps.left
+        right: Compositor.gaps.right
+        bottom: Compositor.gaps.bottom
+    }
     implicitHeight: Style.bar.height
-    color: Colors.bar.background
+    // The window is see-through; BarFrame paints the bar inside it.
+    color: "transparent"
+
+    BarFrame {
+        anchors.fill: parent
+    }
 
     // left — workspaces bring their own spacing
     Row {
