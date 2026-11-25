@@ -12,7 +12,9 @@ nothing else in the tree imports that directory.
 The bar looks like the compositor's windows. On Hyprland it keeps the
 windows' `gaps_out` from the edges as layer-shell `margins`, and
 `BarFrame.qml` paints it with their `rounding` and their focused border
-(`border_size`, `col.active_border`). On Sway all of those are zero, so the
+(`border_size`, `col.active_border`), so with the `hyprland` integration
+its border is the theme's `accent`, changing with every `theme set`
+([themes](./themes.md#hyprland)). On Sway all of those are zero, so the
 bar is flush and flat. The window itself is transparent; `BarFrame` is the
 bar's body. Its border is a ring between two rounded rectangles filled with
 a `LinearGradient`, because a `Rectangle`'s border takes one color and
@@ -61,7 +63,7 @@ loads one backend behind it.
 | `qmldir`         | Registers `Compositor`, and nothing else       |
 | `Compositor.qml` | Detects, loads one backend, forwards two calls |
 | `Sway.qml`       | `Quickshell.I3`; workspaces by `num`; no gaps, rounding or border |
-| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`; gaps, rounding and border from one batched `hyprctl getoption`, read again on `configreloaded` |
+| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`; gaps, rounding and border from one batched `hyprctl getoption`, read again on `configreloaded` and after `applyTheme` |
 
 Two rules hold this together.
 

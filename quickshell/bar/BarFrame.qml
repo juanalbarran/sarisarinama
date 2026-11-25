@@ -26,36 +26,53 @@ Item {
 
     // The ring between two rounded rectangles, filled with the gradient.
     // A Rectangle's border takes one color; Hyprland's can take several.
-    Shape {
+    // A gradient's stops are read once, so new colors (a theme set) build
+    // the ring again; its stops are its children and go with it.
+    Loader {
+        id: ring
         anchors.fill: parent
-        visible: root.borderSize > 0 && root.colors.length > 0
-        preferredRendererType: Shape.CurveRenderer
+        active: root.borderSize > 0 && root.colors.length > 0
+        sourceComponent: ringComponent
+    }
 
-        ShapePath {
-            strokeWidth: -1
-            fillRule: ShapePath.OddEvenFill
-            fillGradient: LinearGradient {
-                x1: root.line.x1
-                y1: root.line.y1
-                x2: root.line.x2
-                y2: root.line.y2
-                stops: root.colors.map((c, i, all) => stop.createObject(root, {
-                        position: all.length > 1 ? i / (all.length - 1) : 0,
-                        color: c
-                    }))
-            }
+    onColorsChanged: {
+        ring.sourceComponent = null;
+        ring.sourceComponent = ringComponent;
+    }
 
-            PathRectangle {
-                width: root.width
-                height: root.height
-                radius: root.outerRadius
-            }
-            PathRectangle {
-                x: root.borderSize
-                y: root.borderSize
-                width: root.width - 2 * root.borderSize
-                height: root.height - 2 * root.borderSize
-                radius: root.innerRadius
+    Component {
+        id: ringComponent
+
+        Shape {
+            id: shape
+            preferredRendererType: Shape.CurveRenderer
+
+            ShapePath {
+                strokeWidth: -1
+                fillRule: ShapePath.OddEvenFill
+                fillGradient: LinearGradient {
+                    x1: root.line.x1
+                    y1: root.line.y1
+                    x2: root.line.x2
+                    y2: root.line.y2
+                    stops: root.colors.map((c, i, all) => stop.createObject(shape, {
+                            position: all.length > 1 ? i / (all.length - 1) : 0,
+                            color: c
+                        }))
+                }
+
+                PathRectangle {
+                    width: root.width
+                    height: root.height
+                    radius: root.outerRadius
+                }
+                PathRectangle {
+                    x: root.borderSize
+                    y: root.borderSize
+                    width: root.width - 2 * root.borderSize
+                    height: root.height - 2 * root.borderSize
+                    radius: root.innerRadius
+                }
             }
         }
     }

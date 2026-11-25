@@ -48,6 +48,9 @@ QtObject {
     readonly property int rounding: 0
     readonly property var border: ({ size: 0, colors: [], angle: 0 })
 
+    // Sway's borders are its config's; the theme does not reach them.
+    function applyTheme(name) {}
+
     // Changes run one at a time, in the order they were asked for; a change
     // asked for while another runs waits its turn instead of being lost.
     // The outputs are read again once the last one is done.

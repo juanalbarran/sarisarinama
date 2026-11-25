@@ -192,6 +192,7 @@ changed palette lands without a `set`. Each is
 | `palette`     | `palette.json`, what Neovim reads     | yes                                |
 | `mode`        | dark or light, for GTK and the portal | yes                                |
 | `qutebrowser` | dark pages, the setting `,d` cycles   | with `programs.qutebrowser.enable` |
+| `hyprland`    | the focused window's border, `accent` | with Hyprland on a hyprlang config |
 
 ### foot and tmux
 
@@ -255,6 +256,28 @@ The other way, sending `:set` to the running qutebrowser, is how commands
 reach it from outside, and it raises the window: under Sway the window is
 marked urgent on every switch. Tested on a headless Sway.
 
+### Hyprland
+
+The focused window's border, and a focused group's, are `accent`, as
+omarchy's `default/themed/hyprland.conf.tpl` paints them; the unfocused
+border stays the config's. Every palette is rendered as
+`hyprland/<name>.conf`, and Hyprland's config sources one copy of it,
+`$XDG_STATE_HOME/sarisarinama/hyprland.conf`, from `extraConfig`: after
+`settings`, so the theme's colour wins over the config's own. The script
+swaps the copy, which is what a reload or a new session reads.
+
+The running Hyprland is not repainted by the script. `hyprctl reload`
+would rerun the config's `exec` lines, and canaima's restarts the shell.
+Instead `theme set` calls `Compositor.applyTheme`, and the Hyprland backend
+runs `hyprctl keyword source` on the theme's file, which changes the
+borders at once and reloads nothing. The shell then reads them back, so the
+bar's border follows (see [bar](./bar.md)). Under Sway it is a no-op. A
+palette changed by a rebuild reaches the copy, and the live borders at the
+next `set` or reload.
+
+`source` is hyprlang, so the integration is off by default on a Lua
+config.
+
 ## Files
 
 | File                                        | Role                                |
@@ -283,6 +306,7 @@ marked urgent on every switch. Tested on a headless Sway.
 | `integrations/palette/`                     | `palette.json`, for Neovim          |
 | `integrations/mode/`                        | Dark or light, in dconf             |
 | `integrations/qutebrowser/`                 | Dark pages, from `palette.json`     |
+| `integrations/hyprland/`                    | Hyprland's borders: files, script   |
 
 `integrations/` is `modules/ui/theme/integrations/`.
 

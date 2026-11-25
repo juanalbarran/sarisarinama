@@ -7,6 +7,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../compositor/"
 
 IpcHandler {
     id: root
@@ -80,6 +81,9 @@ IpcHandler {
         // Applications outside the shell follow. Detached, so a slow one
         // never holds up the answer.
         Colors.themeFile.value("onSet", []).forEach(program => Quickshell.execDetached([program, name]));
+        // The compositor's borders, here and not in onSet: the shell knows
+        // when they have changed, so the bar can read them again.
+        Compositor.applyTheme(name);
         return "ok";
     }
 }

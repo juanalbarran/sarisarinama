@@ -7,6 +7,7 @@
 // disabled ones, and changed with `hyprctl keyword monitor`. Untested:
 // Hyprland is not ported yet, and a Hyprland on the Lua config rejects
 // `hyprctl keyword`.
+import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
@@ -82,9 +83,18 @@ QtObject {
         }
     }
 
+    // The theme's borders, from the file the hyprland integration rendered
+    // for it. Sourced, never reloaded: a reload reruns the config's `exec`
+    // lines, which restart the shell. No file, integration off: nothing.
+    function applyTheme(name) {
+        var file = Quickshell.env("HOME") + "/.config/sarisarinama/hyprland/" + name + ".conf";
+        root.run(["sh", "-c", '[ ! -e "$1" ] || hyprctl keyword source "$1"', "sh", file]);
+    }
+
     // Changes run one at a time, in the order they were asked for; a change
     // asked for while another runs waits its turn instead of being lost.
-    // The outputs are read again once the last one is done.
+    // The outputs and the windows' looks are read again once the last one is
+    // done, so the bar's border follows a theme as soon as Hyprland has it.
     property var queue: []
 
     function run(command) {
@@ -96,6 +106,7 @@ QtObject {
     function next() {
         if (root.queue.length === 0) {
             root.refreshOutputs();
+            root.looksReader.running = true;
             return;
         }
         root.writer.command = root.queue[0];

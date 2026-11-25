@@ -49,6 +49,18 @@
           type = lib.types.attrs;
           default = {};
         };
+        wayland.windowManager.hyprland.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+        };
+        wayland.windowManager.hyprland.configType = lib.mkOption {
+          type = lib.types.enum ["hyprlang" "lua"];
+          default = "hyprlang";
+        };
+        wayland.windowManager.hyprland.extraConfig = lib.mkOption {
+          type = lib.types.lines;
+          default = "";
+        };
         programs.foot.enable = lib.mkOption {
           type = lib.types.bool;
           default = false;
@@ -110,6 +122,7 @@
           programs.sarisarinama.style.menu.font.size = 16;
           programs.foot.enable = true;
           programs.tmux.enable = true;
+          wayland.windowManager.hyprland.enable = true;
           programs.sarisarinama.bookmarks.categories = {
             code.links = [
               {

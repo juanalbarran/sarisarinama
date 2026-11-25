@@ -39,6 +39,13 @@ Singleton {
     readonly property int rounding: root.backend.item ? root.backend.item.rounding : 0
     readonly property var border: root.backend.item ? root.backend.item.border : ({ size: 0, colors: [], angle: 0 })
 
+    // Repaints the running compositor's borders with a theme; `border`
+    // follows once it has. A no-op on Sway.
+    function applyTheme(name) {
+        if (root.backend.item)
+            root.backend.item.applyTheme(name);
+    }
+
     // Every output, the disabled ones too:
     // [{name, description, active, focused, scale, width, height}].
     // Not live: it changes when refreshOutputs() has read them again, which
