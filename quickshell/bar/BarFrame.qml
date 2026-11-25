@@ -21,7 +21,9 @@ Item {
         anchors.fill: parent
         anchors.margins: root.borderSize
         radius: root.innerRadius
-        color: Colors.bar.background
+        // Hyprland's floating bar has a token of its own, so it can be
+        // translucent while Sway's flush one stays as it was.
+        color: Compositor.name === "hyprland" ? Colors.bar.hyprlandBackground : Colors.bar.background
     }
 
     // The ring between two rounded rectangles, filled with the gradient.

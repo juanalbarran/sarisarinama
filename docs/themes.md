@@ -49,7 +49,8 @@ literal `#rrggbb`:
           "selectedBackgroundAlpha": 0.08, "selectedText": "accent" }
 ```
 
-The `bar` block is `background`, `backgroundAlpha`, `text`, `focused`,
+The `bar` block is `background`, `backgroundAlpha`, `hyprlandBackground`,
+`hyprlandBackgroundAlpha`, `text`, `focused`,
 `hover`, `urgent`, `warning` and `charging`.
 
 Omarchy bakes the hex in at theme-set time, because it re-renders on every

@@ -2,6 +2,7 @@
 // The bar window. Geometry comes from Style.bar, colors from Colors; each
 // widget sizes its own text. Nothing here is a literal.
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import "../theme/"
 import "../compositor/"
@@ -30,6 +31,9 @@ PanelWindow {
         bottom: Compositor.gaps.bottom
     }
     implicitHeight: Style.bar.height
+    // A name of its own, so a compositor rule (Hyprland's blur) can pick
+    // out the bar from the shell's other layers.
+    WlrLayershell.namespace: "sarisarinama-bar"
     // The window is see-through; BarFrame paints the bar inside it.
     color: "transparent"
 

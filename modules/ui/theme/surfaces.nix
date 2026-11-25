@@ -22,6 +22,10 @@
       bar = {
         background = key "background" "The bar panel itself.";
         backgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
+        hyprlandBackground = key "background" "The bar panel under Hyprland,
+          where it floats with the windows' gaps and corners. Sway's flush
+          bar keeps `background`.";
+        hyprlandBackgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
         text = key "foreground" "A widget at rest.";
         focused = key "accent" "The focused workspace.";
         hover = key "yellow" "A widget under the pointer.";

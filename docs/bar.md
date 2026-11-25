@@ -15,7 +15,8 @@ windows' `gaps_out` from the edges as layer-shell `margins`, and
 (`border_size`, `col.active_border`), so with the `hyprland` integration
 its border is the theme's `accent`, changing with every `theme set`
 ([themes](./themes.md#hyprland)). On Sway all of those are zero, so the
-bar is flush and flat. The window itself is transparent; `BarFrame` is the
+bar is flush and flat. Its layer is named `sarisarinama-bar`, so a
+compositor rule can pick it out, as canaima's Hyprland blur does. The window itself is transparent; `BarFrame` is the
 bar's body. Its border is a ring between two rounded rectangles filled with
 a `LinearGradient`, because a `Rectangle`'s border takes one color and
 Hyprland's takes several. The gradient follows Hyprland's border shader, not
@@ -127,7 +128,9 @@ A text-only widget needs no block in `BarStyle.qml`; it calls
 
 ## Colors (the `bar` block of `surfaces.json`)
 
-`background`, `backgroundAlpha`, `text`, `focused` (the focused workspace),
+`background`, `backgroundAlpha`, `hyprlandBackground` and
+`hyprlandBackgroundAlpha` (the floating bar under Hyprland, so it can be
+translucent while Sway's flush one is not), `text`, `focused` (the focused workspace),
 `hover`, `urgent` (an urgent workspace, a battery at `critical` or below,
 blinking towards `text`), `warning` (a battery at `warning` or below) and
 `charging`. The battery follows canaima's waybar: critical wins over
