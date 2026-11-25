@@ -19,6 +19,9 @@ Singleton {
     // compiled, so its import never reaches for a socket that is not there.
     readonly property Loader backend: Loader {
         source: root.name === "hyprland" ? "Hypr.qml" : "Sway.qml"
+        // The outputs are read once at start, so the saved ones can be put
+        // back without the panel ever opening.
+        onLoaded: root.refreshOutputs()
     }
 
     // The live workspace object, or null. Callers read .focused and .urgent
@@ -32,19 +35,10 @@ Singleton {
             root.backend.item.activate(n);
     }
 
-    // How the windows look: their distance from the screen edges, their
-    // corner radius and their border {size, colors, angle}. All zero on Sway,
-    // which draws none of them.
+    // How the windows look: their distance from the screen edges and their
+    // corner radius. Both zero on Sway, which draws neither.
     readonly property var gaps: root.backend.item ? root.backend.item.gaps : ({ top: 0, right: 0, bottom: 0, left: 0 })
     readonly property int rounding: root.backend.item ? root.backend.item.rounding : 0
-    readonly property var border: root.backend.item ? root.backend.item.border : ({ size: 0, colors: [], angle: 0 })
-
-    // Repaints the running compositor's borders with a theme; `border`
-    // follows once it has. A no-op on Sway.
-    function applyTheme(name) {
-        if (root.backend.item)
-            root.backend.item.applyTheme(name);
-    }
 
     // Every output, the disabled ones too:
     // [{name, description, active, focused, scale, width, height}].
@@ -57,13 +51,47 @@ Singleton {
             root.backend.item.refreshOutputs();
     }
 
+    // Both remember the change, so a reload or a restart puts it back.
     function setOutputEnabled(name, enabled) {
+        root.memory.remember(name, { active: enabled });
         if (root.backend.item)
             root.backend.item.setOutputEnabled(name, enabled);
     }
 
     function setOutputScale(name, scale) {
+        root.memory.remember(name, { scale: Number(scale) });
         if (root.backend.item)
             root.backend.item.setOutputScale(name, scale);
+    }
+
+    // The displays as the panel last left them, put back once both the file
+    // and the outputs are read: at start, and after a compositor reload.
+    readonly property OutputMemory memory: OutputMemory {
+        onReadyChanged: root.restore()
+    }
+    property bool restorePending: true
+
+    onOutputsChanged: root.restore()
+
+    function restore() {
+        if (!root.restorePending || !root.memory.ready || root.outputs.length === 0 || !root.backend.item)
+            return;
+        root.restorePending = false;
+        // Straight to the backend: these are not new choices to remember.
+        root.memory.plan(root.outputs).forEach(step => {
+            if (step.kind === "scale")
+                root.backend.item.setOutputScale(step.name, step.scale);
+            else
+                root.backend.item.setOutputEnabled(step.name, step.kind === "on");
+        });
+    }
+
+    readonly property Connections reloads: Connections {
+        target: root.backend.item
+        ignoreUnknownSignals: true
+        function onReloaded() {
+            root.restorePending = true;
+            root.refreshOutputs();
+        }
     }
 }

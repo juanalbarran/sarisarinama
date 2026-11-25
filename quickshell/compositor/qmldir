@@ -1,1 +1,2 @@
 singleton Compositor Compositor.qml
+internal OutputMemory OutputMemory.qml

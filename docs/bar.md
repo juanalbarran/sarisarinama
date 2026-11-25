@@ -9,19 +9,13 @@ left, the clock in the centre, service icons on the right.
 It lays out the widgets and imports them with `import "./widgets/"`;
 nothing else in the tree imports that directory.
 
-The bar looks like the compositor's windows. On Hyprland it keeps the
+The bar floats like the compositor's windows. On Hyprland it keeps the
 windows' `gaps_out` from the edges as layer-shell `margins`, and
-`BarFrame.qml` paints it with their `rounding` and their focused border
-(`border_size`, `col.active_border`), so with the `hyprland` integration
-its border is the theme's `accent`, changing with every `theme set`
-([themes](./themes.md#hyprland)). On Sway all of those are zero, so the
-bar is flush and flat. Its layer is named `sarisarinama-bar`, so a
-compositor rule can pick it out, as canaima's Hyprland blur does. The window itself is transparent; `BarFrame` is the
-bar's body. Its border is a ring between two rounded rectangles filled with
-a `LinearGradient`, because a `Rectangle`'s border takes one color and
-Hyprland's takes several. The gradient follows Hyprland's border shader, not
-CSS: on a wide bar a 45° angle runs almost top to bottom, as it does on a
-window that shape.
+`BarFrame.qml` rounds it with their `rounding`; it has no border. On Sway
+both are zero, so the bar is flush and flat. Its layer is named
+`sarisarinama-bar`, so a compositor rule can pick it out, as canaima's
+Hyprland blur does. The window itself is transparent; `BarFrame` is the
+bar's body.
 
 `widgets/` holds one self-contained element per file, each importing
 `"../../theme/"` and knowing nothing about the window. `Workspaces.qml`
@@ -61,10 +55,11 @@ loads one backend behind it.
 
 | File             | Role                                           |
 | ---------------- | ---------------------------------------------- |
-| `qmldir`         | Registers `Compositor`, and nothing else       |
+| `qmldir`         | Registers `Compositor`; `OutputMemory` as internal |
 | `Compositor.qml` | Detects, loads one backend, forwards two calls |
-| `Sway.qml`       | `Quickshell.I3`; workspaces by `num`; no gaps, rounding or border |
-| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`; gaps, rounding and border from one batched `hyprctl getoption`, read again on `configreloaded` and after `applyTheme` |
+| `OutputMemory.qml` | The displays as the monitor panel left them    |
+| `Sway.qml`       | `Quickshell.I3`; workspaces by `num`; no gaps or rounding |
+| `Hypr.qml`       | `Quickshell.Hyprland`; workspaces by `id`; gaps and rounding from one batched `hyprctl getoption`, read again on `configreloaded` |
 
 Two rules hold this together.
 
@@ -82,7 +77,26 @@ when a workspace appeared and never when focus moved. The caller reads
 `Hypr.qml` is named `Hypr` because a local file loses to a type of the same
 name from an imported module, and `Quickshell.Hyprland` exports `Hyprland`.
 Only `Compositor` is in the `qmldir`, so nothing else can reach a backend
-and wake the wrong socket.
+and wake the wrong socket. `OutputMemory` is listed `internal`: visible to
+`Compositor.qml` and to nothing outside the directory.
+
+### Displays survive a reload
+
+A Hyprland reload resets every display to its config's rules, and
+canaima's has none, so a laptop panel turned off from the monitor panel
+came back on. Every `setOutputEnabled` and `setOutputScale` is now
+remembered in `$XDG_STATE_HOME/sarisarinama/outputs.json`,
+`{name: {active, scale}}`, and put back when the shell starts and after a
+`configreloaded` event; canaima's reload restarts the shell, so the start
+is what does it there. The panel flashes on for under a second first.
+
+Only with an external display connected, by the same test as
+`sarisarinama-lid`: without one nothing is put back and the laptop panel
+stays as the compositor has it, so a saved "off" cannot leave the screen
+dark. Displays turn on first, then scales, then off, and a saved state that
+would leave no display on is not applied at all. A display that comes back
+on is set to its saved scale, since it returns at the compositor's own.
+Changes made outside the panel, as the lid script's, are not remembered.
 
 ## Tokens (the `bar` section of `style.json`)
 
@@ -163,9 +177,9 @@ key each token points at is [themes](./themes.md); the defaults in
 bar/                    compositor/
 ├── Bar.qml             ├── Compositor.qml
 ├── BarFrame.qml        ├── Hypr.qml
-└── widgets/            ├── Sway.qml
-    ├── Audio.qml       └── qmldir
-    ├── Battery.qml
+└── widgets/            ├── OutputMemory.qml
+    ├── Audio.qml       ├── Sway.qml
+    ├── Battery.qml     └── qmldir
     ├── Bell.qml
     ├── BluetoothStatus.qml
     ├── Clock.qml
