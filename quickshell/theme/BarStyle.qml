@@ -41,6 +41,7 @@ QtObject {
     }
 
     readonly property int height: px(cfg.height, 30)
+    readonly property int hyprlandHeight: px(cfg.hyprlandHeight, 36)
     readonly property int paddingLeft: px(cfg.paddingLeft, 40)
     readonly property int paddingRight: px(cfg.paddingRight, 20)
     readonly property int spacing: px(cfg.spacing, 10)

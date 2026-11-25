@@ -34,6 +34,8 @@
       // {
         # General bar
         height = px 30 "Bar height in design px.";
+        hyprlandHeight = px 36 "Bar height under Hyprland, where it floats
+          with the windows' gaps and corners. Sway's flush bar keeps `height`.";
         paddingLeft = px 40 "Space between the screen edge and the workspaces.";
         paddingRight = px 20 "Space between the last widget and the screen edge.";
         spacing = px 10 "Gap between the service widgets on the right.";

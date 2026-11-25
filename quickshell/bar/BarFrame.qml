@@ -8,7 +8,7 @@ import "../compositor/"
 
 Rectangle {
     radius: Compositor.rounding
-    // Hyprland's floating bar has a token of its own, so it can be
-    // translucent while Sway's flush one stays as it was.
-    color: Compositor.name === "hyprland" ? Colors.bar.hyprlandBackground : Colors.bar.background
+    // Translucent under Hyprland by surfaces.json's hyprlandOpacity, which
+    // Colors applies to every background.
+    color: Colors.bar.background
 }

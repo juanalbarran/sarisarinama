@@ -30,7 +30,8 @@ PanelWindow {
         right: Compositor.gaps.right
         bottom: Compositor.gaps.bottom
     }
-    implicitHeight: Style.bar.height
+    // Taller under Hyprland, where the bar floats like a window.
+    implicitHeight: Compositor.name === "hyprland" ? Style.bar.hyprlandHeight : Style.bar.height
     // A name of its own, so a compositor rule (Hyprland's blur) can pick
     // out the bar from the shell's other layers.
     WlrLayershell.namespace: "sarisarinama-bar"

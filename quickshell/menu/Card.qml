@@ -6,7 +6,6 @@
 // still goes through Style.space.
 import QtQuick
 import "../theme/"
-import "../compositor/"
 
 Rectangle {
     id: root
@@ -30,9 +29,7 @@ Rectangle {
     implicitWidth: Style.menu.card.width
     implicitHeight: chrome + list.height
 
-    // Under Hyprland the card has a token of its own, so it can be
-    // translucent while Sway's stays as it was.
-    color: Compositor.name === "hyprland" ? Colors.menu.hyprlandBackground : Colors.menu.background
+    color: Colors.menu.background
     radius: Style.menu.card.radius
     border.width: Style.menu.card.border
     border.color: Colors.menu.border

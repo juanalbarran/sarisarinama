@@ -42,21 +42,23 @@ Which key paints what, with the alpha companions, from omarchy's
 literal `#rrggbb`:
 
 ```json
+"hyprlandOpacity": 1.0,
 "menu": { "background": "background", "backgroundAlpha": 1.0,
-          "hyprlandBackground": "background", "hyprlandBackgroundAlpha": 1.0,
           "text": "foreground", "title": "accent",
           "border": "accent", "borderAlpha": 1.0,
           "selectedBackground": "foreground",
           "selectedBackgroundAlpha": 0.08, "selectedText": "accent" }
 ```
 
-The `bar` block is `background`, `backgroundAlpha`, `hyprlandBackground`,
-`hyprlandBackgroundAlpha`, `text`, `focused`,
+The `bar` block is `background`, `backgroundAlpha`, `text`, `focused`,
 `hover`, `urgent`, `warning` and `charging`.
 
-The `hyprlandBackground` pair, in the bar and the menu, paints that surface
-only under Hyprland, so it can be translucent there while Sway keeps
-`background`; canaima sets both alphas from its `ui.hyprland.alpha`.
+`hyprlandOpacity` is one number for the whole shell, not a key per block:
+under Hyprland, `Colors.paint` multiplies every block's `backgroundAlpha` by
+it, so the bar, the menu, every panel and the toasts are see-through
+together and Hyprland can blur what shows through. The lock is left out,
+since below 1 the desktop would show behind it. Under Sway it is ignored.
+canaima sets it from `hostspec.opacity`.
 
 Omarchy bakes the hex in at theme-set time, because it re-renders on every
 switch; the reference is kept instead, so switching swaps one small file and

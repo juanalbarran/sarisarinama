@@ -119,7 +119,8 @@ one. Both come from `_lib/shared.nix`, see [style](./style.md).
 ```json
 "bar": {
   "font": { "family": null, "size": null }, "scale": null,
-  "height": 30, "paddingLeft": 40, "paddingRight": 20, "spacing": 10,
+  "height": 30, "hyprlandHeight": 36,
+  "paddingLeft": 40, "paddingRight": 20, "spacing": 10,
   "clock":      { "step": "title",   "fontSize": null },
   "workspaces": { "step": "caption", "fontSize": null, "count": 5,
                   "spacing": 7, "paddingX": 2, "animation": 300 },
@@ -133,6 +134,9 @@ one. Both come from `_lib/shared.nix`, see [style](./style.md).
   "tray":       { "iconSize": 16, "spacing": 8 }
 }
 ```
+
+`hyprlandHeight` replaces `height` under Hyprland, where the bar floats
+with the windows' gaps and corners; Sway's flush bar keeps `height`.
 
 `paddingLeft` is the gap from the screen edge to the workspaces,
 `paddingRight` from the last widget to the edge. `spacing` is the gap
@@ -152,9 +156,8 @@ A text-only widget needs no block in `BarStyle.qml`; it calls
 
 ## Colors (the `bar` block of `surfaces.json`)
 
-`background`, `backgroundAlpha`, `hyprlandBackground` and
-`hyprlandBackgroundAlpha` (the floating bar under Hyprland, so it can be
-translucent while Sway's flush one is not), `text`, `focused` (the focused workspace),
+`background`, `backgroundAlpha` (times `hyprlandOpacity` under Hyprland, see
+[themes](./themes.md#surfaces-configsarisarinamasurfacesjson)), `text`, `focused` (the focused workspace),
 `hover`, `urgent` (an urgent workspace, a battery at `critical` or below,
 blinking towards `text`), `warning` (a battery at `warning` or below) and
 `charging`. The battery follows canaima's waybar: critical wins over

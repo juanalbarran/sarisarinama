@@ -19,13 +19,16 @@
     panel = import ./_lib/panel.nix lib;
   in {
     options.programs.sarisarinama.theme.surfaces = {
+      # One number for every surface, not a key per block: under Hyprland the
+      # shell multiplies each `background` alpha by it, so the bar, the menu,
+      # the panels and the toasts are see-through together. Sway ignores it.
+      hyprlandOpacity = alpha 1.0 "The `background` of every surface but the
+        lock, under Hyprland only, which can blur what shows through. 1 keeps
+        them as Sway paints them.";
+
       bar = {
         background = key "background" "The bar panel itself.";
         backgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
-        hyprlandBackground = key "background" "The bar panel under Hyprland,
-          where it floats with the windows' gaps and corners. Sway's flush
-          bar keeps `background`.";
-        hyprlandBackgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
         text = key "foreground" "A widget at rest.";
         focused = key "accent" "The focused workspace.";
         hover = key "yellow" "A widget under the pointer.";
@@ -39,9 +42,6 @@
       menu = {
         background = key "background" "The card behind the rows.";
         backgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
-        hyprlandBackground = key "background" "The card under Hyprland, which
-          can blur what shows through it. Sway keeps `background`.";
-        hyprlandBackgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
         text = key "foreground" "An unselected row.";
         title = key "accent" "The card title. Not an omarchy token: the
           card shows the menu file name, see menu.md.";

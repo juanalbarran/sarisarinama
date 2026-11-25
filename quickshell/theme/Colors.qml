@@ -6,6 +6,7 @@
 pragma Singleton
 import Quickshell
 import QtQuick
+import "../compositor/"
 
 Singleton {
     id: root
@@ -49,10 +50,22 @@ Singleton {
         return v === undefined || v === null ? fallback : v;
     }
 
+    // Under Hyprland every surface's background is multiplied by this one
+    // number, so the bar, the menu, the panels and the toasts are
+    // see-through together and Hyprland blurs what shows through. Sway: 1.
+    // The lock is left out: below 1 the desktop would show behind it.
+    readonly property real hyprlandOpacity: {
+        var v = root.surfaceFile.data.hyprlandOpacity;
+        return Compositor.name === "hyprland" && typeof v === "number" ? v : 1.0;
+    }
+
     // One surface: its key resolved through the palette, its alpha applied.
     function paint(section, key, defToken, defColor, defAlpha) {
         var hex = root.lookup(root.token(section, key, defToken), defColor);
-        return Qt.alpha(hex, root.token(section, key + "Alpha", defAlpha));
+        var a = root.token(section, key + "Alpha", defAlpha);
+        if (key === "background" && section !== "lock")
+            a *= root.hyprlandOpacity;
+        return Qt.alpha(hex, a);
     }
 
     readonly property BarColors bar: BarColors {
