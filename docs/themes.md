@@ -43,6 +43,7 @@ literal `#rrggbb`:
 
 ```json
 "menu": { "background": "background", "backgroundAlpha": 1.0,
+          "hyprlandBackground": "background", "hyprlandBackgroundAlpha": 1.0,
           "text": "foreground", "title": "accent",
           "border": "accent", "borderAlpha": 1.0,
           "selectedBackground": "foreground",
@@ -52,6 +53,10 @@ literal `#rrggbb`:
 The `bar` block is `background`, `backgroundAlpha`, `hyprlandBackground`,
 `hyprlandBackgroundAlpha`, `text`, `focused`,
 `hover`, `urgent`, `warning` and `charging`.
+
+The `hyprlandBackground` pair, in the bar and the menu, paints that surface
+only under Hyprland, so it can be translucent there while Sway keeps
+`background`; canaima sets both alphas from its `ui.hyprland.alpha`.
 
 Omarchy bakes the hex in at theme-set time, because it re-renders on every
 switch; the reference is kept instead, so switching swaps one small file and

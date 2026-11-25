@@ -39,6 +39,9 @@
       menu = {
         background = key "background" "The card behind the rows.";
         backgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
+        hyprlandBackground = key "background" "The card under Hyprland, which
+          can blur what shows through it. Sway keeps `background`.";
+        hyprlandBackgroundAlpha = alpha 1.0 "0 is invisible, 1 opaque.";
         text = key "foreground" "An unselected row.";
         title = key "accent" "The card title. Not an omarchy token: the
           card shows the menu file name, see menu.md.";
