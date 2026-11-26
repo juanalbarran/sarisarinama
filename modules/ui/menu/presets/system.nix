@@ -13,11 +13,15 @@
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Ship the system menu (lock, suspend, restart, power off).";
+        description = "Ship the system menu (lock, log out, suspend, restart, power off).";
       };
       lockCommand = lib.mkOption {
         type = lib.types.str;
         default = "loginctl lock-session";
+      };
+      logoutCommand = lib.mkOption {
+        type = lib.types.str;
+        default = ''loginctl terminate-session "$XDG_SESSION_ID"'';
       };
       showSuspend = lib.mkOption {
         type = lib.types.bool;
@@ -28,24 +32,24 @@
     config.programs.sarisarinama.menus.system = lib.mkIf cfg.enable (
       [
         {
-          icon = "";
           label = "Lock";
           action = cfg.lockCommand;
         }
+        {
+          label = "Log out";
+          action = cfg.logoutCommand;
+        }
       ]
       ++ lib.optional cfg.showSuspend {
-        icon = "󰒲";
         label = "Suspend";
         action = "systemctl suspend";
       }
       ++ [
         {
-          icon = "";
           label = "Restart";
           action = "systemctl reboot";
         }
         {
-          icon = "󰐥";
           label = "Power off";
           action = "systemctl poweroff";
         }
